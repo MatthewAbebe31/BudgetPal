@@ -86,7 +86,9 @@ class PurchaseForm extends React.Component {
         <div className="purchase-form-button-container">
           <button type="submit" className="btn btn-primary btn-sm">Submit</button>
           </div>
+
       </form>
+
     </div>
     );
   }

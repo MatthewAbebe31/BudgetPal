@@ -1,3 +1,29 @@
+.navbar {
+  background-color: #85bb65;
+  color: white;
+  width: 100%;
+}
+
+a.navbar-brand,
+a.nav-link {
+  color: white;
+}
+
+#navbarNav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.purchase-list-container {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 50%;
+  margin-top: 20px;
+}
+
 .add-purchase-header {
   margin-bottom: 20px;
 }
@@ -11,12 +37,20 @@
   left: 0;
   right: 0;
   top: 25%;
-  text-align: center;
 }
 
 .purchase-form-button-container {
   display: flex;
   justify-content: flex-end;
+  width: 750px;
+  margin: 0 auto;
+}
+
+.purchase-list-button-container {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 20%;
   width: 750px;
   margin: 0 auto;
 }
@@ -30,6 +64,12 @@ input {
   cursor: pointer;
 }
 
+@media only screen and (max-width: 992px) {
+  .navbar {
+    width: 100%;
+  }
+}
+
 @media only screen and (max-width: 805px) {
   .purchase-input-group {
     width: 75%;
@@ -38,4 +78,8 @@ input {
   .purchase-form-button-container {
     width: 75%;
   }
+}
+
+.hidden {
+  display: none;
 }
