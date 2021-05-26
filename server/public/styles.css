@@ -6,10 +6,12 @@
   position: absolute;
   display: flex;
   flex-flow: column wrap;
-  width: 750px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  width: 50%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 25%;
+  text-align: center;
 }
 
 .purchase-form-button-container {
@@ -30,10 +32,10 @@ input {
 
 @media only screen and (max-width: 805px) {
   .purchase-input-group {
-    width: 350px;
+    width: 75%;
   }
 
   .purchase-form-button-container {
-    width: 350px;
+    width: 75%;
   }
 }
