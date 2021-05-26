@@ -35,7 +35,6 @@ export default class App extends React.Component {
         this.state.purchases.push(data);
         for (let i = 0; i < this.state.purchases.length; i++) {
           newDataArr.push(this.state.purchases[i]);
-          console.log(newDataArr);
         }
         this.setState({ purchases: newDataArr });
       })

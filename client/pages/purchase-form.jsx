@@ -11,6 +11,7 @@ class PurchaseForm extends React.Component {
     };
     this.handleDescriptionInputChange = this.handleDescriptionInputChange.bind(this);
     this.handleAmountInputChange = this.handleAmountInputChange.bind(this);
+    this.handleCategoryInputChange = this.handleCategoryInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -38,7 +39,6 @@ class PurchaseForm extends React.Component {
     this.setState({ category: '' });
     this.setState({ description: '' });
     this.setState({ amount: '' });
-    console.log(newPurchase);
   }
 
   render() {
@@ -48,45 +48,46 @@ class PurchaseForm extends React.Component {
 
     return (
       <div>
-      <h2>Add a Purchase.</h2>
-      <form className="purchase-input-group mb-4 shadow-sm" onSubmit={this.handleSubmit}>
+        <form className="purchase-input-group" onSubmit={this.handleSubmit}>
+          <h2 className="add-purchase-header">Add a Purchase.</h2>
 
-      <label>Enter Category</label>
-      <select className="form-select" aria-label="Default select example">
-        <option value>{categoryValue}</option>
-        <option value="1">Groceries</option>
-        <option value="2">Rent</option>
-        <option value="3">Car</option>
-          </select>
+            <label>Enter Category</label>
+              <select className="form-select" aria-label="Default select example" required value={categoryValue} onChange={this.handleCategoryInputChange}>
+                <option value="" disabled hidden>Select an option</option>
+                <option value="Groceries">Groceries</option>
+                <option value="Rent">Rent</option>
+                <option value="Car">Car</option>
+            </select>
 
         <label>Enter Description</label>
-        <input
-        required
-        autoFocus
-        type="text"
-        value={purchaseDescriptionValue}
-        htmlFor="purchaseDescriptionInput"
-        className="form-control"
-        id="purchaseDescriptionInput"
-        placeholder="Description"
-        onChange={this.handleDescriptionInputChange} />
-
-        <label>Enter Amount</label>
-        <input
+          <input
           required
           autoFocus
           type="text"
-          value={amountValue}
-          htmlFor="amountValueInput"
+          value={purchaseDescriptionValue}
+          htmlFor="purchaseDescriptionInput"
           className="form-control"
-          id="amountValueInput"
-          placeholder="$0.00"
-          onChange={this.handleAmountInputChange} />
+          id="purchaseDescriptionInput"
+          placeholder="Description"
+          onChange={this.handleDescriptionInputChange} />
 
-          <button type="submit" className="btn btn-primary" size="sm">Submit</button>
+        <label>Enter Amount</label>
+          <input
+            required
+            autoFocus
+            type="text"
+            value={amountValue}
+            htmlFor="amountValueInput"
+            className="form-control"
+            id="amountValueInput"
+            placeholder="$0.00"
+            onChange={this.handleAmountInputChange} />
 
-    </form>
+        <div className="purchase-form-button-container">
+          <button type="submit" className="btn btn-primary btn-sm">Submit</button>
           </div>
+      </form>
+    </div>
     );
   }
 }

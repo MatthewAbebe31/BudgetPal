@@ -1,4 +1,25 @@
+.add-purchase-header {
+  margin-bottom: 20px;
+}
+
 .purchase-input-group {
+  position: absolute;
   display: flex;
   flex-flow: column wrap;
+  width: 500px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.purchase-form-button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 500px;
+  margin: 0 auto;
+}
+
+select,
+input {
+  margin-bottom: 20px;
 }

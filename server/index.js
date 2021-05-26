@@ -39,24 +39,21 @@ app.get('/api/purchases', (req, res) => {
     });
 });
 
-let purchaseId = 0;
-
 app.post('/api/purchases', (req, res) => {
-  const id = purchaseId++;
 
-  const { category, description, amount, date } = req.body;
-  if (!category || !description || !amount || !date) {
+  const { category, description, amount } = req.body;
+  if (!category || !description || !amount) {
     res.status(400).json({
       error: 'Please enter required fields'
     });
     return;
   }
   const sql = `
-    insert into "purchases" ("id", "category", "description", "amount", "date")
-    values ($1, $2, $3, $4, $5)
+    insert into "purchases" ("category", "description", "amount")
+    values ($1, $2, $3)
     returning *
   `;
-  const params = [id, category, description, amount, date];
+  const params = [category, description, amount];
   db.query(sql, params)
     .then(result => {
       const [purchase] = result.rows;
