@@ -1,3 +1,8 @@
+/* html,
+body {
+  height: 100%;
+} */
+
 .add-purchase-header {
   margin-bottom: 20px;
 }
@@ -6,7 +11,7 @@
   position: absolute;
   display: flex;
   flex-flow: column wrap;
-  width: 500px;
+  width: 750px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -15,11 +20,25 @@
 .purchase-form-button-container {
   display: flex;
   justify-content: flex-end;
-  width: 500px;
+  width: 750px;
   margin: 0 auto;
 }
 
 select,
 input {
   margin-bottom: 20px;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 805px) {
+  .purchase-input-group {
+    width: 350px;
+  }
+
+  .purchase-form-button-container {
+    width: 350px;
+  }
 }
