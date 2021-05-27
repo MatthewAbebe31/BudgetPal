@@ -28,7 +28,6 @@ export default class App extends React.Component {
   }
 
   addPurchase(newPurchase) {
-    const newDataArr = [];
 
     fetch('/api/purchases', {
       method: 'POST', // or 'PUT'
@@ -39,11 +38,7 @@ export default class App extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.state.purchases.push(data);
-        for (let i = 0; i < this.state.purchases.length; i++) {
-          newDataArr.push(this.state.purchases[i]);
-        }
-        this.setState({ purchases: newDataArr });
+        this.setState({ purchases: data });
       })
       .catch(error => {
         console.error('Error:', error);

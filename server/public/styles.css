@@ -1,17 +1,38 @@
 .navbar {
-  background-color: #85bb65;
-  color: white;
-  width: 100%;
+  background-color: #85bb65 !important;
+}
+
+.navbar-nav {
+  display: flex !important;
+  justify-content: flex-end !important;
 }
 
 a.navbar-brand,
 a.nav-link {
-  color: white;
+  color: white !important;
 }
 
-#navbarNav {
+.row {
   display: flex;
-  justify-content: flex-end;
+}
+
+.col-1 {
+  width: 25%;
+}
+
+.col-2 {
+  width: 75%;
+}
+
+#navbarSupportedContent {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+#purchase-list-header {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .purchase-list-container {
@@ -28,6 +49,10 @@ a.nav-link {
   margin-bottom: 20px;
 }
 
+#purchases-header {
+  text-decoration: underline;
+}
+
 .purchase-input-group {
   position: absolute;
   display: flex;
@@ -42,8 +67,6 @@ a.nav-link {
 .purchase-form-button-container {
   display: flex;
   justify-content: flex-end;
-  width: 750px;
-  margin: 0 auto;
 }
 
 .purchase-list-button-container {
@@ -55,6 +78,17 @@ a.nav-link {
   margin: 0 auto;
 }
 
+#add-new-purchase-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#purchases-edit-delete-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
 select,
 input {
   margin-bottom: 20px;
@@ -64,10 +98,8 @@ input {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 992px) {
-  .navbar {
-    width: 100%;
-  }
+.btn-link {
+  color: black;
 }
 
 @media only screen and (max-width: 805px) {

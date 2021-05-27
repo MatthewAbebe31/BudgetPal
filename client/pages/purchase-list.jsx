@@ -11,30 +11,44 @@ class PurchaseList extends React.Component {
   componentDidMount() {
     fetch('/api/purchases')
       .then(res => res.json())
+      // .then(data => console.log(data))
       .then(data => this.setState({ purchases: data }));
   }
 
   render() {
 
     return (
-    // <div id="purchase-list-header">
-    //   <h2>Purchases</h2>
-    // </div>
+        <div>
+        <div id="purchase-list-header">
+          <h2 id="purchases-header">Purchases</h2>
+        </div>
 
-      this.state.purchases.map(purchase =>
-      <div key={purchase.purchaseId}>
-        <div className="purchase-list-container">
-        <div className="card text-dark bg-info mb-3">
-          <div className="card-header">{purchase.category}</div>
-            <div className="card-body">
-              <h5 className="card-title">{purchase.description}</h5>
-                <p className="card-text">{purchase.amount}</p>
-                <p className="card-text">{purchase.date}</p>
+        {
+
+          this.state.purchases.map(purchase =>
+            <div key={purchase.purchaseId}>
+              <div className="purchase-list-container">
+                <div className="card text-dark bg-info mb-3">
+                  <div className="card-header">{purchase.category}</div>
+                  <div className="card-body">
+                    <h5 className="card-title">{purchase.description}</h5>
+                    <p className="card-text">${purchase.amount}</p>
+                    <p className="card-text">{purchase.date}</p>
+                    <div id="purchases-edit-delete-button-container">
+                      <button type="button" className="btn btn-link">Edit</button>
+                      <button type="button" className="btn btn-link">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
+        <div id="add-new-purchase-button-container">
+          <a href="#addNewPurchases">
+            <button type="button" className="btn btn-success">Add New Purchase</button>
+          </a>
         </div>
-        </div>
-      )
+      </div >
     );
   }
 }
