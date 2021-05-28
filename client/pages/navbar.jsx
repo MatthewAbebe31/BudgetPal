@@ -12,10 +12,14 @@ class Navbar extends React.Component {
               <a className="navbar-brand" href="#">Budget-Pal</a>
             </div>
           </div>
+
           <div className="col-2">
+            <div className="nav-menu-container">
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
+            </div>
+
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav">
                 <li className="nav-item">
