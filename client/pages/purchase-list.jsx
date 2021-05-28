@@ -30,7 +30,7 @@ class PurchaseList extends React.Component {
             return (
               <div key={purchase.purchaseId}>
                 <div className="purchase-list-container">
-                  <div className="card text-dark bg-info mb-3">
+                  <div className="card text-dark bg-light mb-3">
                     <div className="card-header">{purchase.category}</div>
                     <div className="card-body">
                       <h5 className="card-title">{purchase.description}</h5>
