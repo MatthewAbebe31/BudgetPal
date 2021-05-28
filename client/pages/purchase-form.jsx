@@ -39,6 +39,8 @@ class PurchaseForm extends React.Component {
     this.setState({ category: '' });
     this.setState({ description: '' });
     this.setState({ amount: '' });
+
+    window.location.hash = '#purchases';
   }
 
   render() {
@@ -51,27 +53,27 @@ class PurchaseForm extends React.Component {
         <form className="purchase-input-group" onSubmit={this.handleSubmit}>
           <h2 className="add-purchase-header">Add a Purchase.</h2>
 
-            <label>Enter Category</label>
-              <select className="form-select" aria-label="Default select example" required value={categoryValue} onChange={this.handleCategoryInputChange}>
-                <option value="" disabled hidden>Select an option</option>
-                <option value="Groceries">Groceries</option>
-                <option value="Rent">Rent</option>
-                <option value="Car">Car</option>
-            </select>
+          <label>Enter Category</label>
+          <select className="form-select" aria-label="Default select example" required value={categoryValue} onChange={this.handleCategoryInputChange}>
+            <option value="" disabled hidden>Select an option</option>
+            <option value="Groceries">Groceries</option>
+            <option value="Rent">Rent</option>
+            <option value="Car">Car</option>
+          </select>
 
-        <label>Enter Description</label>
+          <label>Enter Description</label>
           <input
-          required
-          autoFocus
-          type="text"
-          value={purchaseDescriptionValue}
-          htmlFor="purchaseDescriptionInput"
-          className="form-control"
-          id="purchaseDescriptionInput"
-          placeholder="Description"
-          onChange={this.handleDescriptionInputChange} />
+            required
+            autoFocus
+            type="text"
+            value={purchaseDescriptionValue}
+            htmlFor="purchaseDescriptionInput"
+            className="form-control"
+            id="purchaseDescriptionInput"
+            placeholder="Description"
+            onChange={this.handleDescriptionInputChange} />
 
-        <label>Enter Amount</label>
+          <label>Enter Amount</label>
           <input
             required
             autoFocus
@@ -83,11 +85,13 @@ class PurchaseForm extends React.Component {
             placeholder="$0.00"
             onChange={this.handleAmountInputChange} />
 
-        <div className="purchase-form-button-container">
-          <button type="submit" className="btn btn-primary btn-sm">Submit</button>
+          <div className="purchase-form-button-container">
+            <button type="submit" className="btn btn-primary btn-sm">Submit</button>
           </div>
-      </form>
-    </div>
+
+        </form>
+
+      </div>
     );
   }
 }

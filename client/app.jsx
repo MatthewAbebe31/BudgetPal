@@ -1,16 +1,24 @@
 import React from 'react';
+import Navbar from './pages/navbar';
+import PurchaseList from './pages/purchase-list';
 import PurchaseForm from './pages/purchase-form';
+import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchases: []
+      purchases: [],
+      route: parseRoute(window.location.hash)
     };
     this.addPurchase = this.addPurchase.bind(this);
   }
 
   componentDidMount() {
+    window.addEventListener('hashchange', () => {
+      const route = parseRoute(window.location.hash);
+      this.setState({ route });
+    });
     this.getAllPurchases();
   }
 
@@ -21,7 +29,6 @@ export default class App extends React.Component {
   }
 
   addPurchase(newPurchase) {
-    const newDataArr = [];
 
     fetch('/api/purchases', {
       method: 'POST', // or 'PUT'
@@ -32,26 +39,29 @@ export default class App extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.state.purchases.push(data);
-        for (let i = 0; i < this.state.purchases.length; i++) {
-          newDataArr.push(this.state.purchases[i]);
-        }
-        this.setState({ purchases: newDataArr });
+        this.setState({ purchases: data });
       })
       .catch(error => {
         console.error('Error:', error);
       });
   }
 
+  renderPage() {
+    const { route } = this.state;
+    if (route.path === 'purchases') {
+      return <PurchaseList />;
+    }
+    if (route.path === 'addNewPurchases') {
+      return <PurchaseForm onSubmit={this.addPurchase} />;
+    }
+  }
+
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col pt-5">
-            <PurchaseForm onSubmit={this.addPurchase} />
-          </div>
-        </div>
-      </div>
+      <>
+        <Navbar />
+        { this.renderPage()}
+      </>
     );
   }
 }

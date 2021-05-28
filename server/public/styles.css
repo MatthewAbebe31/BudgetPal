@@ -1,5 +1,76 @@
+.navbar {
+  background-color: #85bb65 !important;
+  width: 100%;
+}
+
+a.navbar-brand,
+a.nav-link,
+a.hamburger-nav-link {
+  color: white !important;
+}
+
+a.hamburger-nav-link {
+  margin-top: 20px;
+}
+
+.hamburger-menu-nav {
+  position: absolute;
+  background-color: #85bb65 !important;
+  top: 55px;
+  right: 15px;
+  width: 125px;
+}
+
+ul {
+  list-style: none;
+}
+
+.row {
+  display: flex;
+}
+
+.col-1 {
+  width: 25%;
+}
+
+.col-2 {
+  width: 75%;
+}
+
+#navbarSupportedContent {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+.nav-menu-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+#purchase-list-header {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.purchase-list-container {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 50%;
+  margin-top: 20px;
+}
+
 .add-purchase-header {
   margin-bottom: 20px;
+}
+
+#purchases-header {
+  text-decoration: underline;
 }
 
 .purchase-input-group {
@@ -11,14 +82,31 @@
   left: 0;
   right: 0;
   top: 25%;
-  text-align: center;
 }
 
 .purchase-form-button-container {
   display: flex;
   justify-content: flex-end;
+}
+
+.purchase-list-button-container {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 20%;
   width: 750px;
   margin: 0 auto;
+}
+
+#add-new-purchase-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#purchases-edit-delete-button-container {
+  display: flex;
+  justify-content: flex-end;
 }
 
 select,
@@ -30,6 +118,10 @@ input {
   cursor: pointer;
 }
 
+.btn-link {
+  color: black;
+}
+
 @media only screen and (max-width: 805px) {
   .purchase-input-group {
     width: 75%;
@@ -38,4 +130,20 @@ input {
   .purchase-form-button-container {
     width: 75%;
   }
+}
+
+@media only screen and (max-width: 992px) {
+  .navbar-nav {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .card {
+    width: 75%;
+  }
+}
+
+.hidden {
+  display: none;
 }
