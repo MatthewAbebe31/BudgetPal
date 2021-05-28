@@ -12,7 +12,7 @@ create table "purchases" (
   "category"        text    not null,
   "description"     text    not null,
   "amount"          numeric  not null,
-  "date"   timestamptz(6)   not null default now(),
+  "date"            DATE NOT NULL DEFAULT CURRENT_DATE,
   primary key ("purchaseId")
 );
 

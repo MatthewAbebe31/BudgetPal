@@ -8,6 +8,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      purchases: [],
       route: parseRoute(window.location.hash)
     };
     this.addPurchase = this.addPurchase.bind(this);
