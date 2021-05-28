@@ -3,11 +3,6 @@
   width: 100%;
 }
 
-/* .navbar-nav {
-  display: flex !important;
-  justify-content: flex-end !important;
-} */
-
 a.navbar-brand,
 a.nav-link,
 a.hamburger-nav-link {
@@ -28,12 +23,10 @@ a.hamburger-nav-link {
 
 ul {
   list-style: none;
-  text-align: center;
 }
 
 .row {
   display: flex;
-  flex-flow: row nowrap;
 }
 
 .col-1 {
@@ -142,6 +135,12 @@ input {
 @media only screen and (max-width: 992px) {
   .navbar-nav {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .card {
+    width: 75%;
   }
 }
 

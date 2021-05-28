@@ -1,5 +1,5 @@
 import React from 'react';
-import { parseISO, format } from 'date-fns';
+import { format } from 'date-fns';
 
 class PurchaseList extends React.Component {
   constructor(props) {
@@ -12,7 +12,6 @@ class PurchaseList extends React.Component {
   componentDidMount() {
     fetch('/api/purchases')
       .then(res => res.json())
-      // .then(data => data.slice().sort((data[0], data[data.length - 1]) => data[0] - data[data.length - 1]))
       .then(data => this.setState({ purchases: data }));
   }
 
@@ -29,25 +28,25 @@ class PurchaseList extends React.Component {
             const date = purchase.date;
             const dateFormatted = format(new Date(date), 'MM/dd/yyyy');
             return (
-            <div key={purchase.purchaseId}>
-              <div className="purchase-list-container">
-                <div className="card text-dark bg-info mb-3">
-                  <div className="card-header">{purchase.category}</div>
-                  <div className="card-body">
-                    <h5 className="card-title">{purchase.description}</h5>
-                    <p className="card-text">${purchase.amount}</p>
-                    <p className="card-text">{dateFormatted}</p>
-                    <div id="purchases-edit-delete-button-container">
-                      <button type="button" className="btn btn-link">Edit</button>
-                      <button type="button" className="btn btn-link">Delete</button>
+              <div key={purchase.purchaseId}>
+                <div className="purchase-list-container">
+                  <div className="card text-dark bg-info mb-3">
+                    <div className="card-header">{purchase.category}</div>
+                    <div className="card-body">
+                      <h5 className="card-title">{purchase.description}</h5>
+                      <p className="card-text">${purchase.amount}</p>
+                      <p className="card-text">{dateFormatted}</p>
+                      <div id="purchases-edit-delete-button-container">
+                        <button type="button" className="btn btn-link">Edit</button>
+                        <button type="button" className="btn btn-link">Delete</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
             );
           })
-          }
+        }
         <div id="add-new-purchase-button-container">
           <a href="#addNewPurchases">
             <button type="button" className="btn btn-success">Add New Purchase</button>

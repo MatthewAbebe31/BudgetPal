@@ -15,5 +15,3 @@ create table "purchases" (
   "date"            DATE NOT NULL DEFAULT CURRENT_DATE,
   primary key ("purchaseId")
 );
-
---Convert amount to pennies before storing.

@@ -52,7 +52,7 @@ export default class App extends React.Component {
       return <PurchaseList />;
     }
     if (route.path === 'addNewPurchases') {
-      return <PurchaseForm onSubmit={this.addPurchase}/>;
+      return <PurchaseForm onSubmit={this.addPurchase} />;
     }
   }
 
@@ -60,8 +60,8 @@ export default class App extends React.Component {
     return (
       <>
         <Navbar />
-        { this.renderPage() }
-       </>
+        { this.renderPage()}
+      </>
     );
   }
 }

@@ -86,7 +86,7 @@ class PurchaseForm extends React.Component {
             onChange={this.handleAmountInputChange} />
 
           <div className="purchase-form-button-container">
-              <button type="submit" className="btn btn-primary btn-sm">Submit</button>
+            <button type="submit" className="btn btn-primary btn-sm">Submit</button>
           </div>
 
         </form>
