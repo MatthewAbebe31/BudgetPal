@@ -1,5 +1,6 @@
 .navbar {
   background-color: #85bb65 !important;
+  width: 100%;
 }
 
 /* .navbar-nav {
@@ -8,8 +9,26 @@
 } */
 
 a.navbar-brand,
-a.nav-link {
+a.nav-link,
+a.hamburger-nav-link {
   color: white !important;
+}
+
+a.hamburger-nav-link {
+  margin-top: 20px;
+}
+
+.hamburger-menu-nav {
+  position: absolute;
+  background-color: #85bb65 !important;
+  top: 55px;
+  right: 15px;
+  width: 125px;
+}
+
+ul {
+  list-style: none;
+  text-align: center;
 }
 
 .row {

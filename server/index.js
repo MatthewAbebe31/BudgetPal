@@ -25,7 +25,7 @@ app.get('/api/purchases', (req, res) => {
   const sql = `
     select *
       from "purchases"
-     order by "purchaseId"
+     order by "date" desc
   `;
   db.query(sql)
     .then(result => {

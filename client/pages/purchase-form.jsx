@@ -39,6 +39,8 @@ class PurchaseForm extends React.Component {
     this.setState({ category: '' });
     this.setState({ description: '' });
     this.setState({ amount: '' });
+
+    window.location.hash = '#purchases';
   }
 
   render() {
@@ -84,9 +86,7 @@ class PurchaseForm extends React.Component {
             onChange={this.handleAmountInputChange} />
 
           <div className="purchase-form-button-container">
-            <a href="#purchases">
               <button type="submit" className="btn btn-primary btn-sm">Submit</button>
-            </a>
           </div>
 
         </form>

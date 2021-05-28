@@ -12,6 +12,7 @@ class PurchaseList extends React.Component {
   componentDidMount() {
     fetch('/api/purchases')
       .then(res => res.json())
+      // .then(data => data.slice().sort((data[0], data[data.length - 1]) => data[0] - data[data.length - 1]))
       .then(data => this.setState({ purchases: data }));
   }
 
