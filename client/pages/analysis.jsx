@@ -54,20 +54,28 @@ class Analysis extends React.Component {
             }
           }
         ]
-      }
+      },
+      responsive: true,
+      maintainAspectRatio: true
     };
     return (
- <>
- <div className="row">
-   <div className="col-half">
-     <div id="spending-by-time-chart-container">
-        <div className='spending-by-time-header'>
-          <h3 className='chart-title'>Spending by Time</h3>
+      <>
+        <div className="row">
+          <div className="col-half">
+
+            <div id="spending-by-time-chart-container">
+
+              <div className='spending-by-time-header'>
+                <h3 className='chart-title'>Spending by Time</h3>
+              </div>
+
+              <div>
+                <Line data={data} options={options} />
+              </div>
+            </div>
+          </div>
+
         </div>
-        <Line data={data} options={options} />
-        </div>
-   </div>
- </div>
       </>
     );
   }

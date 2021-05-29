@@ -133,15 +133,17 @@ canvas {
   flex-flow: column wrap;
   justify-content: center;
   text-align: center;
-  height: 400px;
-  width: 400px;
+  width: 100%;
   margin-left: 20px;
 }
 
 .spending-by-time-header {
-  display: flex;
-  justify-content: center;
   margin-top: 20px;
+}
+
+#spending-by-time-chart-container {
+  width: 100%;
+  text-align: center;
 }
 
 @media only screen and (max-width: 805px) {
@@ -178,6 +180,8 @@ canvas {
 
   canvas {
     width: 50%;
+    position: relative;
+    transform: translateY(0%) !important;
   }
 }
 
