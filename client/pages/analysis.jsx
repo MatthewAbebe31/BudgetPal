@@ -36,11 +36,11 @@ class Analysis extends React.Component {
       labels: this.state.labels.reverse(),
       datasets: [
         {
-          label: 'Spending by Time',
+          label: 'Spending',
           data: this.state.chartData,
           fill: false,
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgba(255, 99, 132, 0.2)'
+          backgroundColor: 'rgba(30, 139, 195, 1)',
+          borderColor: 'rgba(30, 139, 195, 1)'
         }
       ]
     };
@@ -50,6 +50,9 @@ class Analysis extends React.Component {
         yAxes: [
           {
             ticks: {
+              callback: function (value, index, values) {
+                return '$' + value;
+              },
               beginAtZero: true
             }
           }
@@ -66,7 +69,7 @@ class Analysis extends React.Component {
             <div id="spending-by-time-chart-container">
 
               <div className='spending-by-time-header'>
-                <h3 className='chart-title'>Spending by Time</h3>
+                <h4 className='chart-title'>Spending by Time</h4>
               </div>
 
               <div>

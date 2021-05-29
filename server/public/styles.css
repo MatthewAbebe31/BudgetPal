@@ -142,7 +142,7 @@ canvas {
 }
 
 #spending-by-time-chart-container {
-  width: 100%;
+  width: 75%;
   text-align: center;
 }
 
@@ -182,6 +182,10 @@ canvas {
     width: 50%;
     position: relative;
     transform: translateY(0%) !important;
+  }
+
+  #spending-by-time-chart-container {
+    width: 75%;
   }
 }
 
