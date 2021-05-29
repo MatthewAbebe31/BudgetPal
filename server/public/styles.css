@@ -128,7 +128,7 @@ input {
   color: black;
 }
 
-div#spending-by-time-chart-container {
+canvas {
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
@@ -138,10 +138,11 @@ div#spending-by-time-chart-container {
   margin-left: 20px;
 }
 
-/* .spending-by-time-header {
+.spending-by-time-header {
   display: flex;
   justify-content: center;
-} */
+  margin-top: 20px;
+}
 
 @media only screen and (max-width: 805px) {
   .purchase-input-group {
@@ -166,7 +167,16 @@ div#spending-by-time-chart-container {
 }
 
 @media only screen and (max-width: 992px) {
-  div#spending-by-time-chart-container {
+  .col-half {
+    width: 100%;
+  }
+
+  .chart-title {
+    font-size: small;
+    text-align: center;
+  }
+
+  canvas {
     width: 250px;
   }
 }
