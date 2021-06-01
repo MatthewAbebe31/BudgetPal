@@ -12,6 +12,7 @@ class Analysis extends React.Component {
   }
 
   componentDidMount() {
+
     fetch('/api/purchases/amount')
       .then(res => res.json())
       .then(data => {
@@ -22,8 +23,9 @@ class Analysis extends React.Component {
         for (let i = 0; i < data.length; i++) {
           const dates = data[i].date;
           const formattedDates = format(new Date(dates), 'MM/dd/yyyy');
+          const amounts = data[i].amount;
           labels.push(formattedDates);
-          chartData.push(data[i].amount);
+          chartData.push(amounts);
         }
         this.setState({ labels: labels });
         this.setState({ chartData: chartData });
@@ -47,20 +49,18 @@ class Analysis extends React.Component {
 
     const options = {
       scales: {
-        yAxes: [
-          {
-            ticks: {
-              callback: function (value, index, values) {
-                return '$' + value;
-              },
-              beginAtZero: true
-            }
+        yAxes: {
+          axis: 'y',
+          ticks: {
+            callback: function (value, index, values) {
+              return '$' + value;
+            },
+            beginAtZero: true
           }
-        ]
-      },
-      responsive: true,
-      maintainAspectRatio: true
+        }
+      }
     };
+
     return (
       <>
         <div className="row">
@@ -77,9 +77,9 @@ class Analysis extends React.Component {
               </div>
             </div>
           </div>
-
         </div>
       </>
+
     );
   }
 }

@@ -138,12 +138,23 @@ canvas {
 }
 
 .spending-by-time-header {
-  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.purhcases-by-time-header {
+  margin-bottom: 20px;
 }
 
 #spending-by-time-chart-container {
   width: 75%;
   text-align: center;
+  margin-top: 50px;
+}
+
+#purchases-by-time-chart-container {
+  width: 75%;
+  text-align: center;
+  margin-top: 50px;
 }
 
 @media only screen and (max-width: 805px) {
@@ -185,6 +196,10 @@ canvas {
   }
 
   #spending-by-time-chart-container {
+    width: 75%;
+  }
+
+  #purchases-by-time-chart-container {
     width: 75%;
   }
 }
