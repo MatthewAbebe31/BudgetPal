@@ -1,5 +1,5 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 import { format } from 'date-fns';
 
 class Analysis extends React.Component {
@@ -7,7 +7,9 @@ class Analysis extends React.Component {
     super(props);
     this.state = {
       labels: [],
-      chartData: []
+      chartData: [],
+      purchasesByDayLabels: [],
+      purchasesByDayChartData: []
     };
   }
 
@@ -29,6 +31,24 @@ class Analysis extends React.Component {
         }
         this.setState({ labels: labels });
         this.setState({ chartData: chartData });
+      });
+
+    fetch('/api/purchases/countPurchases')
+      .then(res => res.json())
+      .then(data => {
+
+        const purchasesByDayLabels = [];
+        const purchasesByDayChartData = [];
+
+        for (let j = 0; j < data.length; j++) {
+          const dates = data[j].date;
+          const formattedDates = format(new Date(dates), 'MM/dd/yyyy');
+          const purchases = data[j].count;
+          purchasesByDayLabels.push(formattedDates);
+          purchasesByDayChartData.push(purchases);
+        }
+        this.setState({ purchasesByDayLabels: purchasesByDayLabels });
+        this.setState({ purchasesByDayChartData: purchasesByDayChartData });
       });
   }
 
@@ -61,6 +81,47 @@ class Analysis extends React.Component {
       }
     };
 
+    const purchasesByDayData = {
+      labels: this.state.purchasesByDayLabels.reverse(),
+      datasets: [
+        {
+          label: 'Purchases',
+          data: this.state.purchasesByDayChartData,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }
+      ]
+    };
+
+    const purchasesByDayOptions = {
+      scales: {
+        yAxes: {
+          axis: 'y',
+
+          ticks: {
+            beginAtZero: true,
+            callback: function (value) { if (Number.isInteger(value)) { return value; } },
+            stepSize: 1
+          }
+        }
+      }
+    };
+
     return (
       <>
         <div className="row">
@@ -74,6 +135,24 @@ class Analysis extends React.Component {
 
               <div>
                 <Line data={data} options={options} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="row">
+            <div className="col-half">
+
+              <div id="purchases-by-time-chart-container">
+
+                <div className='purchases-by-time-header'>
+                  <h4 className='chart-title'>Purchases by Time</h4>
+                </div>
+
+                <div>
+                  <Bar data={purchasesByDayData} options={purchasesByDayOptions} />
+                </div>
               </div>
             </div>
           </div>

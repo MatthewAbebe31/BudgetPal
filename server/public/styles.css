@@ -190,9 +190,10 @@ canvas {
   }
 
   canvas {
-    width: 50%;
+    width: 35%;
     position: relative;
     transform: translateY(0%) !important;
+    border: 2px solid black;
   }
 
   #spending-by-time-chart-container {
