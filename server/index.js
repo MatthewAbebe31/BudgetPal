@@ -39,6 +39,44 @@ app.get('/api/purchases', (req, res) => {
     });
 });
 
+app.get('/api/purchases/countPurchases', (req, res) => {
+  const sql = `
+    select count("purchaseId"), "date"
+      from "purchases"
+     group by "date"
+     order by "date" desc
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.get('/api/purchases/amount', (req, res) => {
+  const sql = `
+    select "date", sum("amount") as amount
+      from "purchases"
+     group by "date"
+     order by "date" desc
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.post('/api/purchases', (req, res) => {
 
   const { category, description, amount } = req.body;

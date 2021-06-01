@@ -34,7 +34,7 @@ class Navbar extends React.Component {
               <a className="hamburger-nav-link" href="#purchases">Purchases</a>
             </li>
             <li className="hamburger-nav-item">
-              <a className="hamburger-nav-link" href="#">Analysis</a>
+              <a className="hamburger-nav-link" href="#analysis">Analysis</a>
             </li>
             <li className="hamburger-nav-item">
               <a className="hamburger-nav-link" href="#">Alerts</a>
@@ -80,7 +80,7 @@ class Navbar extends React.Component {
                   <a className="nav-link" aria-current="page" href="#purchases">Purchases</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">Analysis</a>
+                  <a className="nav-link active" aria-current="page" href="#analysis">Analysis</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link active" aria-current="page" href="#">Alerts</a>

@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './pages/navbar';
 import PurchaseList from './pages/purchase-list';
 import PurchaseForm from './pages/purchase-form';
+import Analysis from './pages/analysis';
 import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
@@ -53,6 +54,9 @@ export default class App extends React.Component {
     }
     if (route.path === 'addNewPurchases') {
       return <PurchaseForm onSubmit={this.addPurchase} />;
+    }
+    if (route.path === 'analysis') {
+      return <Analysis />;
     }
   }
 
