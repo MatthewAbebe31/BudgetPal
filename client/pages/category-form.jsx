@@ -33,7 +33,6 @@ class CategoryForm extends React.Component {
     this.setState({ categoryAmount: '' });
 
     window.location.hash = '#categories';
-    console.log(newCategory);
   }
 
   render() {

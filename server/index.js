@@ -125,7 +125,6 @@ app.post('/api/purchases', (req, res) => {
 
 app.post('/api/categories', (req, res) => {
 
-  console.log(req.body);
   const { categoryName, categoryAmount } = req.body;
   if (!categoryName || !categoryAmount) {
     res.status(400).json({
