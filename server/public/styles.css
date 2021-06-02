@@ -75,6 +75,10 @@ ul {
   margin-bottom: 20px;
 }
 
+.add-category-header {
+  margin-bottom: 20px;
+}
+
 #purchases-header {
   text-decoration: underline;
 }
@@ -90,7 +94,23 @@ ul {
   top: 25%;
 }
 
+.category-input-group {
+  position: absolute;
+  display: flex;
+  flex-flow: column wrap;
+  width: 50%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 25%;
+}
+
 .purchase-form-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.category-form-button-container {
   display: flex;
   justify-content: flex-end;
 }
@@ -105,6 +125,12 @@ ul {
 }
 
 #add-new-purchase-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#add-new-category-button-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
@@ -155,6 +181,16 @@ canvas {
   width: 75%;
   text-align: center;
   margin-top: 50px;
+}
+
+@media only screen and (max-width: 805px) {
+  .category-input-group {
+    width: 75%;
+  }
+
+  .category-form-button-container {
+    width: 75%;
+  }
 }
 
 @media only screen and (max-width: 805px) {

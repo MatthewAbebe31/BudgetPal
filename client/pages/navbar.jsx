@@ -28,7 +28,7 @@ class Navbar extends React.Component {
         <div className="hamburger-menu-nav">
           <ul>
             <li className="hamburger-nav-item">
-              <a className="hamburger-nav-link" href="#">Budget</a>
+              <a className="hamburger-nav-link" href="#categories">Categories</a>
             </li>
             <li className="hamburger-nav-item">
               <a className="hamburger-nav-link" href="#purchases">Purchases</a>
@@ -74,7 +74,7 @@ class Navbar extends React.Component {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">Budget</a>
+                  <a className="nav-link active" aria-current="page" href="#categories">Categories</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" aria-current="page" href="#purchases">Purchases</a>

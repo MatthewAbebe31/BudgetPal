@@ -15,3 +15,9 @@ create table "purchases" (
   "date"            DATE NOT NULL DEFAULT CURRENT_DATE,
   primary key ("purchaseId")
 );
+
+create table "categories" (
+  "categoryId"       serial,
+  "categoryName"     text     not null,
+  "categoryAmount"   numeric  not null
+)

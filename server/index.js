@@ -77,6 +77,24 @@ app.get('/api/purchases/amount', (req, res) => {
     });
 });
 
+app.get('/api/categories', (req, res) => {
+  const sql = `
+    select *
+      from "categories"
+     order by "categoryId" desc
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.post('/api/purchases', (req, res) => {
 
   const { category, description, amount } = req.body;
@@ -96,6 +114,35 @@ app.post('/api/purchases', (req, res) => {
     .then(result => {
       const [purchase] = result.rows;
       res.status(201).json(purchase);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.post('/api/categories', (req, res) => {
+
+  console.log(req.body);
+  const { categoryName, categoryAmount } = req.body;
+  if (!categoryName || !categoryAmount) {
+    res.status(400).json({
+      error: 'Please enter required fields'
+    });
+    return;
+  }
+  const sql = `
+    insert into "categories" ("categoryName", "categoryAmount")
+    values ($1, $2)
+    returning *
+  `;
+  const params = [categoryName, categoryAmount];
+  db.query(sql, params)
+    .then(result => {
+      const [category] = result.rows;
+      res.status(201).json(category);
     })
     .catch(err => {
       console.error(err);
