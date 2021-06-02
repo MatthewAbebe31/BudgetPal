@@ -7,12 +7,24 @@ class PurchaseForm extends React.Component {
       purchaseId: '',
       category: '',
       description: '',
-      amount: ''
+      amount: '',
+      selectCategory: []
     };
     this.handleDescriptionInputChange = this.handleDescriptionInputChange.bind(this);
     this.handleAmountInputChange = this.handleAmountInputChange.bind(this);
     this.handleCategoryInputChange = this.handleCategoryInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.getAllCategories = this.getAllCategories.bind(this);
+  }
+
+  componentDidMount() {
+    this.getAllCategories();
+  }
+
+  getAllCategories() {
+    fetch('/api/categories')
+      .then(response => response.json())
+      .then(data => this.setState({ selectCategory: data }));
   }
 
   handleCategoryInputChange(event) {
@@ -47,6 +59,9 @@ class PurchaseForm extends React.Component {
     const categoryValue = this.state.category;
     const purchaseDescriptionValue = this.state.description;
     const amountValue = this.state.amount;
+    const optionTemplate = this.state.selectCategory.map((v, key) => (
+      <option key={key} value={v.id}>{v.categoryName}</option>
+    ));
 
     return (
       <div>
@@ -56,9 +71,10 @@ class PurchaseForm extends React.Component {
           <label>Enter Category</label>
           <select className="form-select" aria-label="Default select example" required value={categoryValue} onChange={this.handleCategoryInputChange}>
             <option value="" disabled hidden>Select an option</option>
-            <option value="Groceries">Groceries</option>
+            {/* <option value="Groceries">Groceries</option>
             <option value="Rent">Rent</option>
-            <option value="Car">Car</option>
+            <option value="Car">Car</option> */}
+            {optionTemplate}
           </select>
 
           <label>Enter Description</label>
