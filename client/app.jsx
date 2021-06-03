@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from './pages/navbar';
+import CategoryForm from './pages/category-form';
 import PurchaseList from './pages/purchase-list';
 import PurchaseForm from './pages/purchase-form';
 import Analysis from './pages/analysis';
@@ -10,9 +11,11 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       purchases: [],
+      categories: [],
       route: parseRoute(window.location.hash)
     };
     this.addPurchase = this.addPurchase.bind(this);
+    this.addCategory = this.addCategory.bind(this);
   }
 
   componentDidMount() {
@@ -21,12 +24,19 @@ export default class App extends React.Component {
       this.setState({ route });
     });
     this.getAllPurchases();
+    this.getAllCategories();
   }
 
   getAllPurchases() {
     fetch('/api/purchases')
       .then(response => response.json())
       .then(data => this.setState({ purchases: data }));
+  }
+
+  getAllCategories() {
+    fetch('/api/categories')
+      .then(response => response.json())
+      .then(data => this.setState({ categories: data }));
   }
 
   addPurchase(newPurchase) {
@@ -47,8 +57,29 @@ export default class App extends React.Component {
       });
   }
 
+  addCategory(newCategory) {
+
+    fetch('/api/categories', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newCategory)
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ categories: data });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
   renderPage() {
     const { route } = this.state;
+    if (route.path === 'categories') {
+      return <CategoryForm onSubmit={this.addCategory}/>;
+    }
     if (route.path === 'purchases') {
       return <PurchaseList />;
     }

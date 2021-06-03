@@ -26,21 +26,21 @@ class Navbar extends React.Component {
     if (this.state.isClicked) {
       return (
         <div className="hamburger-menu-nav">
-          <ul>
-            <li className="hamburger-nav-item">
-              <a className="hamburger-nav-link" href="#">Budget</a>
+          <ul className="ps-2 text-start">
+            <li className="mt-2 hamburger-nav-item">
+              <a className="text-white" href="#categories">Categories</a>
             </li>
-            <li className="hamburger-nav-item">
-              <a className="hamburger-nav-link" href="#purchases">Purchases</a>
+            <li className="mt-2 hamburger-nav-item">
+              <a className="text-white" href="#purchases">Purchases</a>
             </li>
-            <li className="hamburger-nav-item">
-              <a className="hamburger-nav-link" href="#analysis">Analysis</a>
+            <li className="mt-2 hamburger-nav-item">
+              <a className="text-white" href="#analysis">Analysis</a>
             </li>
-            <li className="hamburger-nav-item">
-              <a className="hamburger-nav-link" href="#">Alerts</a>
+            <li className="mt-2 hamburger-nav-item">
+              <a className="text-white" href="#">Alerts</a>
             </li>
-            <li className="hamburger-nav-item">
-              <a className="hamburger-nav-link" href="#">Notes</a>
+            <li className="mt-2 hamburger-nav-item">
+              <a className="text-white" href="#">Notes</a>
             </li>
           </ul>
         </div>
@@ -54,14 +54,14 @@ class Navbar extends React.Component {
       <div className="row">
 
         <nav className="navbar navbar-expand-lg navbar-light">
-          <div className="col-1">
+          <div className="col">
             <div className="container-fluid">
-              <a className="navbar-brand" href="#">Budget-Pal</a>
+              <a className="navbar-brand text-white" href="#">Budget-Pal</a>
             </div>
           </div>
 
-          <div className="col-2">
-            <div className="nav-menu-container">
+          <div className="col">
+            <div className="d-flex justify-content-end me-3">
 
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span onClick={this.handleClick} className="navbar-toggler-icon"></span>
@@ -71,22 +71,22 @@ class Navbar extends React.Component {
               </button>
             </div>
 
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <div className="collapse navbar-collapse d-flex justify-content-end me-3">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">Budget</a>
+                  <a className="text-white nav-link active" aria-current="page" href="#categories">Categories</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#purchases">Purchases</a>
+                  <a className="text-white nav-link" aria-current="page" href="#purchases">Purchases</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#analysis">Analysis</a>
+                  <a className="text-white nav-link active" aria-current="page" href="#analysis">Analysis</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">Alerts</a>
+                  <a className="text-white nav-link active" aria-current="page" href="#">Alerts</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">Notes</a>
+                  <a className="text-white nav-link active" aria-current="page" href="#">Notes</a>
                 </li>
               </ul>
             </div>
