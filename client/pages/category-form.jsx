@@ -40,40 +40,43 @@ class CategoryForm extends React.Component {
     const categoryAmount = this.state.categoryAmount;
 
     return (
-      <div>
-        <form className="category-input-group" onSubmit={this.handleSubmit}>
-          <h2 className="add-category-header">Add a Category.</h2>
+      <div className="row">
+        <div className="col">
+          <div className="category-form-container pt-5">
+            <form className="category-form-group" onSubmit={this.handleSubmit}>
+              <h2 className="add-category-header">Add a Category.</h2>
 
-          <label>Enter Name</label>
-          <input
-            required
-            autoFocus
-            type="text"
-            value={categoryName}
-            htmlFor="categoryNameInput"
-            className="form-control"
-            id="categoryNameInput"
-            placeholder="Category Name"
-            onChange={this.handleCategoryNameInputChange} />
+              <label>Enter Name</label>
+              <input
+                required
+                autoFocus
+                type="text"
+                value={categoryName}
+                htmlFor="categoryNameInput"
+                className="form-control"
+                id="categoryNameInput"
+                placeholder="Category Name"
+                onChange={this.handleCategoryNameInputChange} />
 
-          <label>Enter Amount</label>
-          <input
-            required
-            autoFocus
-            type="text"
-            value={categoryAmount}
-            htmlFor="categoryAmountInput"
-            className="form-control"
-            id="categoryAmountInput"
-            placeholder="$0.00"
-            onChange={this.handleCategoryAmountInputChange} />
+              <label>Enter Amount</label>
+              <input
+                required
+                autoFocus
+                type="text"
+                value={categoryAmount}
+                htmlFor="categoryAmountInput"
+                className="form-control"
+                id="categoryAmountInput"
+                placeholder="$0.00"
+                onChange={this.handleCategoryAmountInputChange} />
 
-          <div className="category-form-button-container">
-            <button type="submit" className="btn btn-primary btn-sm">Submit</button>
+              <div className="category-form-button-container d-flex justify-content-end w-100">
+                <button type="submit" className="btn btn-primary btn-sm">Submit</button>
+              </div>
+
+            </form>
           </div>
-
-        </form>
-
+        </div>
       </div>
     );
   }

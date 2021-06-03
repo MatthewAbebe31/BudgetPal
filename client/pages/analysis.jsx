@@ -125,12 +125,12 @@ class Analysis extends React.Component {
     return (
       <>
         <div className="row">
-          <div className="col-half">
+          <div className="col-md-6">
 
-            <div id="spending-by-time-chart-container">
+            <div className="spending-by-time-chart-container mt-3 text-center w-75">
 
-              <div className='spending-by-time-header'>
-                <h4 className='chart-title'>Spending by Time</h4>
+              <div className='spending-by-time-header mb-3'>
+                <h4 className='chart-title text-center fs-5'>Spending by Time</h4>
               </div>
 
               <div>
@@ -142,11 +142,11 @@ class Analysis extends React.Component {
 
         <div>
           <div className="row">
-            <div className="col-half">
+            <div className="col-md-6">
 
-              <div id="purchases-by-time-chart-container">
+              <div className="purchases-by-time-chart-container mt-3 text-center w-75">
 
-                <div className='purchases-by-time-header'>
+                <div className='purchases-by-time-header mb-3'>
                   <h4 className='chart-title'>Purchases by Time</h4>
                 </div>
 
