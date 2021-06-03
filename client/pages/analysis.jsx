@@ -125,7 +125,7 @@ class Analysis extends React.Component {
     return (
       <>
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
 
             <div className="spending-by-time-chart-container mt-3 text-center w-75">
 
@@ -142,7 +142,7 @@ class Analysis extends React.Component {
 
         <div>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
 
               <div className="purchases-by-time-chart-container mt-3 text-center w-75">
 
