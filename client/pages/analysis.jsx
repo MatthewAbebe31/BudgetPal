@@ -187,7 +187,7 @@ class Analysis extends React.Component {
                 <h4 className='chart-title text-center fs-5'>Spending by Category</h4>
               </div>
               <div>
-                <Pie data={spendingByCategoryData} options={spendingByCategoryOptions}/>
+                <Pie data={spendingByCategoryData} options={spendingByCategoryOptions} />
               </div>
             </div>
           </div>
