@@ -1,5 +1,5 @@
 import React from 'react';
-import { Line, Bar } from 'react-chartjs-2';
+import { Line, Bar, Pie } from 'react-chartjs-2';
 import { format } from 'date-fns';
 
 class Analysis extends React.Component {
@@ -9,7 +9,9 @@ class Analysis extends React.Component {
       labels: [],
       chartData: [],
       purchasesByDayLabels: [],
-      purchasesByDayChartData: []
+      purchasesByDayChartData: [],
+      spendingByCategoryLabels: [],
+      spendingByCategoryChartData: []
     };
   }
 
@@ -31,6 +33,23 @@ class Analysis extends React.Component {
         }
         this.setState({ labels: labels });
         this.setState({ chartData: chartData });
+      });
+
+    fetch('/api/purchases/categorySpending')
+      .then(res => res.json())
+      .then(data => {
+
+        const spendingByCategoryLabels = [];
+        const spendingByCategoryChartData = [];
+
+        for (let i = 0; i < data.length; i++) {
+          const labels = data[i].category;
+          const amounts = data[i].amount;
+          spendingByCategoryLabels.push(labels);
+          spendingByCategoryChartData.push(amounts);
+        }
+        this.setState({ spendingByCategoryLabels: spendingByCategoryLabels });
+        this.setState({ spendingByCategoryChartData: spendingByCategoryChartData });
       });
 
     fetch('/api/purchases/countPurchases')
@@ -122,22 +141,57 @@ class Analysis extends React.Component {
       }
     };
 
+    const spendingByCategoryData = {
+      labels: this.state.spendingByCategoryLabels,
+      datasets: [
+        {
+          label: 'Spending',
+          data: this.state.spendingByCategoryChartData,
+          fill: false,
+          backgroundColor: ['rgba(30, 139, 195, 1)',
+            'rgba(255, 159, 64)', 'rgb(255, 205, 86)',
+            'rgb(0, 163, 51)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)',
+            'rgb(0,0,255)'],
+          borderColor: 'rgba(30, 139, 195, 1)'
+        }
+      ]
+    };
+
+    const spendingByCategoryOptions = {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 1.8
+    };
+
     return (
       <>
         <div className="row">
+
           <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
-
             <div className="spending-by-time-chart-container mt-3 text-center w-75">
-
               <div className='spending-by-time-header mb-3'>
                 <h4 className='chart-title text-center fs-5'>Spending by Time</h4>
               </div>
-
               <div>
                 <Line data={data} options={options} />
               </div>
             </div>
           </div>
+
+          <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
+            <div className="spending-by-category-chart-container mt-5 text-center w-75">
+              <div className='spending-by-category-header mb-3'>
+                <h4 className='chart-title text-center fs-5'>Spending by Category</h4>
+              </div>
+              <div>
+                <Pie data={spendingByCategoryData} options={spendingByCategoryOptions} />
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <div>

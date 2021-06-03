@@ -77,6 +77,25 @@ app.get('/api/purchases/amount', (req, res) => {
     });
 });
 
+app.get('/api/purchases/categorySpending', (req, res) => {
+  const sql = `
+    select sum("amount") as amount, "category"
+      from "purchases"
+     group by "category"
+     order by "category" desc
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.get('/api/categories', (req, res) => {
   const sql = `
     select *
