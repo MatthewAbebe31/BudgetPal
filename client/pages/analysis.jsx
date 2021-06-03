@@ -247,7 +247,7 @@ class Analysis extends React.Component {
           </div>
 
           <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
-            <div className="spending-by-category-chart-container mt-5 text-center w-75">
+            <div className="spending-by-category-chart-container mt-3 text-center w-75">
               <div className='spending-by-category-header mb-3'>
                 <h4 className='chart-title text-center fs-5'>Spending by Category</h4>
               </div>
