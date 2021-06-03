@@ -28,11 +28,11 @@ class PurchaseList extends React.Component {
               <div key={purchase.purchaseId}>
                 <div className="d-flex justify-content-center">
                   <div className="card text-dark bg-light mb-3">
-                    <div className="card-header">{purchase.category}</div>
+                    <h5 className="card-header">{purchase.category}</h5>
                     <div className="card-body">
-                      <h5 className="card-title">{purchase.description}</h5>
-                      <p className="card-text">${purchase.amount}</p>
-                      <p className="card-text">{dateFormatted}</p>
+                      <p className="card-text">Description: {purchase.description}</p>
+                      <p className="card-text">Purchase amount: ${purchase.amount}</p>
+                      <p className="card-text">Date: {dateFormatted}</p>
                       <div className="purchases-edit-delete-button-container d-flex justify-content-end">
                         <button type="button" className="btn btn-link">Edit</button>
                         <button type="button" className="btn btn-link">Delete</button>

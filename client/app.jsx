@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from './pages/navbar';
+import CategoryList from './pages/category-list';
 import CategoryForm from './pages/category-form';
 import PurchaseList from './pages/purchase-list';
 import PurchaseForm from './pages/purchase-form';
@@ -78,13 +79,16 @@ export default class App extends React.Component {
   renderPage() {
     const { route } = this.state;
     if (route.path === 'categories') {
-      return <CategoryForm onSubmit={this.addCategory}/>;
+      return <CategoryList/>;
     }
     if (route.path === 'purchases') {
       return <PurchaseList />;
     }
     if (route.path === 'addNewPurchases') {
       return <PurchaseForm onSubmit={this.addPurchase} />;
+    }
+    if (route.path === 'addNewCategories') {
+      return <CategoryForm onSubmit={this.addCategory} />;
     }
     if (route.path === 'analysis') {
       return <Analysis />;
