@@ -27,5 +27,6 @@ create table "notes" (
   "noteId"             serial,
   "category"           text     not null,
   "note"               text     not null,
+  "date"            DATE NOT NULL DEFAULT CURRENT_DATE,
   primary key ("noteId")
 );
