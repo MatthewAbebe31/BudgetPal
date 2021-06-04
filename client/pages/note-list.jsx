@@ -7,6 +7,7 @@ class NoteList extends React.Component {
     this.state = {
       notes: []
     };
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -16,13 +17,15 @@ class NoteList extends React.Component {
   }
 
   handleDelete(event) {
-    const id = event.target.id;
-    fetch(`/api/notes/noteId/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
+    const noteId = event.target.id;
+    fetch(`/api/notes/noteId/${noteId}`, {
+      method: 'DELETE'
     });
+
+    const id = parseInt(event.target.id, 10);
+    const notes = this.state.notes.filter(note => note.noteId !== id);
+    this.setState({ notes: notes });
+
   }
 
   render() {
