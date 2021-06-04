@@ -19,5 +19,13 @@ create table "purchases" (
 create table "categories" (
   "categoryId"       serial,
   "categoryName"     text     not null,
-  "categoryAmount"   numeric  not null
-)
+  "categoryAmount"   numeric  not null,
+  primary key ("categoryId")
+);
+
+create table "notes" (
+  "noteId"             serial,
+  "category"           text     not null,
+  "note"               text     not null,
+  primary key ("noteId")
+);

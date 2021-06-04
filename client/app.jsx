@@ -4,6 +4,7 @@ import CategoryList from './pages/category-list';
 import CategoryForm from './pages/category-form';
 import PurchaseList from './pages/purchase-list';
 import PurchaseForm from './pages/purchase-form';
+import NoteForm from './pages/note-form';
 import Analysis from './pages/analysis';
 import parseRoute from './lib/parse-route';
 
@@ -13,6 +14,7 @@ export default class App extends React.Component {
     this.state = {
       purchases: [],
       categories: [],
+      notes: [],
       route: parseRoute(window.location.hash)
     };
     this.addPurchase = this.addPurchase.bind(this);
@@ -43,7 +45,7 @@ export default class App extends React.Component {
   addPurchase(newPurchase) {
 
     fetch('/api/purchases', {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -61,7 +63,7 @@ export default class App extends React.Component {
   addCategory(newCategory) {
 
     fetch('/api/categories', {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -76,6 +78,24 @@ export default class App extends React.Component {
       });
   }
 
+  addNote(newNote) {
+
+    fetch('/api/notes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newNote)
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ notes: data });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
   renderPage() {
     const { route } = this.state;
     if (route.path === 'categories') {
@@ -83,6 +103,9 @@ export default class App extends React.Component {
     }
     if (route.path === 'purchases') {
       return <PurchaseList />;
+    }
+    if (route.path === 'addNewNotes') {
+      return <NoteForm onSubmit={this.addNote} />;
     }
     if (route.path === 'addNewPurchases') {
       return <PurchaseForm onSubmit={this.addPurchase} />;
