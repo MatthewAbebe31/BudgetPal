@@ -15,6 +15,16 @@ class PurchaseList extends React.Component {
       .then(data => this.setState({ purchases: data }));
   }
 
+  handleDelete(event) {
+    const id = event.target.id;
+    fetch(`/api/purchases/purchaseId/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   render() {
 
     return (
@@ -35,7 +45,7 @@ class PurchaseList extends React.Component {
                       <p className="card-text">Date: {dateFormatted}</p>
                       <div className="purchases-edit-delete-button-container d-flex justify-content-end">
                         <button type="button" className="btn btn-link">Edit</button>
-                        <button type="button" className="btn btn-link">Delete</button>
+                        <button type="button" id={purchase.purchaseId} onClick={this.handleDelete} className="btn btn-link">Delete</button>
                       </div>
                     </div>
                   </div>

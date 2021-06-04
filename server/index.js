@@ -235,6 +235,23 @@ app.post('/api/notes', (req, res) => {
     });
 });
 
+app.delete('/api/:table/:columnId/:id', function (req, res) {
+  const id = req.params.id;
+  const table = req.params.table;
+  const columnId = req.params.columnId;
+  const sql = `
+  delete from "${table}"
+  where "${columnId}" = $1
+  returning * `;
+  const params = [id];
+  db.query(sql, params)
+    .then(result => {
+      const data = result.rows[0];
+      res.status(204).json(data);
+    });
+
+});
+
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on ${process.env.PORT}`);

@@ -15,6 +15,16 @@ class NoteList extends React.Component {
       .then(data => this.setState({ notes: data }));
   }
 
+  handleDelete(event) {
+    const id = event.target.id;
+    fetch(`/api/notes/noteId/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   render() {
 
     return (
@@ -34,7 +44,7 @@ class NoteList extends React.Component {
                       <p className="card-text">Date: {dateFormatted}</p>
                       <div className="notes-edit-delete-button-container d-flex justify-content-end">
                         <button type="button" className="btn btn-link">Edit</button>
-                        <button type="button" className="btn btn-link">Delete</button>
+                        <button type="button" id={note.noteId} onClick={this.handleDelete} className="btn btn-link">Delete</button>
                       </div>
                     </div>
                   </div>

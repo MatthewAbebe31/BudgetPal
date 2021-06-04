@@ -4,8 +4,10 @@ class CategoryList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: []
+      categories: [],
+      isDeleted: false
     };
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -14,11 +16,23 @@ class CategoryList extends React.Component {
       .then(data => this.setState({ categories: data }));
   }
 
+  handleDelete(event) {
+    const categoryId = event.target.id;
+    fetch(`/api/categories/categoryId/${categoryId}`, {
+      method: 'DELETE'
+    });
+
+    const id = parseInt(event.target.id, 10);
+    const categories = this.state.categories.filter(category => category.categoryId !== id);
+    this.setState({ categories: categories });
+
+  }
+
   render() {
 
     return (
       <div>
-          <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>
+        <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>
         {
           this.state.categories.map(category => {
             return (
@@ -30,7 +44,7 @@ class CategoryList extends React.Component {
                       <p className="card-text">Budget: ${category.categoryAmount}</p>
                       <div className="categories-edit-delete-button-container d-flex justify-content-end">
                         <button type="button" className="btn btn-link">Edit</button>
-                        <button type="button" className="btn btn-link">Delete</button>
+                        <button type="button" id={category.categoryId} onClick={this.handleDelete} className="btn btn-link">Delete</button>
                       </div>
                     </div>
                   </div>
