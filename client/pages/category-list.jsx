@@ -7,6 +7,7 @@ class CategoryList extends React.Component {
       categories: [],
       isDeleted: false
     };
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -22,15 +23,12 @@ class CategoryList extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       }
-    })
-      .then(result => {
-        return result;
-      });
+    });
+    const categories = this.state.categories.filter(category => category[id]);
+    this.setState({ categories: categories });
     fetch('/api/categories')
       .then(res => res.json())
-      .then(data => this.setState({
-        categories: data
-      }));
+      .then(data => this.setState({ categories: data }));
   }
 
   render() {

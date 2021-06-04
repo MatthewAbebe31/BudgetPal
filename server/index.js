@@ -244,7 +244,6 @@ app.delete('/api/:table/:columnId/:id', function (req, res) {
   where "${columnId}" = $1
   returning * `;
   const params = [id];
-  console.log(params);
   db.query(sql, params)
     .then(result => {
       const data = result.rows[0];
