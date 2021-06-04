@@ -133,6 +133,24 @@ app.get('/api/categories', (req, res) => {
     });
 });
 
+app.get('/api/notes', (req, res) => {
+  const sql = `
+    select *
+      from "notes"
+     order by "noteId" desc
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.post('/api/purchases', (req, res) => {
 
   const { category, description, amount } = req.body;

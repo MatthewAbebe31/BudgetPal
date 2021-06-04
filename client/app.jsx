@@ -4,6 +4,7 @@ import CategoryList from './pages/category-list';
 import CategoryForm from './pages/category-form';
 import PurchaseList from './pages/purchase-list';
 import PurchaseForm from './pages/purchase-form';
+import NoteList from './pages/note-list';
 import NoteForm from './pages/note-form';
 import Analysis from './pages/analysis';
 import parseRoute from './lib/parse-route';
@@ -19,6 +20,7 @@ export default class App extends React.Component {
     };
     this.addPurchase = this.addPurchase.bind(this);
     this.addCategory = this.addCategory.bind(this);
+    this.addNote = this.addNote.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +30,7 @@ export default class App extends React.Component {
     });
     this.getAllPurchases();
     this.getAllCategories();
+    this.getAllNotes();
   }
 
   getAllPurchases() {
@@ -40,6 +43,12 @@ export default class App extends React.Component {
     fetch('/api/categories')
       .then(response => response.json())
       .then(data => this.setState({ categories: data }));
+  }
+
+  getAllNotes() {
+    fetch('/api/notes')
+      .then(response => response.json())
+      .then(data => this.setState({ notes: data }));
   }
 
   addPurchase(newPurchase) {
@@ -99,10 +108,13 @@ export default class App extends React.Component {
   renderPage() {
     const { route } = this.state;
     if (route.path === 'categories') {
-      return <CategoryList/>;
+      return <CategoryList />;
     }
     if (route.path === 'purchases') {
       return <PurchaseList />;
+    }
+    if (route.path === 'notes') {
+      return <NoteList />;
     }
     if (route.path === 'addNewNotes') {
       return <NoteForm onSubmit={this.addNote} />;
