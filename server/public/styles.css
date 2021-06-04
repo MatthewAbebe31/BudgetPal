@@ -24,26 +24,19 @@
   margin-top: 20px;
 }
 
-.purchase-form-container {
+.purchase-form-container,
+.category-form-container,
+.note-form-container {
   margin: 0 auto;
   max-width: 768px;
   display: flex;
   justify-content: center;
 }
 
-.category-form-container {
-  margin: 0 auto;
-  max-width: 768px;
-  display: flex;
-  justify-content: center;
-}
-
-.purchase-input-group {
-  width: 50%;
-}
-
-.category-form-group {
-  width: 50%;
+.purchase-input-group,
+.category-form-group,
+.note-input-group {
+  width: 75%;
 }
 
 select,
@@ -77,14 +70,20 @@ canvas {
   .category-form-button-container {
     width: 75%;
   }
-}
 
-@media only screen and (min-width: 805px) {
   .purchase-input-group {
     width: 75%;
   }
 
   .purchase-form-button-container {
+    width: 75%;
+  }
+
+  .note-input-group {
+    width: 75%;
+  }
+
+  .note-form-button-container {
     width: 75%;
   }
 }

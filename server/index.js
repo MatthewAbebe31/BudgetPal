@@ -189,6 +189,34 @@ app.post('/api/categories', (req, res) => {
     });
 });
 
+app.post('/api/notes', (req, res) => {
+
+  const { category, note } = req.body;
+  if (!category || !note) {
+    res.status(400).json({
+      error: 'Please enter required fields'
+    });
+    return;
+  }
+  const sql = `
+    insert into "notes" ("category", "note")
+    values ($1, $2)
+    returning *
+  `;
+  const params = [category, note];
+  db.query(sql, params)
+    .then(result => {
+      const [category] = result.rows;
+      res.status(201).json(category);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on ${process.env.PORT}`);

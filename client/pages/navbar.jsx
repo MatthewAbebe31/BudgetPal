@@ -86,7 +86,7 @@ class Navbar extends React.Component {
                   <a className="text-white nav-link active" aria-current="page" href="#">Alerts</a>
                 </li>
                 <li className="nav-item">
-                  <a className="text-white nav-link active" aria-current="page" href="#">Notes</a>
+                  <a className="text-white nav-link active" aria-current="page" href="#notes">Notes</a>
                 </li>
               </ul>
             </div>
