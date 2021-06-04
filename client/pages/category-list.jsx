@@ -4,7 +4,8 @@ class CategoryList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: []
+      categories: [],
+      isDeleted: false
     };
   }
 
@@ -12,6 +13,24 @@ class CategoryList extends React.Component {
     fetch('/api/categories')
       .then(res => res.json())
       .then(data => this.setState({ categories: data }));
+  }
+
+  handleDelete(event) {
+    const id = event.target.id;
+    fetch(`/api/categories/categoryId/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(result => {
+        return result;
+      });
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => this.setState({
+        categories: data
+      }));
   }
 
   render() {
@@ -30,7 +49,7 @@ class CategoryList extends React.Component {
                       <p className="card-text">Budget: ${category.categoryAmount}</p>
                       <div className="categories-edit-delete-button-container d-flex justify-content-end">
                         <button type="button" className="btn btn-link">Edit</button>
-                        <button type="button" className="btn btn-link">Delete</button>
+                        <button type="button" id={category.categoryId} onClick={this.handleDelete} className="btn btn-link">Delete</button>
                       </div>
                     </div>
                   </div>

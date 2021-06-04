@@ -235,6 +235,37 @@ app.post('/api/notes', (req, res) => {
     });
 });
 
+app.delete('/api/:table/:columnId/:id', function (req, res) {
+  const id = req.params.id;
+  const table = req.params.table;
+  const columnId = req.params.columnId;
+  const sql = `
+  delete from "${table}"
+  where "${columnId}" = $1
+  returning * `;
+  const params = [id];
+  console.log(params);
+  db.query(sql, params)
+    .then(result => {
+      const data = result.rows[0];
+      res.status(204).json(data);
+    })
+    .catch(err => {
+      console.error(err);
+      if (!id) {
+        res.status(400);
+        res.json({ error: 'An id is required' });
+      } else if (res[id]) {
+        res.status(404);
+        res.json({ error: 'id not found' });
+      } else if (err) {
+        res.status(500);
+        (console.error(err));
+        res.json({ error: 'An unexpected error occurred.' });
+      }
+    });
+});
+
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on ${process.env.PORT}`);
