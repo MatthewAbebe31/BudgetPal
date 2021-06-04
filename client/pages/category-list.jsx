@@ -17,25 +17,22 @@ class CategoryList extends React.Component {
   }
 
   handleDelete(event) {
-    const id = event.target.id;
-    fetch(`/api/categories/categoryId/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
+    const categoryId = event.target.id;
+    fetch(`/api/categories/categoryId/${categoryId}`, {
+      method: 'DELETE'
     });
-    const categories = this.state.categories.filter(category => category[id]);
+
+    const id = parseInt(event.target.id, 10);
+    const categories = this.state.categories.filter(category => category.categoryId !== id);
     this.setState({ categories: categories });
-    fetch('/api/categories')
-      .then(res => res.json())
-      .then(data => this.setState({ categories: data }));
+
   }
 
   render() {
 
     return (
       <div>
-          <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>
+        <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>
         {
           this.state.categories.map(category => {
             return (
