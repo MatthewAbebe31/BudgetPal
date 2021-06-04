@@ -45,7 +45,7 @@ export default class App extends React.Component {
   addPurchase(newPurchase) {
 
     fetch('/api/purchases', {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -63,7 +63,7 @@ export default class App extends React.Component {
   addCategory(newCategory) {
 
     fetch('/api/categories', {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -81,7 +81,7 @@ export default class App extends React.Component {
   addNote(newNote) {
 
     fetch('/api/notes', {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
