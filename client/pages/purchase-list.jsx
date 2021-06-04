@@ -7,6 +7,7 @@ class PurchaseList extends React.Component {
     this.state = {
       purchases: []
     };
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -16,13 +17,15 @@ class PurchaseList extends React.Component {
   }
 
   handleDelete(event) {
-    const id = event.target.id;
-    fetch(`/api/purchases/purchaseId/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
+    const purchaseId = event.target.id;
+    fetch(`/api/purchases/purchaseId/${purchaseId}`, {
+      method: 'DELETE'
     });
+
+    const id = parseInt(event.target.id, 10);
+    const purchases = this.state.purchases.filter(purchase => purchase.purchaseId !== id);
+    this.setState({ purchases: purchases });
+
   }
 
   render() {
