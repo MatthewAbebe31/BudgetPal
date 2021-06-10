@@ -37,10 +37,7 @@ class Navbar extends React.Component {
               <a className="text-white" href="#analysis">Analysis</a>
             </li>
             <li className="mt-2 hamburger-nav-item">
-              <a className="text-white" href="#">Alerts</a>
-            </li>
-            <li className="mt-2 hamburger-nav-item">
-              <a className="text-white" href="#">Notes</a>
+              <a className="text-white" href="#notes">Notes</a>
             </li>
           </ul>
         </div>
