@@ -1,5 +1,6 @@
 body {
   background-color: cornsilk;
+  height: 100vh;
 }
 
 a {
@@ -94,6 +95,10 @@ canvas {
   background-color: white;
 }
 
+.purchases-by-time-header {
+  margin-top: 20px;
+}
+
 footer {
   background-color: #85bb65;
   position: absolute;
@@ -147,19 +152,15 @@ footer {
   .jumbotron {
     width: 50%;
   }
-}
 
-@media only screen and (min-width: 992px) {
   .card {
     width: 50%;
   }
 }
 
-@media only screen and (min-width: 992px) {
-  canvas {
-    width: 35%;
-    position: relative;
-    transform: translateY(0%) !important;
+@media only screen and (max-width: 767px) {
+  footer {
+    position: fixed !important;
   }
 }
 
