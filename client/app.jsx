@@ -1,7 +1,9 @@
 import React from 'react';
 import Navbar from './pages/navbar';
+import Home from './pages/home';
 import CategoryList from './pages/category-list';
 import CategoryForm from './pages/category-form';
+import EditCategoryForm from './pages/edit-category-form';
 import PurchaseList from './pages/purchase-list';
 import PurchaseForm from './pages/purchase-form';
 import NoteList from './pages/note-list';
@@ -105,8 +107,30 @@ export default class App extends React.Component {
       });
   }
 
+  putCategory(editedCategory) {
+    const categoryId = event.target.id;
+
+    fetch(`/api/categories/categoryId/${categoryId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(editedCategory)
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ categories: data });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
   renderPage() {
     const { route } = this.state;
+    if (route.path === '') {
+      return <Home />;
+    }
     if (route.path === 'categories') {
       return <CategoryList />;
     }
@@ -124,6 +148,15 @@ export default class App extends React.Component {
     }
     if (route.path === 'addNewCategories') {
       return <CategoryForm onSubmit={this.addCategory} />;
+    }
+    //  if (route.path === 'editNotes') {
+    //   return <EditNoteForm onSubmit={this.addNote} />;
+    // }
+    //  if (route.path === 'editPurchases') {
+    //   return <EditPurchaseForm onSubmit={this.addNote} />;
+    // }
+    if (route.path === 'editCategories/:categoryId') {
+      return <EditCategoryForm onSubmit={this.putCategory} />;
     }
     if (route.path === 'analysis') {
       return <Analysis />;
