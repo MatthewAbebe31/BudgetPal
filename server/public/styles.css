@@ -109,6 +109,12 @@ footer {
   color: white;
 }
 
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
 .footer-name {
   color: white;
   font-weight: normal;
