@@ -9,6 +9,7 @@ import PurchaseForm from './pages/purchase-form';
 import NoteList from './pages/note-list';
 import NoteForm from './pages/note-form';
 import Analysis from './pages/analysis';
+import Footer from './pages/footer';
 import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
@@ -167,6 +168,7 @@ export default class App extends React.Component {
     return (
       <>
         <Navbar />
+        <Footer />
         { this.renderPage()}
       </>
     );
