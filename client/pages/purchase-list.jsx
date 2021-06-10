@@ -5,7 +5,8 @@ class PurchaseList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchases: []
+      purchases: [],
+      isLoading: true
     };
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -13,7 +14,7 @@ class PurchaseList extends React.Component {
   componentDidMount() {
     fetch('/api/purchases')
       .then(res => res.json())
-      .then(data => this.setState({ purchases: data }));
+      .then(data => this.setState({ purchases: data, isLoading: false }));
   }
 
   handleDelete(event) {
@@ -29,10 +30,12 @@ class PurchaseList extends React.Component {
   }
 
   render() {
-
+    if (this.state.isLoading === true) {
+      console.log(this.state.isLoading);
+    }
     return (
       <div>
-          <h2 className="text-center mt-3 text-decoration-underline">Purchases</h2>
+        <h2 className="text-center mt-3 text-decoration-underline">Purchases</h2>
         {
           this.state.purchases.map(purchase => {
             const date = purchase.date;
@@ -59,7 +62,7 @@ class PurchaseList extends React.Component {
         }
         <div className="add-new-purchase-button-container d-flex justify-content-center">
           <a href="#addNewPurchases">
-            <button type="button" className="btn btn-success">Add New Purchase</button>
+            <button type="button" className="btn btn-primary">Add New Purchase</button>
           </a>
         </div>
       </div >

@@ -224,6 +224,38 @@ app.post('/api/notes', (req, res) => {
   const params = [category, note];
   db.query(sql, params)
     .then(result => {
+      const [note] = result.rows;
+      res.status(201).json(note);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+app.put('/api/categories/categoryId/:id', (req, res) => {
+
+  const { categoryId, categoryName, categoryAmount } = req.body;
+  // const categoryAmount = parseInt(req.body.categoryAmount);
+
+  if (!categoryId || !categoryName || !categoryAmount) {
+    res.status(400).json({
+      error: 'Please enter required fields'
+    });
+    return;
+  }
+  const sql = `
+    update "categories"
+    set "categoryName" = '$1',
+        "categoryAmount" = '$2',
+    where ${categoryId} = '$3'
+    returning *
+  `;
+  const params = [categoryId, categoryName, categoryAmount];
+  db.query(sql, params)
+    .then(result => {
       const [category] = result.rows;
       res.status(201).json(category);
     })
@@ -235,7 +267,7 @@ app.post('/api/notes', (req, res) => {
     });
 });
 
-app.delete('/api/:table/:columnId/:id', function (req, res) {
+app.delete('/api/:table/:columnId/:id', function (req, res, next) {
   const id = req.params.id;
   const table = req.params.table;
   const columnId = req.params.columnId;
@@ -248,8 +280,10 @@ app.delete('/api/:table/:columnId/:id', function (req, res) {
     .then(result => {
       const data = result.rows[0];
       res.status(204).json(data);
+    })
+    .catch(err => {
+      next(err);
     });
-
 });
 
 app.listen(process.env.PORT, () => {

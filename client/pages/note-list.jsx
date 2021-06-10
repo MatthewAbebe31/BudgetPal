@@ -5,7 +5,8 @@ class NoteList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notes: []
+      notes: [],
+      isLoading: true
     };
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -13,7 +14,7 @@ class NoteList extends React.Component {
   componentDidMount() {
     fetch('/api/notes')
       .then(res => res.json())
-      .then(data => this.setState({ notes: data }));
+      .then(data => this.setState({ notes: data, isLoading: false }));
   }
 
   handleDelete(event) {
@@ -29,6 +30,9 @@ class NoteList extends React.Component {
   }
 
   render() {
+    if (this.state.isLoading === true) {
+      console.log(this.state.isLoading);
+    }
 
     return (
       <div>
@@ -58,7 +62,7 @@ class NoteList extends React.Component {
         }
         <div className="add-new-note-button-container d-flex justify-content-center">
           <a href="#addNewNotes">
-            <button type="button" className="btn btn-success">Add New Note</button>
+            <button type="button" className="btn btn-primary">Add New Note</button>
           </a>
         </div>
       </div >
