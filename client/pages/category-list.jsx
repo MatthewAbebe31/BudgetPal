@@ -54,7 +54,7 @@ class CategoryList extends React.Component {
                       <h5 className="card-title">{category.categoryName}</h5>
                       <p className="card-text">Budget: ${category.categoryAmount}</p>
                       <div className="categories-edit-delete-button-container d-flex justify-content-end">
-                        <a href={`#editCategories/${category.categoryId}`}>
+                        <a href={`#editCategories?categoryId=${category.categoryId}`}>
                           <button type="button" className="btn btn-link">Edit</button>
                         </a>
                         <button type="button" id={category.categoryId} onClick={this.handleDelete} className="btn btn-link">Delete</button>

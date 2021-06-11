@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router';
 
 class EditCategoryForm extends React.Component {
   constructor(props) {
@@ -14,15 +15,8 @@ class EditCategoryForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    fetch('/api/categories')
-      .then(res => res.json())
-      .then(data => this.setState({ categories: data }));
-  }
-
   handleEditCategoryNameInputChange(event) {
     this.setState({ categoryName: event.target.value });
-    console.log(event.target.value.id);
     this.setState({ categroyId: event.target.id });
   }
 
@@ -35,15 +29,15 @@ class EditCategoryForm extends React.Component {
     event.preventDefault();
 
     const editedCategory = {
-      categoryId: this.state.categoryId,
+      categoryId: parseInt(this.props.categoryId),
       categoryName: this.state.categoryName,
-      categoryAmount: this.state.categoryAmount
+      categoryAmount: parseInt(this.state.categoryAmount)
     };
     this.props.onSubmit(editedCategory);
     this.setState({ categoryName: '' });
     this.setState({ categoryAmount: '' });
 
-    window.location.hash = '#categories';
+    window.location.hash = 'categories';
 
     console.log(editedCategory);
   }

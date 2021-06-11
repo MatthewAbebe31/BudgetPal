@@ -235,10 +235,9 @@ app.post('/api/notes', (req, res) => {
     });
 });
 
-app.put('/api/categories/categoryId/:id', (req, res) => {
+app.put('/api/categories', (req, res) => {
 
   const { categoryId, categoryName, categoryAmount } = req.body;
-  // const categoryAmount = parseInt(req.body.categoryAmount);
 
   if (!categoryId || !categoryName || !categoryAmount) {
     res.status(400).json({
@@ -248,15 +247,15 @@ app.put('/api/categories/categoryId/:id', (req, res) => {
   }
   const sql = `
     update "categories"
-    set "categoryName" = '$1',
-        "categoryAmount" = '$2',
-    where ${categoryId} = '$3'
+    set    "categoryName"   = $1,
+           "categoryAmount" = $2
+    where  "categoryId"     = $3
     returning *
   `;
-  const params = [categoryId, categoryName, categoryAmount];
+  const params = [categoryName, categoryAmount, categoryId];
   db.query(sql, params)
     .then(result => {
-      const [category] = result.rows;
+      const category = result.rows;
       res.status(201).json(category);
     })
     .catch(err => {
