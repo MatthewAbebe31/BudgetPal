@@ -171,8 +171,10 @@ export default class App extends React.Component {
     return (
       <>
         <Navbar />
+        <div className="content-container">
+          { this.renderPage()}
+        </div>
         <Footer />
-        { this.renderPage()}
       </>
     );
   }
