@@ -24,6 +24,7 @@ export default class App extends React.Component {
     this.addPurchase = this.addPurchase.bind(this);
     this.addCategory = this.addCategory.bind(this);
     this.addNote = this.addNote.bind(this);
+    this.putCategory = this.putCategory.bind(this);
   }
 
   componentDidMount() {
@@ -109,9 +110,8 @@ export default class App extends React.Component {
   }
 
   putCategory(editedCategory) {
-    const categoryId = event.target.id;
 
-    fetch(`/api/categories/categoryId/${categoryId}`, {
+    fetch('/api/categories', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -128,7 +128,9 @@ export default class App extends React.Component {
   }
 
   renderPage() {
+
     const { route } = this.state;
+
     if (route.path === '') {
       return <Home />;
     }
@@ -156,8 +158,9 @@ export default class App extends React.Component {
     //  if (route.path === 'editPurchases') {
     //   return <EditPurchaseForm onSubmit={this.addNote} />;
     // }
-    if (route.path === 'editCategories/:categoryId') {
-      return <EditCategoryForm onSubmit={this.putCategory} />;
+    if (route.path === 'editCategories') {
+      const categoryId = route.params.get('categoryId');
+      return <EditCategoryForm categoryId={categoryId} onSubmit={this.putCategory} />;
     }
     if (route.path === 'analysis') {
       return <Analysis />;
