@@ -266,6 +266,38 @@ app.put('/api/categories', (req, res) => {
     });
 });
 
+app.put('/api/purchases', (req, res) => {
+
+  const { purchaseId, category, description, amount } = req.body;
+
+  if (!purchaseId || !category || !description || !amount) {
+    res.status(400).json({
+      error: 'Please enter required fields'
+    });
+    return;
+  }
+  const sql = `
+    update "purchases"
+    set    "category"   = $1,
+           "description" = $2,
+           "amount" = $3
+    where  "purchaseId"     = $4
+    returning *
+  `;
+  const params = [category, description, amount, purchaseId];
+  db.query(sql, params)
+    .then(result => {
+      const purchase = result.rows;
+      res.status(201).json(purchase);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.delete('/api/:table/:columnId/:id', function (req, res, next) {
   const id = req.params.id;
   const table = req.params.table;

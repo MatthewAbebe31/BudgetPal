@@ -17,7 +17,6 @@ class EditCategoryForm extends React.Component {
 
   handleEditCategoryNameInputChange(event) {
     this.setState({ categoryName: event.target.value });
-    this.setState({ categroyId: event.target.id });
   }
 
   handleEditCategoryAmountInputChange(event) {

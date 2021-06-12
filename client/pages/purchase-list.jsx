@@ -50,7 +50,9 @@ class PurchaseList extends React.Component {
                       <p className="card-text">Purchase amount: ${purchase.amount}</p>
                       <p className="card-text">Date: {dateFormatted}</p>
                       <div className="purchases-edit-delete-button-container d-flex justify-content-end">
-                        <button type="button" className="btn btn-link">Edit</button>
+                        <a href={`#editPurchases?purchaseId=${purchase.purchaseId}`}>
+                          <button type="button" className="btn btn-link">Edit</button>
+                        </a>
                         <button type="button" id={purchase.purchaseId} onClick={this.handleDelete} className="btn btn-link">Delete</button>
                       </div>
                     </div>

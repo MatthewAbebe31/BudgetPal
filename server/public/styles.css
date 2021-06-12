@@ -60,8 +60,9 @@ a {
 
 .purchase-form-container,
 .category-form-container,
+.note-form-container,
 .edit-category-form-container,
-.note-form-container {
+.edit-purchase-form-container {
   margin: 0 auto;
   max-width: 768px;
   display: flex;
@@ -70,8 +71,9 @@ a {
 
 .purchase-input-group,
 .category-form-group,
+.note-input-group,
 .edit-category-form-group,
-.note-input-group {
+.edit-purchase-form-group {
   width: 75%;
 }
 
