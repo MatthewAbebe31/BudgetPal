@@ -6,6 +6,7 @@ import CategoryForm from './pages/category-form';
 import EditCategoryForm from './pages/edit-category-form';
 import PurchaseList from './pages/purchase-list';
 import PurchaseForm from './pages/purchase-form';
+import EditPurchaseForm from './pages/edit-purchase-form';
 import NoteList from './pages/note-list';
 import NoteForm from './pages/note-form';
 import Analysis from './pages/analysis';
@@ -127,6 +128,24 @@ export default class App extends React.Component {
       });
   }
 
+  putPurchase(editedPurchase) {
+
+    fetch('/api/purchases', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(editedPurchase)
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ purchases: data });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
   renderPage() {
 
     const { route } = this.state;
@@ -155,9 +174,10 @@ export default class App extends React.Component {
     //  if (route.path === 'editNotes') {
     //   return <EditNoteForm onSubmit={this.addNote} />;
     // }
-    //  if (route.path === 'editPurchases') {
-    //   return <EditPurchaseForm onSubmit={this.addNote} />;
-    // }
+    if (route.path === 'editPurchases') {
+      const purchaseId = route.params.get('purchaseId');
+      return <EditPurchaseForm purchaseId={purchaseId} onSubmit={this.putPurchase} />;
+    }
     if (route.path === 'editCategories') {
       const categoryId = route.params.get('categoryId');
       return <EditCategoryForm categoryId={categoryId} onSubmit={this.putCategory} />;
