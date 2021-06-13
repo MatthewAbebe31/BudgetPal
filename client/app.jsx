@@ -36,27 +36,6 @@ export default class App extends React.Component {
       const route = parseRoute(window.location.hash);
       this.setState({ route });
     });
-    this.getAllPurchases();
-    this.getAllCategories();
-    this.getAllNotes();
-  }
-
-  getAllPurchases() {
-    fetch('/api/purchases')
-      .then(response => response.json())
-      .then(data => this.setState({ purchases: data }));
-  }
-
-  getAllCategories() {
-    fetch('/api/categories')
-      .then(response => response.json())
-      .then(data => this.setState({ categories: data }));
-  }
-
-  getAllNotes() {
-    fetch('/api/notes')
-      .then(response => response.json())
-      .then(data => this.setState({ notes: data }));
   }
 
   addPurchase(newPurchase) {
