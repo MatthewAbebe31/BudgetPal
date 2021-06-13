@@ -1,4 +1,4 @@
-# final-project
+# Budget-Pal
 
 <h4>Description</h4>
 A full stack JavaScript solo project.
