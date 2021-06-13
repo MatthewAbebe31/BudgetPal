@@ -298,6 +298,37 @@ app.put('/api/purchases', (req, res) => {
     });
 });
 
+app.put('/api/notes', (req, res) => {
+
+  const { noteId, category, note } = req.body;
+
+  if (!noteId || !category || !note) {
+    res.status(400).json({
+      error: 'Please enter required fields'
+    });
+    return;
+  }
+  const sql = `
+    update "notes"
+    set    "category"   = $1,
+           "note" = $2
+    where  "noteId"     = $3
+    returning *
+  `;
+  const params = [category, note, noteId];
+  db.query(sql, params)
+    .then(result => {
+      const note = result.rows;
+      res.status(201).json(note);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.delete('/api/:table/:columnId/:id', function (req, res, next) {
   const id = req.params.id;
   const table = req.params.table;

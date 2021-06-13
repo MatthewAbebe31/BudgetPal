@@ -67,7 +67,7 @@ class PurchaseForm extends React.Component {
       <div className="row">
         <div className="col">
           <div className="purchase-form-container pt-5">
-            <form className="purchase-input-group" onSubmit={this.handleSubmit}>
+            <form className="purchase-form-group" onSubmit={this.handleSubmit}>
               <h2 className="add-purchase-header">Add a Purchase.</h2>
 
               <label>Enter Category</label>

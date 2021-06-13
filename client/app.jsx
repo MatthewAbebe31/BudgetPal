@@ -9,6 +9,7 @@ import PurchaseForm from './pages/purchase-form';
 import EditPurchaseForm from './pages/edit-purchase-form';
 import NoteList from './pages/note-list';
 import NoteForm from './pages/note-form';
+import EditNoteForm from './pages/edit-note-form';
 import Analysis from './pages/analysis';
 import Footer from './pages/footer';
 import parseRoute from './lib/parse-route';
@@ -26,6 +27,8 @@ export default class App extends React.Component {
     this.addCategory = this.addCategory.bind(this);
     this.addNote = this.addNote.bind(this);
     this.putCategory = this.putCategory.bind(this);
+    this.putPurchase = this.putPurchase.bind(this);
+    this.putNote = this.putNote.bind(this);
   }
 
   componentDidMount() {
@@ -146,6 +149,24 @@ export default class App extends React.Component {
       });
   }
 
+  putNote(editedNote) {
+
+    fetch('/api/notes', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(editedNote)
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ notes: data });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
   renderPage() {
 
     const { route } = this.state;
@@ -171,9 +192,10 @@ export default class App extends React.Component {
     if (route.path === 'addNewCategories') {
       return <CategoryForm onSubmit={this.addCategory} />;
     }
-    //  if (route.path === 'editNotes') {
-    //   return <EditNoteForm onSubmit={this.addNote} />;
-    // }
+    if (route.path === 'editNotes') {
+      const noteId = route.params.get('noteId');
+      return <EditNoteForm noteId={noteId} onSubmit={this.putNote} />;
+    }
     if (route.path === 'editPurchases') {
       const purchaseId = route.params.get('purchaseId');
       return <EditPurchaseForm purchaseId={purchaseId} onSubmit={this.putPurchase} />;
