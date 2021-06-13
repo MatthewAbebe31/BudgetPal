@@ -1,18 +1,19 @@
 import React from 'react';
+import { useParams } from 'react-router';
 
-class NoteForm extends React.Component {
+class EditNoteForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      notes: [],
       noteId: '',
       category: '',
       note: '',
       selectCategory: []
     };
-    this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
-    this.handleCategoryInputChange = this.handleCategoryInputChange.bind(this);
+    this.handleEditCategoryInputChange = this.handleEditCategoryInputChange.bind(this);
+    this.handleEditNoteInputChange = this.handleEditNoteInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.getAllCategories = this.getAllCategories.bind(this);
   }
 
   componentDidMount() {
@@ -25,31 +26,35 @@ class NoteForm extends React.Component {
       .then(data => this.setState({ selectCategory: data }));
   }
 
-  handleCategoryInputChange(event) {
+  handleEditCategoryInputChange(event) {
     this.setState({ category: event.target.value });
   }
 
-  handleNoteInputChange(event) {
+  handleEditNoteInputChange(event) {
     this.setState({ note: event.target.value });
   }
 
   handleSubmit(event) {
+
     event.preventDefault();
-    const newNote = {
-      noteId: this.state.noteId,
+
+    const editedNote = {
+      noteId: parseInt(this.props.noteId),
       category: this.state.category,
       note: this.state.note
     };
-    this.props.onSubmit(newNote);
+    this.props.onSubmit(editedNote);
     this.setState({ category: '' });
     this.setState({ note: '' });
 
-    window.location.hash = '#notes';
+    window.location.hash = 'notes';
+
+    console.log(editedNote);
   }
 
   render() {
-    const categoryValue = this.state.category;
-    const noteValue = this.state.note;
+    const editedCategory = this.state.category;
+    const editedNote = this.state.note;
     const optionTemplate = this.state.selectCategory.map((v, key) => (
       <option key={key} value={v.id}>{v.categoryName}</option>
     ));
@@ -57,12 +62,12 @@ class NoteForm extends React.Component {
     return (
       <div className="row">
         <div className="col">
-          <div className="note-form-container pt-5">
-            <form className="note-form-group" onSubmit={this.handleSubmit}>
-              <h2 className="add-note-header">Add a Note.</h2>
+          <div className="edit-note-form-container pt-5">
+            <form className="edit-note-form-group" onSubmit={this.handleSubmit}>
+              <h2 className="edit-note-header">Edit a Note.</h2>
 
               <label>Enter Category</label>
-              <select className="form-select" aria-label="Default select example" required value={categoryValue} onChange={this.handleCategoryInputChange}>
+              <select className="form-select" aria-label="Default select example" required value={editedCategory} onChange={this.handleEditCategoryInputChange}>
                 <option value="" disabled hidden>Select an option</option>
                 {optionTemplate}
               </select>
@@ -72,14 +77,14 @@ class NoteForm extends React.Component {
                 required
                 autoFocus
                 type="text"
-                value={noteValue}
-                htmlFor="purchaseDescriptionInput"
+                value={editedNote}
+                htmlFor="editNoteInput"
                 className="form-control"
-                id="purchaseDescriptionInput"
-                placeholder="Description"
-                onChange={this.handleNoteInputChange} />
+                id="editNoteInput"
+                placeholder="Note"
+                onChange={this.handleEditNoteInputChange} />
 
-              <div className="note-form-button-container d-flex justify-content-end w-100">
+              <div className="edit-note-form-button-container d-flex justify-content-end w-100">
                 <button type="submit" className="btn btn-primary btn-sm">Submit</button>
               </div>
 
@@ -91,4 +96,4 @@ class NoteForm extends React.Component {
   }
 }
 
-export default NoteForm;
+export default EditNoteForm;

@@ -36,7 +36,7 @@ class NoteList extends React.Component {
 
     return (
       <div>
-          <h2 className="text-center mt-3 text-decoration-underline">Notes</h2>
+        <h2 className="text-center mt-3 text-decoration-underline">Notes</h2>
         {
           this.state.notes.map(note => {
             const date = note.date;
@@ -50,7 +50,9 @@ class NoteList extends React.Component {
                       <p className="card-text">Note: {note.note}</p>
                       <p className="card-text">Date: {dateFormatted}</p>
                       <div className="notes-edit-delete-button-container d-flex justify-content-end">
-                        <button type="button" className="btn btn-link">Edit</button>
+                        <a href={`#editNotes?noteId=${note.noteId}`}>
+                          <button type="button" className="btn btn-link">Edit</button>
+                        </a>
                         <button type="button" id={note.noteId} onClick={this.handleDelete} className="btn btn-link">Delete</button>
                       </div>
                     </div>

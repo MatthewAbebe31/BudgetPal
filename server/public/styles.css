@@ -1,8 +1,3 @@
-/* html,
-body {
-  height: 100vh;
-} */
-
 body {
   background-color: cornsilk;
 }
@@ -62,18 +57,20 @@ a {
 .category-form-container,
 .note-form-container,
 .edit-category-form-container,
-.edit-purchase-form-container {
+.edit-purchase-form-container,
+.edit-note-form-container {
   margin: 0 auto;
   max-width: 768px;
   display: flex;
   justify-content: center;
 }
 
-.purchase-input-group,
+.purchase-form-group,
 .category-form-group,
-.note-input-group,
+.note-form-group,
 .edit-category-form-group,
-.edit-purchase-form-group {
+.edit-purchase-form-group,
+.edit-note-form-group {
   width: 75%;
 }
 
@@ -132,26 +129,17 @@ footer {
 }
 
 @media only screen and (min-width: 805px) {
-  .category-form-group {
+  .category-form-group,
+  .purchase-form-group,
+  .note-form-group,
+  .edit-category-form-group,
+  .edit-purchase-form-group,
+  .edit-note-form-group {
     width: 75%;
   }
 
-  .category-form-button-container {
-    width: 75%;
-  }
-
-  .purchase-input-group {
-    width: 75%;
-  }
-
-  .purchase-form-button-container {
-    width: 75%;
-  }
-
-  .note-input-group {
-    width: 75%;
-  }
-
+  .category-form-button-container,
+  .purchase-form-button-container,
   .note-form-button-container {
     width: 75%;
   }
