@@ -8,6 +8,7 @@ class Navbar extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.showHamburgerMenu = this.showHamburgerMenu.bind(this);
+    this.hideHamburgerMenu = this.hideHamburgerMenu.bind(this);
   }
 
   handleClick() {
@@ -28,21 +29,25 @@ class Navbar extends React.Component {
         <div className="hamburger-menu-nav">
           <ul className="ps-2 text-start">
             <li className="mt-2 hamburger-nav-item">
-              <a className="text-white" href="#categories">Categories</a>
+              <a className="text-white" href="#categories" onClick={this.hideHamburgerMenu}>Categories</a>
             </li>
             <li className="mt-2 hamburger-nav-item">
-              <a className="text-white" href="#purchases">Purchases</a>
+              <a className="text-white" href="#purchases" onClick={this.hideHamburgerMenu}>Purchases</a>
             </li>
             <li className="mt-2 hamburger-nav-item">
-              <a className="text-white" href="#analysis">Analysis</a>
+              <a className="text-white" href="#analysis" onClick={this.hideHamburgerMenu}>Analysis</a>
             </li>
             <li className="mt-2 hamburger-nav-item">
-              <a className="text-white" href="#notes">Notes</a>
+              <a className="text-white" href="#notes" onClick={this.hideHamburgerMenu}>Notes</a>
             </li>
           </ul>
         </div>
       );
     }
+  }
+
+  hideHamburgerMenu() {
+    this.setState({ isClicked: false });
   }
 
   render() {
