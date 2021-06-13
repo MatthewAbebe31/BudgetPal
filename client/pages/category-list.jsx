@@ -5,7 +5,6 @@ class CategoryList extends React.Component {
     super(props);
     this.state = {
       categories: [],
-      isDeleted: false,
       isLoading: true
     };
     this.handleDelete = this.handleDelete.bind(this);
