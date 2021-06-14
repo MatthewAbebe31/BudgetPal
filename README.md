@@ -1,7 +1,7 @@
 # Budget-Pal
 
 <h4>Description</h4>
-A full stack JavaScript solo project.
+A full stack React application that tracks purchases and analyzes spending habits.
 
 <h4>Technologies</h4>
 <p float="left">
