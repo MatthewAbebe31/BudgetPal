@@ -17,7 +17,14 @@ A full stack React application that tracks purchases and analyzes spending habit
 
 <h4>Features</h4>
 
+* Budget-Pal allows users to categorize and track their expenditures as well as examine charts related to spending activity.
+* Budget-Pal is a useful application for people that want to improve their budgeting skills.
+* Users can create budgeting categories and record their purchases.
+* Users can assess their spending habits by viewing charts and make notes on related to their budget.
+* Future feature: Create alerts associated with budgeting goals.
+
 <h4>Live Demo</h4>
+Try the application live at https://budget-pal-app.herokuapp.com/
 
 <h4>Installation</h4>
 
