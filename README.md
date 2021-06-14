@@ -57,7 +57,10 @@ createdb [database-name]
 npm run db:import
 ```
 
-5. Start the Express API server
+ * To view database ```pgweb --db=[database-name]```
+ Then visit ```http://localhost:8081```
+
+5. Open a new console and start the Express API server
 
 ```
 npm run dev
