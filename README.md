@@ -31,7 +31,7 @@ Try the application live at https://budget-pal-app.herokuapp.com/
 
 <h4>Installation</h4>
 
- 1. Clone the repository
+ 1. Clone the repository.
 
 ```
 git clone https://github.com/Matthew-Abebe/Budget-Pal.git
@@ -39,19 +39,19 @@ git clone https://github.com/Matthew-Abebe/Budget-Pal.git
 cd Budget-Pal
 ```
 
-2. Start ```postgresql```
+2. Start ```postgresql```.
 
 ```
 sudo service postgresql start
 ```
 
-3. Create a database
+3. Create a database.
 
 ```
 createdb [database-name]
 ```
 
-4. Import database schema
+4. Import database schema.
 
 ```
 npm run db:import
@@ -60,13 +60,13 @@ npm run db:import
  * To view database ```pgweb --db=[database-name]```.
  Then visit ```http://localhost:8081```
 
-5. Open a new console and start the Express API server
+5. Open a new console and start the Express API server.
 
 ```
 npm run dev
 ```
 
-6. View application at ```localhost:3000```
+6. View application at ```localhost:3000```.
 
 <h4>How to Use</h4>
 
