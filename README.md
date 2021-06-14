@@ -31,6 +31,40 @@ Try the application live at https://budget-pal-app.herokuapp.com/
 
 <h4>Installation</h4>
 
+ 1. Clone the repository
+
+```
+git clone https://github.com/Matthew-Abebe/Budget-Pal.git
+
+cd Budget-Pal
+```
+
+2. Start ```postgresql```
+
+```
+sudo service postgresql start
+```
+
+3. Create a database
+
+```
+createdb [database-name]
+```
+
+4. Import database schema
+
+```
+npm run db:import
+```
+
+5. Start the Express API server
+
+```
+npm run dev
+```
+
+6. View application at ```localhost:3000```
+
 <h4>How to Use</h4>
 
 * Select the categories option on the navbar and enter information into the required fields to create categories.
