@@ -70,9 +70,9 @@ npm run dev
 
 <h4>How to Use</h4>
 
-* Select the categories option on the navbar and enter information into the required fields to create categories.
-* Select the purchases option on the navbar and enter information into the required fields to create purchases.
+* Select the categories option on the navbar and enter information into the required fields to create a category.
+* Select the purchases option on the navbar and enter information into the required fields to create a purchase.
 * View charts related to your budget by choosing the Analysis option on the navbar.
-* Select the notes option on the navbar and enter information into the required fields to create notes pertaining to your budget.
+* Select the notes option on the navbar and enter information into the required fields to create a note pertaining to your budget.
 
 
