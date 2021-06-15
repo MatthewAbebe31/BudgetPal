@@ -31,11 +31,48 @@ Try the application live at https://budget-pal-app.herokuapp.com/
 
 <h4>Installation</h4>
 
+ 1. Clone the repository.
+
+```
+git clone https://github.com/Matthew-Abebe/Budget-Pal.git
+
+cd Budget-Pal
+```
+
+2. Start ```postgresql```.
+
+```
+sudo service postgresql start
+```
+
+3. Create a database.
+
+```
+createdb [database-name]
+```
+
+4. Import database schema.
+
+```
+npm run db:import
+```
+
+ * To view database ```pgweb --db=[database-name]```.
+ Then visit ```http://localhost:8081```
+
+5. Open a new console and start the Express API server.
+
+```
+npm run dev
+```
+
+6. View application at ```localhost:3000```.
+
 <h4>How to Use</h4>
 
-* Select the categories option on the navbar and enter information into the required fields to create categories.
-* Select the purchases option on the navbar and enter information into the required fields to create purchases.
+* Select the Categories option on the navbar and enter information into the required fields to create a category.
+* Select the Purchases option on the navbar and enter information into the required fields to create a purchase.
 * View charts related to your budget by choosing the Analysis option on the navbar.
-* Select the notes option on the navbar and enter information into the required fields to create notes pertaining to your budget.
+* Select the Notes option on the navbar and enter information into the required fields to create a note pertaining to your budget.
 
 
