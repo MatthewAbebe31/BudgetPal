@@ -26,7 +26,7 @@ class EditCategoryForm extends React.Component {
     const editedCategory = {
       categoryId: parseInt(this.props.categoryId),
       categoryName: this.state.categoryName,
-      categoryAmount: parseInt(this.state.categoryAmount)
+      categoryAmount: this.state.categoryAmount
     };
     this.props.onSubmit(editedCategory, editedCategory.categoryId);
     this.setState({ categoryName: '' });
