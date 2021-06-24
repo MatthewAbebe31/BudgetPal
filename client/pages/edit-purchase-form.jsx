@@ -1,11 +1,9 @@
 import React from 'react';
-import { useParams } from 'react-router';
 
 class EditPurchaseForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchases: [],
       purchaseId: '',
       category: '',
       description: '',
@@ -42,22 +40,18 @@ class EditPurchaseForm extends React.Component {
 
   handleSubmit(event) {
 
-    event.preventDefault();
-
     const editedPurchase = {
       purchaseId: parseInt(this.props.purchaseId),
       category: this.state.category,
       description: this.state.description,
       amount: parseInt(this.state.amount)
     };
-    this.props.onSubmit(editedPurchase);
+    this.props.onSubmit(editedPurchase, editedPurchase.purchaseId);
     this.setState({ category: '' });
     this.setState({ description: '' });
     this.setState({ amount: '' });
 
     window.location.hash = 'purchases';
-
-    console.log(editedPurchase);
   }
 
   render() {

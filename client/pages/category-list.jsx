@@ -1,50 +1,12 @@
 import React from 'react';
 
 class CategoryList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      categories: [],
-      isLoading: true
-    };
-    this.handleDelete = this.handleDelete.bind(this);
-  }
-
-  componentDidMount() {
-    fetch('/api/categories')
-      .then(res => res.json())
-      .then(data => this.setState({ categories: data, isLoading: false }));
-  }
-
-  handleDelete(event) {
-
-    const categoryId = event.target.id;
-    fetch(`/api/categories/categoryId/${categoryId}`, {
-      method: 'DELETE'
-    })
-      .catch(err => {
-        console.error(err);
-      });
-    fetch('/api/categories')
-      .then(res => res.json())
-      .then(data => this.setState({ categories: data }));
-
-    const id = parseInt(categoryId, 10);
-    const categories = this.state.categories.filter(category => category.categoryId !== id);
-    this.setState({ categories: categories });
-
-  }
-
   render() {
-    if (this.state.isLoading === true) {
-      console.log(this.state.isLoading);
-    }
-
     return (
       <div>
         <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>
         {
-          this.state.categories.map(category => {
+          this.props.categories.map(category => {
             return (
               <div key={category.categoryId}>
                 <div className="d-flex justify-content-center">
@@ -56,7 +18,7 @@ class CategoryList extends React.Component {
                         <a href={`#editCategories?categoryId=${category.categoryId}`}>
                           <button type="button" className="btn btn-link">Edit</button>
                         </a>
-                        <button type="button" id={category.categoryId} onClick={this.handleDelete} className="btn btn-link">Delete</button>
+                        <button type="button" id={category.categoryId} onClick={() => this.props.deleteCategory(category.categoryId)} className="btn btn-link">Delete</button>
                       </div>
                     </div>
                   </div>

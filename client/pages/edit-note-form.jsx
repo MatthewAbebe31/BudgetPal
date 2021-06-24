@@ -1,11 +1,9 @@
 import React from 'react';
-import { useParams } from 'react-router';
 
 class EditNoteForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notes: [],
       noteId: '',
       category: '',
       note: '',
@@ -36,20 +34,16 @@ class EditNoteForm extends React.Component {
 
   handleSubmit(event) {
 
-    event.preventDefault();
-
     const editedNote = {
       noteId: parseInt(this.props.noteId),
       category: this.state.category,
       note: this.state.note
     };
-    this.props.onSubmit(editedNote);
+    this.props.onSubmit(editedNote, editedNote.noteId);
     this.setState({ category: '' });
     this.setState({ note: '' });
 
     window.location.hash = 'notes';
-
-    console.log(editedNote);
   }
 
   render() {

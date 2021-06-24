@@ -1,11 +1,9 @@
 import React from 'react';
-import { useParams } from 'react-router';
 
 class EditCategoryForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: [],
       categoryId: '',
       categoryName: '',
       categoryAmount: ''
@@ -25,20 +23,16 @@ class EditCategoryForm extends React.Component {
 
   handleSubmit(event) {
 
-    event.preventDefault();
-
     const editedCategory = {
       categoryId: parseInt(this.props.categoryId),
       categoryName: this.state.categoryName,
       categoryAmount: parseInt(this.state.categoryAmount)
     };
-    this.props.onSubmit(editedCategory);
+    this.props.onSubmit(editedCategory, editedCategory.categoryId);
     this.setState({ categoryName: '' });
     this.setState({ categoryAmount: '' });
 
     window.location.hash = 'categories';
-
-    console.log(editedCategory);
   }
 
   render() {
