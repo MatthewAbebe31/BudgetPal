@@ -21,11 +21,29 @@ const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
 
+app.get('/api/categories', (req, res) => {
+  const sql = `
+    select *
+      from "categories"
+     order by "categoryId" desc
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
 app.get('/api/purchases', (req, res) => {
   const sql = `
     select *
       from "purchases"
-     order by "date" desc
+     order by "purchaseId" desc
   `;
   db.query(sql)
     .then(result => {
@@ -102,24 +120,6 @@ app.get('/api/purchases/countPurchasesByCategory', (req, res) => {
       from "purchases"
      group by "category"
      order by "category" desc
-  `;
-  db.query(sql)
-    .then(result => {
-      res.json(result.rows);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
-    });
-});
-
-app.get('/api/categories', (req, res) => {
-  const sql = `
-    select *
-      from "categories"
-     order by "categoryId" desc
   `;
   db.query(sql)
     .then(result => {
@@ -255,7 +255,7 @@ app.put('/api/categories', (req, res) => {
   const params = [categoryName, categoryAmount, categoryId];
   db.query(sql, params)
     .then(result => {
-      const category = result.rows;
+      const [category] = result.rows;
       res.status(201).json(category);
     })
     .catch(err => {
@@ -287,7 +287,7 @@ app.put('/api/purchases', (req, res) => {
   const params = [category, description, amount, purchaseId];
   db.query(sql, params)
     .then(result => {
-      const purchase = result.rows;
+      const [purchase] = result.rows;
       res.status(201).json(purchase);
     })
     .catch(err => {
@@ -318,7 +318,7 @@ app.put('/api/notes', (req, res) => {
   const params = [category, note, noteId];
   db.query(sql, params)
     .then(result => {
-      const note = result.rows;
+      const [note] = result.rows;
       res.status(201).json(note);
     })
     .catch(err => {

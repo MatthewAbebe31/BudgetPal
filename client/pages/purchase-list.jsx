@@ -2,42 +2,12 @@ import React from 'react';
 import { format } from 'date-fns';
 
 class PurchaseList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      purchases: [],
-      isLoading: true
-    };
-    this.handleDelete = this.handleDelete.bind(this);
-  }
-
-  componentDidMount() {
-    fetch('/api/purchases')
-      .then(res => res.json())
-      .then(data => this.setState({ purchases: data, isLoading: false }));
-  }
-
-  handleDelete(event) {
-    const purchaseId = event.target.id;
-    fetch(`/api/purchases/purchaseId/${purchaseId}`, {
-      method: 'DELETE'
-    });
-
-    const id = parseInt(event.target.id, 10);
-    const purchases = this.state.purchases.filter(purchase => purchase.purchaseId !== id);
-    this.setState({ purchases: purchases });
-
-  }
-
   render() {
-    if (this.state.isLoading === true) {
-      console.log(this.state.isLoading);
-    }
     return (
       <div>
         <h2 className="text-center mt-3 text-decoration-underline">Purchases</h2>
         {
-          this.state.purchases.map(purchase => {
+          this.props.purchases.map(purchase => {
             const date = purchase.date;
             const dateFormatted = format(new Date(date), 'MM/dd/yyyy');
             return (
@@ -53,7 +23,7 @@ class PurchaseList extends React.Component {
                         <a href={`#editPurchases?purchaseId=${purchase.purchaseId}`}>
                           <button type="button" className="btn btn-link">Edit</button>
                         </a>
-                        <button type="button" id={purchase.purchaseId} onClick={this.handleDelete} className="btn btn-link">Delete</button>
+                        <button type="button" id={purchase.purchaseId} onClick={() => this.props.deletePurchase(purchase.purchaseId)} className="btn btn-link">Delete</button>
                       </div>
                     </div>
                   </div>
