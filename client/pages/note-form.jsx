@@ -43,8 +43,6 @@ class NoteForm extends React.Component {
     this.props.onSubmit(newNote);
     this.setState({ category: '' });
     this.setState({ note: '' });
-
-    window.location.hash = '#notes';
   }
 
   render() {

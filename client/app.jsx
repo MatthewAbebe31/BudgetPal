@@ -79,7 +79,9 @@ export default class App extends React.Component {
         for (let i = 0; i < this.state.categories.length; i++) {
           newCategoryArr.unshift(this.state.categories[i]);
         }
-        this.setState({ categories: newCategoryArr });
+        this.setState({ categories: newCategoryArr }, () => {
+          window.location.hash = 'categories';
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -103,7 +105,9 @@ export default class App extends React.Component {
         for (let i = 0; i < this.state.purchases.length; i++) {
           newPurchaseArr.unshift(this.state.purchases[i]);
         }
-        this.setState({ purchases: newPurchaseArr });
+        this.setState({ purchases: newPurchaseArr }, () => {
+          window.location.hash = 'purchases';
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -127,7 +131,9 @@ export default class App extends React.Component {
         for (let i = 0; i < this.state.notes.length; i++) {
           newNoteArr.unshift(this.state.notes[i]);
         }
-        this.setState({ notes: newNoteArr });
+        this.setState({ notes: newNoteArr }, () => {
+          window.location.hash = 'notes';
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -184,7 +190,9 @@ export default class App extends React.Component {
       .then(data => {
         const newPurchases = this.state.purchases.slice();
         newPurchases[index] = data;
-        this.setState({ purchases: newPurchases });
+        this.setState({ purchases: newPurchases }, () => {
+          window.location.hash = 'purchases';
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -211,7 +219,9 @@ export default class App extends React.Component {
       .then(data => {
         const newNotes = this.state.notes.slice();
         newNotes[index] = data;
-        this.setState({ notes: newNotes });
+        this.setState({ notes: newNotes }, () => {
+          window.location.hash = 'notes';
+        });
       })
       .catch(error => {
         console.error('Error:', error);

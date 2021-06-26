@@ -51,8 +51,6 @@ class PurchaseForm extends React.Component {
     this.setState({ category: '' });
     this.setState({ description: '' });
     this.setState({ amount: '' });
-
-    window.location.hash = '#purchases';
   }
 
   render() {

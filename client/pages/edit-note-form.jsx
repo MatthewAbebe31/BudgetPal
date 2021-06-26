@@ -42,8 +42,6 @@ class EditNoteForm extends React.Component {
     this.props.onSubmit(editedNote, editedNote.noteId);
     this.setState({ category: '' });
     this.setState({ note: '' });
-
-    window.location.hash = 'notes';
   }
 
   render() {

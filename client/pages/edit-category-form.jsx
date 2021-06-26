@@ -31,8 +31,6 @@ class EditCategoryForm extends React.Component {
     this.props.onSubmit(editedCategory, editedCategory.categoryId);
     this.setState({ categoryName: '' });
     this.setState({ categoryAmount: '' });
-
-    window.location.hash = 'categories';
   }
 
   render() {
