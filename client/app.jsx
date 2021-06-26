@@ -155,7 +155,9 @@ export default class App extends React.Component {
       .then(data => {
         const newCategories = this.state.categories.slice();
         newCategories[index] = data;
-        this.setState({ categories: newCategories });
+        this.setState({ categories: newCategories }, () => {
+          window.location.hash = 'categories';
+        });
       })
       .catch(error => {
         console.error('Error:', error);

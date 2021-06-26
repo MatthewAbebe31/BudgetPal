@@ -31,8 +31,6 @@ class CategoryForm extends React.Component {
     this.props.onSubmit(newCategory);
     this.setState({ categoryName: '' });
     this.setState({ categoryAmount: '' });
-
-    window.location.hash = '#categories';
   }
 
   render() {
