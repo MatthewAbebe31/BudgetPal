@@ -33,7 +33,7 @@ class EditNoteForm extends React.Component {
   }
 
   handleSubmit(event) {
-
+    event.preventDefault();
     const editedNote = {
       noteId: parseInt(this.props.noteId),
       category: this.state.category,

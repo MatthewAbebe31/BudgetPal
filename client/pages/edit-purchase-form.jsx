@@ -39,7 +39,7 @@ class EditPurchaseForm extends React.Component {
   }
 
   handleSubmit(event) {
-
+    event.preventDefault();
     const editedPurchase = {
       purchaseId: parseInt(this.props.purchaseId),
       category: this.state.category,

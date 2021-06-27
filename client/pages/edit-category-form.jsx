@@ -22,7 +22,7 @@ class EditCategoryForm extends React.Component {
   }
 
   handleSubmit(event) {
-
+    event.preventDefault();
     const editedCategory = {
       categoryId: parseInt(this.props.categoryId),
       categoryName: this.state.categoryName,
