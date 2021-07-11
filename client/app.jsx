@@ -18,6 +18,9 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isCategoriesLoaded: false,
+      isPurchasesLoaded: false,
+      isNotesLoaded: false,
       purchases: [],
       categories: [],
       notes: [],
@@ -47,19 +50,19 @@ export default class App extends React.Component {
   getAllCategories() {
     fetch('/api/categories')
       .then(response => response.json())
-      .then(data => this.setState({ categories: data }));
+      .then(data => this.setState({ categories: data, isCategoriesLoaded: true }));
   }
 
   getAllPurchases() {
     fetch('/api/purchases')
       .then(response => response.json())
-      .then(data => this.setState({ purchases: data }));
+      .then(data => this.setState({ purchases: data, isPurchasesLoaded: true }));
   }
 
   getAllNotes() {
     fetch('/api/notes')
       .then(response => response.json())
-      .then(data => this.setState({ notes: data }));
+      .then(data => this.setState({ notes: data, isNotesLoaded: true }));
   }
 
   addCategory(newCategory) {
@@ -275,8 +278,11 @@ export default class App extends React.Component {
 
   renderPage() {
 
-    const { route } = this.state;
+    const { route, isCategoriesLoaded, isPurchasesLoaded, isNotesLoaded } = this.state;
 
+    if (!isCategoriesLoaded || !isPurchasesLoaded || !isNotesLoaded) {
+      return <div>Loading...</div>;
+    }
     if (route.path === '') {
       return <Home />;
     }
@@ -306,7 +312,7 @@ export default class App extends React.Component {
     }
     if (route.path === 'editNotes') {
       const noteId = route.params.get('noteId');
-      return <EditNoteForm noteId={noteId} onSubmit={this.putNote} />;
+      return <EditNoteForm note={this.state.notes.find(note => `${note.noteId}` === noteId)} onSubmit={this.putNote} />;
     }
     if (route.path === 'editPurchases') {
       const purchaseId = route.params.get('purchaseId');
