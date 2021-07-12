@@ -43,7 +43,7 @@ class EditPurchaseForm extends React.Component {
       purchaseId: parseInt(this.props.purchase.purchaseId),
       category: this.state.category,
       description: this.state.description,
-      amount: this.state.amount
+      amount: parseInt(this.state.amount).toFixed(2)
     };
     this.props.onSubmit(editedPurchase, editedPurchase.purchaseId);
     this.setState({ category: '' });

@@ -45,7 +45,7 @@ class PurchaseForm extends React.Component {
       purchaseId: this.state.purchaseId,
       category: this.state.category,
       description: this.state.description,
-      amount: this.state.amount
+      amount: parseInt(this.state.amount).toFixed(2)
     };
     this.props.onSubmit(newPurchase);
     this.setState({ category: '' });
