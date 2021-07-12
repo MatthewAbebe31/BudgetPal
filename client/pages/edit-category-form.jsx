@@ -4,9 +4,8 @@ class EditCategoryForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryId: '',
-      categoryName: '',
-      categoryAmount: ''
+      categoryName: props.category.categoryName,
+      categoryAmount: props.category.categoryAmount
     };
     this.handleEditCategoryNameInputChange = this.handleEditCategoryNameInputChange.bind(this);
     this.handleEditCategoryAmountInputChange = this.handleEditCategoryAmountInputChange.bind(this);
@@ -24,7 +23,7 @@ class EditCategoryForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const editedCategory = {
-      categoryId: parseInt(this.props.categoryId),
+      categoryId: parseInt(this.props.category.categoryId),
       categoryName: this.state.categoryName,
       categoryAmount: this.state.categoryAmount
     };

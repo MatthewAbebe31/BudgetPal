@@ -18,20 +18,7 @@ class CategoryList extends React.Component {
                         <a href={`#editCategories?categoryId=${category.categoryId}`}>
                           <button type="button" className="btn btn-link">Edit</button>
                         </a>
-                        <button type="button" id={category.categoryId} onClick={() => {
-                          for (let i = 0; i < this.props.purchases.length; i++) {
-                            console.log('this.props.purchases.category', typeof this.props.purchases[i].category, this.props.purchases[i].category);
-                            console.log('category.categoryName', typeof category.categoryName, category.categoryName);
-                            if (this.props.purchases[i].category === category.categoryName) {
-                              alert('This category contains purchases. Are you sure you want to delete?');
-                              // build modal with yes no option, if click yes then delete, if no then don't.
-                            } else {
-                              this.props.deleteCategory(category.categoryId);
-                            }
-                          }
-                        }
-                      }
-                        className="btn btn-link">Delete</button>
+                        <button type="button" id={category.categoryId} onClick={() => this.props.deleteCategory(category.categoryId)} className="btn btn-link">Delete</button>
                       </div>
                     </div>
                   </div>

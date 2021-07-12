@@ -317,11 +317,11 @@ export default class App extends React.Component {
     }
     if (route.path === 'editPurchases') {
       const purchaseId = route.params.get('purchaseId');
-      return <EditPurchaseForm purchaseId={purchaseId} onSubmit={this.putPurchase} />;
+      return <EditPurchaseForm purchase={this.state.purchases.find(purchase => `${purchase.purchaseId}` === purchaseId)} onSubmit={this.putPurchase} />;
     }
     if (route.path === 'editCategories') {
       const categoryId = route.params.get('categoryId');
-      return <EditCategoryForm categoryId={categoryId} onSubmit={this.putCategory} />;
+      return <EditCategoryForm category={this.state.categories.find(category => `${category.categoryId}` === categoryId)} onSubmit={this.putCategory} />;
     }
     if (route.path === 'analysis') {
       return <Analysis />;
