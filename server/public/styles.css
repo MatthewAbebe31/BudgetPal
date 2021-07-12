@@ -103,11 +103,6 @@ canvas {
   margin-top: 20px;
 }
 
-.content-container {
-  min-height: 100vh;
-  margin-bottom: 60px;
-}
-
 footer {
   display: flex;
   justify-content: center;
@@ -165,7 +160,7 @@ footer {
 
 @media only screen and (max-width: 767px) {
   footer {
-    position: fixed !important;
+    position: fixed;
   }
 }
 
