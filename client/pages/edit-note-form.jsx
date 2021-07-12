@@ -49,7 +49,7 @@ class EditNoteForm extends React.Component {
     const optionTemplate = this.state.selectCategory.map((v, key) => (
       <option key={key} value={v.id}>{v.categoryName}</option>
     ));
-    console.log(this.props);
+
     return (
       <div className="row">
         <div className="col">

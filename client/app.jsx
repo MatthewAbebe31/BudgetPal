@@ -289,6 +289,7 @@ export default class App extends React.Component {
     if (route.path === 'categories') {
       return <CategoryList
         categories={this.state.categories}
+        purchases={this.state.purchases}
         deleteCategory={this.deleteCategory} />;
     }
     if (route.path === 'purchases') {
