@@ -18,19 +18,7 @@ class CategoryList extends React.Component {
                         <a href={`#editCategories?categoryId=${category.categoryId}`}>
                           <button type="button" className="btn btn-link">Edit</button>
                         </a>
-                        <button type="button" id={category.categoryId} onClick={() => {
-                          for (let i = 0; i < this.props.purchases.length; i++) {
-                            if (this.props.purchases[i].category === category.categoryName) {
-                              const r = confirm('This category contains purchases. Are you sure you want to delete?');
-                              if (r === true) {
-                                this.props.deleteCategory(category.categoryId);
-                              } else {
-                                return;
-                              }
-                            }
-                          }
-                        }
-                        }
+                        <button type="button" id={category.categoryId} onClick={() => this.props.deleteCategory(category.categoryId)}
                           className="btn btn-link">Delete</button>
                       </div>
                     </div>

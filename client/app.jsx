@@ -233,17 +233,41 @@ export default class App extends React.Component {
 
   deleteCategory(categoryId) {
 
+    let category = null;
+
+    for (let l = 0; l < this.state.categories.length; l++) {
+      if (this.state.categories[l].categoryId === categoryId) {
+        category = this.state.categories[l].categoryName;
+      }
+    }
+    const purchasesArr = this.state.purchases.filter(purchase =>
+      purchase.category === category
+    );
+    if (purchasesArr.length > 0) {
+      const r = confirm('This category contains purchases. Are you sure you want to delete?');
+      if (r === false) {
+        return;
+      }
+    }
     fetch(`/api/categories/categoryId/${categoryId}`, {
       method: 'DELETE'
     })
-      .catch(err => {
-        console.error(err);
+      .then(data => {
+        if (data.ok) {
+          fetch('/api/categories')
+            .then(data => {
+              if (data.ok) {
+                return data.json();
+              }
+            })
+            .catch(error => console.error(error))
+            .then(response => {
+              this.setState({ categories: response });
+            });
+        } else {
+          throw new Error(data);
+        }
       });
-
-    const id = parseInt(categoryId, 10);
-    const categories = this.state.categories.filter(category => category.categoryId !== id);
-    this.setState({ categories: categories });
-
   }
 
   deletePurchase(purchaseId) {
