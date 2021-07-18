@@ -233,23 +233,26 @@ export default class App extends React.Component {
 
   deleteCategory(categoryId) {
 
-    let category = null;
+    let categoryName = null;
 
     for (let l = 0; l < this.state.categories.length; l++) {
       if (this.state.categories[l].categoryId === categoryId) {
-        category = this.state.categories[l].categoryName;
+        categoryName = this.state.categories[l].categoryName;
       }
     }
+
     const purchasesArr = this.state.purchases.filter(purchase =>
-      purchase.category === category
+      purchase.category === categoryName
     );
+
     if (purchasesArr.length > 0) {
       const r = confirm('This category contains purchases. Are you sure you want to delete?');
       if (r === false) {
         return;
       }
     }
-    fetch(`/api/categories/categoryId/${categoryId}`, {
+
+    fetch(`/api/categories/${categoryId}`, {
       method: 'DELETE'
     })
       .then(data => {
@@ -272,7 +275,7 @@ export default class App extends React.Component {
 
   deletePurchase(purchaseId) {
 
-    fetch(`/api/purchases/purchaseId/${purchaseId}`, {
+    fetch(`/api/purchases/${purchaseId}`, {
       method: 'DELETE'
     })
       .catch(err => {
@@ -287,7 +290,7 @@ export default class App extends React.Component {
 
   deleteNote(noteId) {
 
-    fetch(`/api/notes/noteId/${noteId}`, {
+    fetch(`/api/notes/${noteId}`, {
       method: 'DELETE'
     })
       .catch(err => {

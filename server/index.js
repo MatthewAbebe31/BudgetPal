@@ -329,15 +329,59 @@ app.put('/api/notes', (req, res) => {
     });
 });
 
-app.delete('/api/:table/:columnId/:id', function (req, res, next) {
-  const id = req.params.id;
-  const table = req.params.table;
-  const columnId = req.params.columnId;
+app.delete('/api/categories/:categoryId', function (req, res, next) {
+  const categoryId = parseInt(req.params.categoryId);
+
   const sql = `
-  delete from "${table}"
-  where "${columnId}" = $1
-  returning * `;
-  const params = [id];
+    delete from "categories"
+    where "categoryId" = $1
+    returning *
+  `;
+
+  const params = [categoryId];
+
+  db.query(sql, params)
+    .then(result => {
+      const data = result.rows[0];
+      res.status(204).json(data);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.delete('/api/purchases/:purchaseId', function (req, res, next) {
+  const purchaseId = parseInt(req.params.purchaseId);
+
+  const sql = `
+    delete from "purchases"
+    where "purchaseId" = $1
+    returning *
+  `;
+
+  const params = [purchaseId];
+
+  db.query(sql, params)
+    .then(result => {
+      const data = result.rows[0];
+      res.status(204).json(data);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+app.delete('/api/notes/:noteId', function (req, res, next) {
+  const noteId = parseInt(req.params.noteId);
+
+  const sql = `
+    delete from "notes"
+    where "noteId" = $1
+    returning *
+  `;
+
+  const params = [noteId];
+
   db.query(sql, params)
     .then(result => {
       const data = result.rows[0];
