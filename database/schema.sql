@@ -9,6 +9,7 @@ create schema "public";
 
 create table "purchases" (
   "purchaseId"      serial,
+  "categoryId"      numeric not null,
   "category"        text    not null,
   "description"     text    not null,
   "amount"          numeric  not null,

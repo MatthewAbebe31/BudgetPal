@@ -5,6 +5,7 @@ class PurchaseForm extends React.Component {
     super(props);
     this.state = {
       purchaseId: '',
+      categoryId: '',
       category: '',
       description: '',
       amount: '',
@@ -28,6 +29,12 @@ class PurchaseForm extends React.Component {
   }
 
   handleCategoryInputChange(event) {
+    this.state.selectCategory.map(category => {
+      if (category.categoryName === event.target.value) {
+        this.setState({ categoryId: category.categoryId });
+      }
+      return this.state.categoryId;
+    });
     this.setState({ category: event.target.value });
   }
 
@@ -43,6 +50,7 @@ class PurchaseForm extends React.Component {
     event.preventDefault();
     const newPurchase = {
       purchaseId: this.state.purchaseId,
+      categoryId: this.state.categoryId,
       category: this.state.category,
       description: this.state.description,
       amount: parseInt(this.state.amount).toFixed(2)

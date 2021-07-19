@@ -153,19 +153,19 @@ app.get('/api/notes', (req, res) => {
 
 app.post('/api/purchases', (req, res) => {
 
-  const { category, description, amount } = req.body;
-  if (!category || !description || !amount) {
+  const { categoryId, category, description, amount } = req.body;
+  if (!categoryId || !category || !description || !amount) {
     res.status(400).json({
       error: 'Please enter required fields'
     });
     return;
   }
   const sql = `
-    insert into "purchases" ("category", "description", "amount")
-    values ($1, $2, $3)
+    insert into "purchases" ("categoryId", "category", "description", "amount")
+    values ($1, $2, $3, $4)
     returning *
   `;
-  const params = [category, description, amount];
+  const params = [categoryId, category, description, amount];
   db.query(sql, params)
     .then(result => {
       const [purchase] = result.rows;
@@ -329,24 +329,50 @@ app.put('/api/notes', (req, res) => {
     });
 });
 
+// app.delete('/api/categories/:categoryId', function (req, res, next) {
+//   const categoryId = parseInt(req.params.categoryId);
+
+//   const sql = `
+//     delete from "categories"
+//     where "categoryId" = $1
+//     returning *
+//   `;
+
+//   const params = [categoryId];
+
+//   db.query(sql, params)
+//     .then(result => {
+//       const data = result.rows[0];
+//       res.status(204).json(data);
+//     })
+//     .catch(err => {
+//       next(err);
+//     });
+// });
+
 app.delete('/api/categories/:categoryId', function (req, res, next) {
   const categoryId = parseInt(req.params.categoryId);
-
   const sql = `
     delete from "categories"
     where "categoryId" = $1
     returning *
   `;
-
+  const secondSql = `
+    delete from "purchases"
+    where "categoryId" = $1
+    returning *
+  `;
   const params = [categoryId];
 
-  db.query(sql, params)
-    .then(result => {
-      const data = result.rows[0];
-      res.status(204).json(data);
-    })
+  Promise.all([
+    db.query(sql, params),
+    db.query(secondSql, params)
+  ]).then(result => {
+    res.sendStatus(204);
+  })
     .catch(err => {
-      next(err);
+      console.error(err);
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
