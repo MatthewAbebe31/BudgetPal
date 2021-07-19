@@ -266,6 +266,8 @@ export default class App extends React.Component {
           throw new Error(data);
         }
       });
+
+    window.location.reload();
   }
 
   deletePurchase(purchaseId) {
