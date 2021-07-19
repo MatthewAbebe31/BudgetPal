@@ -67,8 +67,6 @@ export default class App extends React.Component {
 
   addCategory(newCategory) {
 
-    const newCategoryArr = [];
-
     fetch('/api/categories', {
       method: 'POST',
       headers: {
@@ -78,10 +76,7 @@ export default class App extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.state.categories.push(data);
-        for (let i = 0; i < this.state.categories.length; i++) {
-          newCategoryArr.unshift(this.state.categories[i]);
-        }
+        const newCategoryArr = this.state.categories.concat(data);
         this.setState({ categories: newCategoryArr }, () => {
           window.location.hash = 'categories';
         });
@@ -278,13 +273,22 @@ export default class App extends React.Component {
     fetch(`/api/purchases/${purchaseId}`, {
       method: 'DELETE'
     })
-      .catch(err => {
-        console.error(err);
+      .then(data => {
+        if (data.ok) {
+          fetch('/api/purchases')
+            .then(data => {
+              if (data.ok) {
+                return data.json();
+              }
+            })
+            .catch(error => console.error(error))
+            .then(response => {
+              this.setState({ purchases: response });
+            });
+        } else {
+          throw new Error(data);
+        }
       });
-
-    const id = parseInt(purchaseId, 10);
-    const purchases = this.state.purchases.filter(purchase => purchase.purchaseId !== id);
-    this.setState({ purchases: purchases });
 
   }
 
@@ -293,13 +297,22 @@ export default class App extends React.Component {
     fetch(`/api/notes/${noteId}`, {
       method: 'DELETE'
     })
-      .catch(err => {
-        console.error(err);
+      .then(data => {
+        if (data.ok) {
+          fetch('/api/notes')
+            .then(data => {
+              if (data.ok) {
+                return data.json();
+              }
+            })
+            .catch(error => console.error(error))
+            .then(response => {
+              this.setState({ notes: response });
+            });
+        } else {
+          throw new Error(data);
+        }
       });
-
-    const id = parseInt(noteId, 10);
-    const notes = this.state.notes.filter(note => note.noteId !== id);
-    this.setState({ notes: notes });
 
   }
 
@@ -333,7 +346,7 @@ export default class App extends React.Component {
       return <NoteForm onSubmit={this.addNote} />;
     }
     if (route.path === 'addNewPurchases') {
-      return <PurchaseForm onSubmit={this.addPurchase} />;
+      return <PurchaseForm categories={this.state.categories} onSubmit={this.addPurchase} />;
     }
     if (route.path === 'addNewCategories') {
       return <CategoryForm onSubmit={this.addCategory} />;
