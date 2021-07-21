@@ -8,8 +8,12 @@ class Analysis extends React.Component {
     this.state = {
       labels: [],
       chartData: [],
+      indexLabels: [],
+      spendingIndexData: [],
       purchasesByDayLabels: [],
       purchasesByDayChartData: [],
+      totalAmountByCategoryChartData: [],
+      totalAmountByCategoryLabels: [],
       spendingByCategoryLabels: [],
       spendingByCategoryChartData: [],
       purchasesByCategoryLabels: [],
@@ -52,6 +56,41 @@ class Analysis extends React.Component {
         }
         this.setState({ spendingByCategoryLabels: spendingByCategoryLabels });
         this.setState({ spendingByCategoryChartData: spendingByCategoryChartData });
+      });
+
+    fetch('/api/categories/categoryBudget')
+      .then(res => res.json())
+      .then(data => {
+
+        // console.log(data);
+
+        const budgetIndexArr = [];
+        const spendingIndexArr = [];
+        const indexLabelsArr = [];
+
+        this.setState({ indexData: data });
+
+        for (let z = 0; z < data[0].rows.length; z++) {
+          budgetIndexArr.push(data[0].rows.[z]);
+        }
+
+        for (let y = 0; y < data[1].rows.length; y++) {
+          spendingIndexArr.push(data[1].rows.[y]);
+        }
+
+        for (let i = 0; i < budgetIndexArr.length; i++) {
+          for (let m = 0; m < spendingIndexArr.length; m++) {
+            if (budgetIndexArr[i].categoryName === spendingIndexArr[m].Category) {
+              spendingIndexArr[m].budgetAmount = budgetIndexArr[i].categoryamount;
+              indexLabelsArr.push(spendingIndexArr[m].Category);
+              this.setState({ spendingIndexData: spendingIndexArr });
+              this.setState({ indexLabels: indexLabelsArr });
+            }
+          }
+        }
+
+        console.log(this.state.spendingIndexData);
+        console.log(this.state.indexLabels);
       });
 
     fetch('/api/purchases/countPurchases')
@@ -191,34 +230,86 @@ class Analysis extends React.Component {
       aspectRatio: 1.8
     };
 
-    const purchasesByCategoryData = {
-      labels: this.state.purchasesByCategoryLabels,
+    // const purchasesByCategoryData = {
+    //   labels: this.state.purchasesByCategoryLabels,
+    //   datasets: [
+    //     {
+    //       label: 'Purchases',
+    //       data: this.state.purchasesByCategoryChartData,
+    //       backgroundColor: [
+    //         'rgba(255, 99, 132, 0.2)',
+    //         'rgba(54, 162, 235, 0.2)',
+    //         'rgba(255, 206, 86, 0.2)',
+    //         'rgba(75, 192, 192, 0.2)',
+    //         'rgba(153, 102, 255, 0.2)',
+    //         'rgba(255, 159, 64, 0.2)'
+    //       ],
+    //       borderColor: [
+    //         'rgba(255, 99, 132, 1)',
+    //         'rgba(54, 162, 235, 1)',
+    //         'rgba(255, 206, 86, 1)',
+    //         'rgba(75, 192, 192, 1)',
+    //         'rgba(153, 102, 255, 1)',
+    //         'rgba(255, 159, 64, 1)'
+    //       ],
+    //       borderWidth: 1
+    //     }
+    //   ]
+    // };
+
+    // const purchasesByCategoryOptions = {
+    //   scales: {
+    //     yAxes: {
+    //       axis: 'y',
+
+    //       ticks: {
+    //         beginAtZero: true,
+    //         stepSize: 1
+    //       }
+    //     }
+    //   }
+    // };
+
+    const budgetByCategoryData = {
+      labels: this.state.indexLabels,
       datasets: [
         {
-          label: 'Purchases',
-          data: this.state.purchasesByCategoryChartData,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+          label: 'Budget',
+          data: this.state.spendingIndexData,
+          parsing: {
+            yAxisKey: 'budgetAmount'
+          },
+          fill: false,
+          backgroundColor: ['rgba(30, 139, 195, 1)',
+            'rgba(255, 159, 64)', 'rgb(255, 205, 86)',
+            'rgb(0, 163, 51)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)',
+            'rgb(0,0,255)'],
+          borderColor: 'rgba(30, 139, 195, 1)'
+        },
+        {
+          label: 'Spending',
+          data: this.state.spendingIndexData,
+          parsing: {
+            yAxisKey: 'totalSpent'
+          },
+          fill: false,
+          backgroundColor: ['rgba(30, 139, 195, 1)',
+            'rgba(255, 159, 64)', 'rgb(255, 205, 86)',
+            'rgb(0, 163, 51)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)',
+            'rgb(0,0,255)'],
+          borderColor: 'rgba(30, 139, 195, 1)'
         }
+
       ]
     };
 
-    const purchasesByCategoryOptions = {
+    const budgetByCategoryOptions = {
       scales: {
         yAxes: {
           axis: 'y',
@@ -275,7 +366,7 @@ class Analysis extends React.Component {
               </div>
             </div>
 
-            <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
+            {/* <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
 
               <div className="purchases-by-time-category-container mt-3 text-center w-75">
 
@@ -287,7 +378,22 @@ class Analysis extends React.Component {
                   <Bar data={purchasesByCategoryData} options={purchasesByCategoryOptions} />
                 </div>
               </div>
+            </div> */}
+
+            <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
+
+              <div className="purchases-by-time-category-container mt-3 text-center w-75">
+
+                <div className='purchases-by-category-header mb-3 mt-3'>
+                  <h4 className='chart-title'>Budget by Category</h4>
+                </div>
+
+                <div>
+                  <Bar data={budgetByCategoryData} options={budgetByCategoryOptions} />
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </>

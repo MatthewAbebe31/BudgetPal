@@ -114,6 +114,38 @@ app.get('/api/purchases/categorySpending', (req, res) => {
     });
 });
 
+app.get('/api/categories/categoryBudget', (req, res) => {
+  const sql = `
+    select sum("categoryAmount") as categoryAmount, "categoryName"
+      from "categories"
+     group by "categoryName"
+     order by "categoryName" desc
+  `;
+
+  const secondSql = `
+    select sum("amount") as "totalSpent", "category" as "Category"
+      from "purchases"
+      join "categories" on ("category" = "categoryName")
+     group by "category"
+     order by "category" desc
+  `;
+
+  Promise.all([
+    db.query(sql),
+    db.query(secondSql)
+  ]).then(results => {
+    // const firstResult = results[0];
+    // const secondResult = results[1];
+    // res.status(200).json(firstResult);
+    // res.status(200).json(secondResult);
+    res.status(200).json(results);
+  })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'an unexpected error occurred' });
+    });
+});
+
 app.get('/api/purchases/countPurchasesByCategory', (req, res) => {
   const sql = `
     select count("purchaseId") as purchases, "category"
