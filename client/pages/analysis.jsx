@@ -271,7 +271,6 @@ class Analysis extends React.Component {
     // };
 
     const budgetByCategoryData = {
-      labels: this.state.indexLabels,
       datasets: [
         {
           label: 'Budget',

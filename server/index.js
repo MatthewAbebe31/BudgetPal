@@ -25,7 +25,6 @@ app.get('/api/categories', (req, res) => {
   const sql = `
     select *
       from "categories"
-      join "purchases" using ("categoryId")
      order by "categoryId" desc
   `;
   db.query(sql)
