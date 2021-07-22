@@ -25,6 +25,7 @@ app.get('/api/categories', (req, res) => {
   const sql = `
     select *
       from "categories"
+      join "purchases" using ("categoryId")
      order by "categoryId" desc
   `;
   db.query(sql)
@@ -123,7 +124,7 @@ app.get('/api/categories/categoryBudget', (req, res) => {
   `;
 
   const secondSql = `
-    select sum("amount") as "totalSpent", "category" as "Category"
+    select sum("amount") as "totalSpent", "category" as "x"
       from "purchases"
       join "categories" on ("category" = "categoryName")
      group by "category"
@@ -134,10 +135,6 @@ app.get('/api/categories/categoryBudget', (req, res) => {
     db.query(sql),
     db.query(secondSql)
   ]).then(results => {
-    // const firstResult = results[0];
-    // const secondResult = results[1];
-    // res.status(200).json(firstResult);
-    // res.status(200).json(secondResult);
     res.status(200).json(results);
   })
     .catch(err => {

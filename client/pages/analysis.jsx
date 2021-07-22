@@ -62,7 +62,7 @@ class Analysis extends React.Component {
       .then(res => res.json())
       .then(data => {
 
-        // console.log(data);
+        console.log('data', data);
 
         const budgetIndexArr = [];
         const spendingIndexArr = [];
@@ -80,17 +80,17 @@ class Analysis extends React.Component {
 
         for (let i = 0; i < budgetIndexArr.length; i++) {
           for (let m = 0; m < spendingIndexArr.length; m++) {
-            if (budgetIndexArr[i].categoryName === spendingIndexArr[m].Category) {
+            if (budgetIndexArr[i].categoryName === spendingIndexArr[m].x) {
               spendingIndexArr[m].budgetAmount = budgetIndexArr[i].categoryamount;
-              indexLabelsArr.push(spendingIndexArr[m].Category);
+              indexLabelsArr.push(spendingIndexArr[m].x);
               this.setState({ spendingIndexData: spendingIndexArr });
               this.setState({ indexLabels: indexLabelsArr });
             }
           }
         }
 
-        console.log(this.state.spendingIndexData);
-        console.log(this.state.indexLabels);
+        console.log('spendingIndexData', this.state.spendingIndexData);
+        console.log('indexLabels', this.state.indexLabels);
       });
 
     fetch('/api/purchases/countPurchases')
