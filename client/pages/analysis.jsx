@@ -8,7 +8,6 @@ class Analysis extends React.Component {
     this.state = {
       labels: [],
       chartData: [],
-      indexLabels: [],
       spendingIndexData: [],
       purchasesByDayLabels: [],
       purchasesByDayChartData: [],
@@ -62,11 +61,8 @@ class Analysis extends React.Component {
       .then(res => res.json())
       .then(data => {
 
-        console.log('data', data);
-
         const budgetIndexArr = [];
         const spendingIndexArr = [];
-        const indexLabelsArr = [];
 
         this.setState({ indexData: data });
 
@@ -83,15 +79,11 @@ class Analysis extends React.Component {
             if (budgetIndexArr[i].categoryName === spendingIndexArr[m].x) {
               spendingIndexArr[m].budgetAmount = budgetIndexArr[i].categoryamount;
               spendingIndexArr[m].budgetVariance = budgetIndexArr[i].categoryamount - spendingIndexArr[m].totalSpent;
-              indexLabelsArr.push(spendingIndexArr[m].x);
               this.setState({ spendingIndexData: spendingIndexArr });
-              this.setState({ indexLabels: indexLabelsArr });
             }
           }
         }
 
-        console.log('spendingIndexData', this.state.spendingIndexData);
-        console.log('indexLabels', this.state.indexLabels);
       });
 
     fetch('/api/purchases/countPurchases')
@@ -171,49 +163,6 @@ class Analysis extends React.Component {
       }
     };
 
-    // const purchasesByDayData = {
-    //   labels: this.state.purchasesByDayLabels,
-    //   datasets: [
-    //     {
-    //       label: 'Purchases',
-    //       data: this.state.purchasesByDayChartData,
-    //       backgroundColor: [
-    //         'rgba(255, 99, 132, 0.2)',
-    //         'rgba(54, 162, 235, 0.2)',
-    //         'rgba(255, 206, 86, 0.2)',
-    //         'rgba(75, 192, 192, 0.2)',
-    //         'rgba(153, 102, 255, 0.2)',
-    //         'rgba(255, 159, 64, 0.2)'
-    //       ],
-    //       borderColor: [
-    //         'rgba(255, 99, 132, 1)',
-    //         'rgba(54, 162, 235, 1)',
-    //         'rgba(255, 206, 86, 1)',
-    //         'rgba(75, 192, 192, 1)',
-    //         'rgba(153, 102, 255, 1)',
-    //         'rgba(255, 159, 64, 1)'
-    //       ],
-    //       borderWidth: 1
-    //     }
-    //   ]
-    // };
-
-    // const purchasesByDayOptions = {
-    //   scales: {
-    //     yAxes: {
-    //       axis: 'y',
-
-    //       ticks: {
-    //         beginAtZero: true,
-    //         callback: function (value) { if (Number.isInteger(value)) { return value; } },
-    //         stepSize: 1
-    //       }
-    //     },
-    //     xAxes: {
-    //       reverse: true
-    //     }
-    //   }
-    // };
     const purchasesByCategoryData = {
       labels: this.state.purchasesByCategoryLabels,
       datasets: [
@@ -221,22 +170,22 @@ class Analysis extends React.Component {
           label: 'Purchases',
           data: this.state.purchasesByCategoryChartData,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+            'rgba(255, 99, 132)',
+            'rgba(54, 162, 235)',
+            'rgba(255, 206, 86)',
+            'rgba(75, 192, 192)',
+            'rgba(153, 102, 255)',
+            'rgba(255, 159, 64)'
+          ]
+          // borderColor: [
+          //   'rgba(255, 99, 132, 1)',
+          //   'rgba(54, 162, 235, 1)',
+          //   'rgba(255, 206, 86, 1)',
+          //   'rgba(75, 192, 192, 1)',
+          //   'rgba(153, 102, 255, 1)',
+          //   'rgba(255, 159, 64, 1)'
+          // ],
+          // borderWidth: 1
         }
       ]
     };
@@ -376,20 +325,6 @@ class Analysis extends React.Component {
                 </div>
               </div>
             </div>
-
-            {/* <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
-
-              <div className="purchases-by-time-category-container mt-3 text-center w-75">
-
-                <div className='purchases-by-category-header mb-3 mt-3'>
-                  <h4 className='chart-title'>Purchases by Category</h4>
-                </div>
-
-                <div>
-                  <Bar data={purchasesByCategoryData} options={purchasesByCategoryOptions} />
-                </div>
-              </div>
-            </div> */}
 
             <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
 

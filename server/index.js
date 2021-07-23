@@ -358,27 +358,6 @@ app.put('/api/notes', (req, res) => {
     });
 });
 
-// app.delete('/api/categories/:categoryId', function (req, res, next) {
-//   const categoryId = parseInt(req.params.categoryId);
-
-//   const sql = `
-//     delete from "categories"
-//     where "categoryId" = $1
-//     returning *
-//   `;
-
-//   const params = [categoryId];
-
-//   db.query(sql, params)
-//     .then(result => {
-//       const data = result.rows[0];
-//       res.status(204).json(data);
-//     })
-//     .catch(err => {
-//       next(err);
-//     });
-// });
-
 app.delete('/api/categories/:categoryId', function (req, res, next) {
   const categoryId = parseInt(req.params.categoryId);
   const sql = `

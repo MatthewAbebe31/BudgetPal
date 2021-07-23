@@ -94,8 +94,6 @@ export default class App extends React.Component {
 
   addPurchase(newPurchase) {
 
-    const newPurchaseArr = [];
-
     fetch('/api/purchases', {
       method: 'POST',
       headers: {
@@ -106,9 +104,7 @@ export default class App extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.state.purchases.push(data);
-        for (let i = 0; i < this.state.purchases.length; i++) {
-          newPurchaseArr.unshift(this.state.purchases[i]);
-        }
+        const newPurchaseArr = this.state.purchases.concat(data);
         this.setState({ purchases: newPurchaseArr }, () => {
           window.location.hash = 'purchases';
         });
@@ -120,8 +116,6 @@ export default class App extends React.Component {
 
   addNote(newNote) {
 
-    const newNoteArr = [];
-
     fetch('/api/notes', {
       method: 'POST',
       headers: {
@@ -132,9 +126,7 @@ export default class App extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.state.notes.push(data);
-        for (let i = 0; i < this.state.notes.length; i++) {
-          newNoteArr.unshift(this.state.notes[i]);
-        }
+        const newNoteArr = this.state.notes.concat(data);
         this.setState({ notes: newNoteArr }, () => {
           window.location.hash = 'notes';
         });

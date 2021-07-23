@@ -16,8 +16,8 @@ class NoteList extends React.Component {
                   <div className="card text-dark bg-light mb-3">
                     <h5 className="card-header">{note.category}</h5>
                     <div className="card-body">
-                      <p className="card-text">Note: {note.note}</p>
-                      <p className="card-text">Date: {dateFormatted}</p>
+                      <p className="card-text"><b>Note:</b> {note.note}</p>
+                      <p className="card-text"><b>Date:</b> {dateFormatted}</p>
                       <div className="notes-edit-delete-button-container d-flex justify-content-end">
                         <a href={`#editNotes?noteId=${note.noteId}`}>
                           <button type="button" className="btn btn-link">Edit</button>
