@@ -82,6 +82,7 @@ class Analysis extends React.Component {
           for (let m = 0; m < spendingIndexArr.length; m++) {
             if (budgetIndexArr[i].categoryName === spendingIndexArr[m].x) {
               spendingIndexArr[m].budgetAmount = budgetIndexArr[i].categoryamount;
+              spendingIndexArr[m].budgetVariance = budgetIndexArr[i].categoryamount - spendingIndexArr[m].totalSpent;
               indexLabelsArr.push(spendingIndexArr[m].x);
               this.setState({ spendingIndexData: spendingIndexArr });
               this.setState({ indexLabels: indexLabelsArr });
@@ -130,6 +131,15 @@ class Analysis extends React.Component {
   }
 
   render() {
+
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF'.split('');
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
 
     const data = {
       labels: this.state.labels,
@@ -279,13 +289,7 @@ class Analysis extends React.Component {
             yAxisKey: 'budgetAmount'
           },
           fill: false,
-          backgroundColor: ['rgba(30, 139, 195, 1)',
-            'rgba(255, 159, 64)', 'rgb(255, 205, 86)',
-            'rgb(0, 163, 51)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-            'rgb(201, 203, 207)',
-            'rgb(0,0,255)'],
+          backgroundColor: 'rgb(0, 128, 0)',
           borderColor: 'rgba(30, 139, 195, 1)'
         },
         {
@@ -295,13 +299,17 @@ class Analysis extends React.Component {
             yAxisKey: 'totalSpent'
           },
           fill: false,
-          backgroundColor: ['rgba(30, 139, 195, 1)',
-            'rgba(255, 159, 64)', 'rgb(255, 205, 86)',
-            'rgb(0, 163, 51)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-            'rgb(201, 203, 207)',
-            'rgb(0,0,255)'],
+          backgroundColor: 'rgba(30, 139, 195, 1)',
+          borderColor: 'rgba(30, 139, 195, 1)'
+        },
+        {
+          label: 'Variance',
+          data: this.state.spendingIndexData,
+          parsing: {
+            yAxisKey: 'budgetVariance'
+          },
+          fill: false,
+          backgroundColor: 'rgb(255, 0, 0)',
           borderColor: 'rgba(30, 139, 195, 1)'
         }
 
