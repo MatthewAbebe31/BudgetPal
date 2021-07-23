@@ -47,16 +47,22 @@ export default class App extends React.Component {
     this.getAllNotes();
   }
 
+  // getAllCategories() {
+  //   fetch('/api/categories')
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       data.forEach(function (category) {
+  //         category.totalSpent = 0;
+  //         category.totalSpent += category.amount;
+  //       });
+  //       this.setState({ categories: data, isCategoriesLoaded: true });
+  //     });
+  // }
+
   getAllCategories() {
     fetch('/api/categories')
       .then(response => response.json())
-      .then(data => {
-        data.forEach(function (category) {
-          category.totalSpent = 0;
-          category.totalSpent += category.amount;
-        });
-        this.setState({ categories: data, isCategoriesLoaded: true });
-      });
+      .then(data => this.setState({ categories: data, isCategoriesLoaded: true }));
   }
 
   getAllPurchases() {
@@ -71,7 +77,30 @@ export default class App extends React.Component {
       .then(data => this.setState({ notes: data, isNotesLoaded: true }));
   }
 
+  // addCategory(newCategory) {
+
+  //   fetch('/api/categories', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(newCategory)
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       const newCategoryArr = this.state.categories.concat(data);
+  //       this.setState({ categories: newCategoryArr }, () => {
+  //         window.location.hash = 'categories';
+  //       });
+  //     })
+  //     .catch(error => {
+  //       console.error('Error:', error);
+  //     });
+  // }
+
   addCategory(newCategory) {
+
+    let category = null;
 
     fetch('/api/categories', {
       method: 'POST',
@@ -80,15 +109,25 @@ export default class App extends React.Component {
       },
       body: JSON.stringify(newCategory)
     })
-      .then(response => response.json())
       .then(data => {
-        const newCategoryArr = this.state.categories.concat(data);
-        this.setState({ categories: newCategoryArr }, () => {
-          window.location.hash = 'categories';
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
+        if (data.ok) {
+          fetch('/api/categories')
+            .then(data => {
+              if (data.ok) {
+                category = data;
+                return category.json();
+              }
+            })
+            .catch(error => console.error(error))
+            .then(response => {
+              response.concat(category);
+              this.setState({ categories: response }, () => {
+                window.location.hash = 'categories';
+              });
+            });
+        } else {
+          throw new Error(data);
+        }
       });
   }
 

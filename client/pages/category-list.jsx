@@ -2,6 +2,13 @@ import React from 'react';
 
 class CategoryList extends React.Component {
   render() {
+    const variance = {};
+    this.props.categories.forEach(category => {
+      if (!Object.prototype.hasOwnProperty.call(variance, category.categoryId)) {
+        variance[category.categoryId] = 0;
+      }
+      variance[category.categoryId] += category.amount;
+    });
     return (
       <div>
         <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>
@@ -14,8 +21,8 @@ class CategoryList extends React.Component {
                       <h5 className="card-header">{category.categoryName}</h5>
                     <div className="card-body">
                       <p className="card-text"><b>Budget:</b> ${category.categoryAmount}</p>
-                      <p className="card-text"><b>Spent:</b> ${(category.totalSpent - 0).toFixed(2)}</p>
-                      <p className="card-text"><b>Variance:</b> ${(category.categoryAmount - category.totalSpent).toFixed(2)}</p>
+                      <p className="card-text"><b>Total Spent:</b> ${parseInt(variance[category.categoryId]).toFixed(2)}</p>
+                      <p className="card-text"><b>Variance:</b> ${(category.categoryAmount - variance[category.categoryId]).toFixed(2)}</p>
                       <div className="categories-edit-delete-button-container d-flex justify-content-end">
                         <a href={`#editCategories?categoryId=${category.categoryId}`}>
                           <button type="button" className="btn btn-link">Edit</button>
