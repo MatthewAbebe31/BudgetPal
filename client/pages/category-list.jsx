@@ -2,6 +2,13 @@ import React from 'react';
 
 class CategoryList extends React.Component {
   render() {
+    const variance = {};
+    this.props.categories.forEach(category => {
+      if (!Object.prototype.hasOwnProperty.call(variance, category.categoryId)) {
+        variance[category.categoryId] = 0;
+      }
+      variance[category.categoryId] += category.amount;
+    });
     return (
       <div>
         <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>
@@ -14,6 +21,7 @@ class CategoryList extends React.Component {
                     <div className="card-body">
                       <h5 className="card-title">{category.categoryName}</h5>
                       <p className="card-text">Budget: ${category.categoryAmount}</p>
+                      <p className="card-text">Variance: ${(category.categoryAmount - variance[category.categoryId]).toFixed(2)}</p>
                       <div className="categories-edit-delete-button-container d-flex justify-content-end">
                         <a href={`#editCategories?categoryId=${category.categoryId}`}>
                           <button type="button" className="btn btn-link">Edit</button>

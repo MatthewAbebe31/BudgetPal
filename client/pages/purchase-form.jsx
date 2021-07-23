@@ -25,10 +25,7 @@ class PurchaseForm extends React.Component {
   getAllCategories() {
     fetch('/api/categories')
       .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.setState({ selectCategory: data });
-      });
+      .then(data => this.setState({ selectCategory: data }));
   }
 
   handleCategoryInputChange(event) {

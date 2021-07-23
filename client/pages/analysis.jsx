@@ -222,14 +222,22 @@ class Analysis extends React.Component {
           label: 'Spending',
           data: this.state.spendingByCategoryChartData,
           fill: false,
-          backgroundColor: ['rgba(30, 139, 195, 1)',
-            'rgba(255, 159, 64)', 'rgb(255, 205, 86)',
-            'rgb(0, 163, 51)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-            'rgb(201, 203, 207)',
-            'rgb(0,0,255)'],
-          borderColor: 'rgba(30, 139, 195, 1)'
+          backgroundColor: [getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor()
+          ]
         }
       ]
     };
@@ -289,8 +297,7 @@ class Analysis extends React.Component {
             yAxisKey: 'budgetAmount'
           },
           fill: false,
-          backgroundColor: 'rgb(0, 128, 0)',
-          borderColor: 'rgba(30, 139, 195, 1)'
+          backgroundColor: 'rgb(0, 128, 0)'
         },
         {
           label: 'Spending',
@@ -299,8 +306,7 @@ class Analysis extends React.Component {
             yAxisKey: 'totalSpent'
           },
           fill: false,
-          backgroundColor: 'rgba(30, 139, 195, 1)',
-          borderColor: 'rgba(30, 139, 195, 1)'
+          backgroundColor: 'rgba(30, 139, 195, 1)'
         },
         {
           label: 'Variance',
@@ -309,8 +315,7 @@ class Analysis extends React.Component {
             yAxisKey: 'budgetVariance'
           },
           fill: false,
-          backgroundColor: 'rgb(255, 0, 0)',
-          borderColor: 'rgba(30, 139, 195, 1)'
+          backgroundColor: 'rgb(255, 0, 0)'
         }
 
       ]

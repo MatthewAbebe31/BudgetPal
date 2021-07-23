@@ -23,8 +23,9 @@ app.use(jsonMiddleware);
 
 app.get('/api/categories', (req, res) => {
   const sql = `
-    select *
+    select "categoryId", "categoryName", "categoryAmount", "amount"
       from "categories"
+      left join "purchases" using ("categoryId")
      order by "categoryId" desc
   `;
   db.query(sql)
