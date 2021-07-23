@@ -11,8 +11,8 @@ class CategoryList extends React.Component {
               <div key={category.categoryId}>
                 <div className="d-flex justify-content-center">
                   <div className="card text-dark bg-light mb-3">
+                      <h5 className="card-header">{category.categoryName}</h5>
                     <div className="card-body">
-                      <h5 className="card-title">{category.categoryName}</h5>
                       <p className="card-text">Budget: ${category.categoryAmount}</p>
                       <p className="card-text">Spent: ${(category.totalSpent - 0).toFixed(2)}</p>
                       <p className="card-text">Variance: ${(category.categoryAmount - category.totalSpent).toFixed(2)}</p>

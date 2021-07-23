@@ -171,12 +171,55 @@ class Analysis extends React.Component {
       }
     };
 
-    const purchasesByDayData = {
-      labels: this.state.purchasesByDayLabels,
+    // const purchasesByDayData = {
+    //   labels: this.state.purchasesByDayLabels,
+    //   datasets: [
+    //     {
+    //       label: 'Purchases',
+    //       data: this.state.purchasesByDayChartData,
+    //       backgroundColor: [
+    //         'rgba(255, 99, 132, 0.2)',
+    //         'rgba(54, 162, 235, 0.2)',
+    //         'rgba(255, 206, 86, 0.2)',
+    //         'rgba(75, 192, 192, 0.2)',
+    //         'rgba(153, 102, 255, 0.2)',
+    //         'rgba(255, 159, 64, 0.2)'
+    //       ],
+    //       borderColor: [
+    //         'rgba(255, 99, 132, 1)',
+    //         'rgba(54, 162, 235, 1)',
+    //         'rgba(255, 206, 86, 1)',
+    //         'rgba(75, 192, 192, 1)',
+    //         'rgba(153, 102, 255, 1)',
+    //         'rgba(255, 159, 64, 1)'
+    //       ],
+    //       borderWidth: 1
+    //     }
+    //   ]
+    // };
+
+    // const purchasesByDayOptions = {
+    //   scales: {
+    //     yAxes: {
+    //       axis: 'y',
+
+    //       ticks: {
+    //         beginAtZero: true,
+    //         callback: function (value) { if (Number.isInteger(value)) { return value; } },
+    //         stepSize: 1
+    //       }
+    //     },
+    //     xAxes: {
+    //       reverse: true
+    //     }
+    //   }
+    // };
+    const purchasesByCategoryData = {
+      labels: this.state.purchasesByCategoryLabels,
       datasets: [
         {
           label: 'Purchases',
-          data: this.state.purchasesByDayChartData,
+          data: this.state.purchasesByCategoryChartData,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -198,19 +241,15 @@ class Analysis extends React.Component {
       ]
     };
 
-    const purchasesByDayOptions = {
+    const purchasesByCategoryOptions = {
       scales: {
         yAxes: {
           axis: 'y',
 
           ticks: {
             beginAtZero: true,
-            callback: function (value) { if (Number.isInteger(value)) { return value; } },
             stepSize: 1
           }
-        },
-        xAxes: {
-          reverse: true
         }
       }
     };
@@ -247,46 +286,6 @@ class Analysis extends React.Component {
       maintainAspectRatio: true,
       aspectRatio: 1.8
     };
-
-    // const purchasesByCategoryData = {
-    //   labels: this.state.purchasesByCategoryLabels,
-    //   datasets: [
-    //     {
-    //       label: 'Purchases',
-    //       data: this.state.purchasesByCategoryChartData,
-    //       backgroundColor: [
-    //         'rgba(255, 99, 132, 0.2)',
-    //         'rgba(54, 162, 235, 0.2)',
-    //         'rgba(255, 206, 86, 0.2)',
-    //         'rgba(75, 192, 192, 0.2)',
-    //         'rgba(153, 102, 255, 0.2)',
-    //         'rgba(255, 159, 64, 0.2)'
-    //       ],
-    //       borderColor: [
-    //         'rgba(255, 99, 132, 1)',
-    //         'rgba(54, 162, 235, 1)',
-    //         'rgba(255, 206, 86, 1)',
-    //         'rgba(75, 192, 192, 1)',
-    //         'rgba(153, 102, 255, 1)',
-    //         'rgba(255, 159, 64, 1)'
-    //       ],
-    //       borderWidth: 1
-    //     }
-    //   ]
-    // };
-
-    // const purchasesByCategoryOptions = {
-    //   scales: {
-    //     yAxes: {
-    //       axis: 'y',
-
-    //       ticks: {
-    //         beginAtZero: true,
-    //         stepSize: 1
-    //       }
-    //     }
-    //   }
-    // };
 
     const budgetByCategoryData = {
       datasets: [
@@ -369,11 +368,11 @@ class Analysis extends React.Component {
               <div className="purchases-by-time-chart-container mt-3 text-center w-75">
 
                 <div className='purchases-by-time-header mb-3'>
-                  <h4 className='chart-title'>Purchases by Time</h4>
+                  <h4 className='chart-title'>Purchases by Category</h4>
                 </div>
 
                 <div>
-                  <Bar data={purchasesByDayData} options={purchasesByDayOptions} />
+                  <Bar data={purchasesByCategoryData} options={purchasesByCategoryOptions} />
                 </div>
               </div>
             </div>
