@@ -50,7 +50,13 @@ export default class App extends React.Component {
   getAllCategories() {
     fetch('/api/categories')
       .then(response => response.json())
-      .then(data => this.setState({ categories: data, isCategoriesLoaded: true }));
+      .then(data => {
+        data.forEach(function (category) {
+          category.totalSpent = 0;
+          category.totalSpent += category.amount;
+        });
+        this.setState({ categories: data, isCategoriesLoaded: true });
+      });
   }
 
   getAllPurchases() {
