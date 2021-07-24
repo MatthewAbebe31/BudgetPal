@@ -23,9 +23,10 @@ app.use(jsonMiddleware);
 
 app.get('/api/categories', (req, res) => {
   const sql = `
-    select "categoryId", "categoryName", "categoryAmount", "amount"
+    select "categoryId", "categoryName", "categoryAmount", sum("amount") as "totalSpent"
       from "categories"
       left join "purchases" using ("categoryId")
+      group by "categoryId", "categoryName", "categoryAmount"
      order by "categoryId" desc
   `;
   db.query(sql)
@@ -194,6 +195,7 @@ app.post('/api/purchases', (req, res) => {
     values ($1, $2, $3, $4)
     returning *
   `;
+
   const params = [categoryId, category, description, amount];
   db.query(sql, params)
     .then(result => {

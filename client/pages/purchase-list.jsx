@@ -7,11 +7,11 @@ class PurchaseList extends React.Component {
       <div>
         <h2 className="text-center mt-3 text-decoration-underline">Purchases</h2>
         {
-          this.props.purchases.map(purchase => {
+          this.props.purchases.map((purchase, index) => {
             const date = purchase.date;
             const dateFormatted = format(new Date(date), 'MM/dd/yyyy');
             return (
-              <div key={purchase.purchaseId}>
+              <div key={index}>
                 <div className="d-flex justify-content-center">
                   <div className="card text-dark bg-light mb-3">
                     <h5 className="card-header">{purchase.category}</h5>

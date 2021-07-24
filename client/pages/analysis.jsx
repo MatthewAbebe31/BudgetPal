@@ -125,12 +125,33 @@ class Analysis extends React.Component {
   render() {
 
     function getRandomColor() {
-      const letters = '0123456789ABCDEF'.split('');
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
+      const rgbaArr = [
+        'rgba(255, 0, 0)',
+        'rgba(255, 255, 0)',
+        'rgba(0, 0, 255)',
+        'rgba(150, 75, 0)',
+        'rgba(255, 165, 0)',
+        'rgba(0, 128, 0)',
+        'rgba(238, 130, 238)',
+        'rgba(255, 166, 201)',
+        'rgba(255, 174, 66)',
+        'rgba(13, 152, 186)',
+        'rgba(199, 21, 133)',
+        'rgba(255, 83, 73)',
+        'rgba(154, 205, 50)',
+        'rgba(138, 43, 226)',
+        'rgba(199, 21, 133)',
+        'rgba(240, 225, 48)',
+        'rgba(0, 123, 167)',
+        'rgba(253, 213, 177)',
+        'rgba(255, 36, 0)',
+        'rgba(173, 255, 47)',
+        'rgba(75, 0, 130)'
+      ];
+
+      const randomColor = rgbaArr[Math.floor(Math.random() * rgbaArr.length)];
+
+      return randomColor;
     }
 
     const data = {
@@ -170,22 +191,29 @@ class Analysis extends React.Component {
           label: 'Purchases',
           data: this.state.purchasesByCategoryChartData,
           backgroundColor: [
-            'rgba(255, 99, 132)',
-            'rgba(54, 162, 235)',
-            'rgba(255, 206, 86)',
-            'rgba(75, 192, 192)',
-            'rgba(153, 102, 255)',
-            'rgba(255, 159, 64)'
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor()
           ]
-          // borderColor: [
-          //   'rgba(255, 99, 132, 1)',
-          //   'rgba(54, 162, 235, 1)',
-          //   'rgba(255, 206, 86, 1)',
-          //   'rgba(75, 192, 192, 1)',
-          //   'rgba(153, 102, 255, 1)',
-          //   'rgba(255, 159, 64, 1)'
-          // ],
-          // borderWidth: 1
         }
       ]
     };
@@ -210,7 +238,15 @@ class Analysis extends React.Component {
           label: 'Spending',
           data: this.state.spendingByCategoryChartData,
           fill: false,
-          backgroundColor: [getRandomColor(),
+          backgroundColor: [
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
             getRandomColor(),
             getRandomColor(),
             getRandomColor(),

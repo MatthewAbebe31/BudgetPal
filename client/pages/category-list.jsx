@@ -1,33 +1,49 @@
 import React from 'react';
 
 class CategoryList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categoriesData: []
+    };
+  }
+
+  componentDidMount() {
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => {
+        const variance = {};
+        data.forEach(category => {
+          if (!Object.prototype.hasOwnProperty.call(variance, category.categoryId)) {
+            variance[category.categoryId] = 0;
+          }
+          variance[category.categoryId] += category.totalSpent;
+        });
+        this.setState({ categoriesData: data });
+      });
+
+  }
+
   render() {
-    const variance = {};
-    this.props.categories.forEach(category => {
-      if (!Object.prototype.hasOwnProperty.call(variance, category.categoryId)) {
-        variance[category.categoryId] = 0;
-      }
-      variance[category.categoryId] += category.amount;
-    });
     return (
       <div>
         <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>
         {
-          this.props.categories.map(category => {
+          this.state.categoriesData.map((category, index) => {
             return (
-              <div key={category.categoryId}>
+              <div key={index}>
                 <div className="d-flex justify-content-center">
                   <div className="card text-dark bg-light mb-3">
-                      <h5 className="card-header">{category.categoryName}</h5>
+                      <h5 className="card-header">{this.state.categoriesData[index].categoryName}</h5>
                     <div className="card-body">
-                      <p className="card-text"><b>Budget:</b> ${category.categoryAmount}</p>
-                      <p className="card-text"><b>Total Spent:</b> ${parseInt(variance[category.categoryId]).toFixed(2)}</p>
-                      <p className="card-text"><b>Variance:</b> ${(category.categoryAmount - variance[category.categoryId]).toFixed(2)}</p>
+                      <p className="card-text"><b>Budget:</b> ${this.state.categoriesData[index].categoryAmount}</p>
+                      <p className="card-text"><b>Total Spent:</b> ${parseInt(this.state.categoriesData[index].totalSpent - 0).toFixed(2)}</p>
+                      <p className="card-text"><b>Variance:</b> ${parseInt(this.state.categoriesData[index].categoryAmount - this.state.categoriesData[index].totalSpent).toFixed(2)}</p>
                       <div className="categories-edit-delete-button-container d-flex justify-content-end">
-                        <a href={`#editCategories?categoryId=${category.categoryId}`}>
+                        <a href={`#editCategories?categoryId=${this.state.categoriesData[index].categoryId}`}>
                           <button type="button" className="btn btn-link">Edit</button>
                         </a>
-                        <button type="button" id={category.categoryId} onClick={() => this.props.deleteCategory(category.categoryId)}
+                        <button type="button" id={this.state.categoriesData[index].categoryId} onClick={() => this.props.deleteCategory(this.state.categoriesData[index].categoryId)}
                           className="btn btn-link">Delete</button>
                       </div>
                     </div>
