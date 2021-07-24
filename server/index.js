@@ -23,8 +23,10 @@ app.use(jsonMiddleware);
 
 app.get('/api/categories', (req, res) => {
   const sql = `
-    select *
+    select "categoryId", "categoryName", "categoryAmount", sum("amount") as "totalSpent"
       from "categories"
+      left join "purchases" using ("categoryId")
+      group by "categoryId", "categoryName", "categoryAmount"
      order by "categoryId" desc
   `;
   db.query(sql)
@@ -114,6 +116,34 @@ app.get('/api/purchases/categorySpending', (req, res) => {
     });
 });
 
+app.get('/api/categories/categoryBudget', (req, res) => {
+  const sql = `
+    select sum("categoryAmount") as categoryAmount, "categoryName"
+      from "categories"
+     group by "categoryName"
+     order by "categoryName" desc
+  `;
+
+  const secondSql = `
+    select sum("amount") as "totalSpent", "category" as "x"
+      from "purchases"
+      join "categories" on ("category" = "categoryName")
+     group by "category"
+     order by "category" desc
+  `;
+
+  Promise.all([
+    db.query(sql),
+    db.query(secondSql)
+  ]).then(results => {
+    res.status(200).json(results);
+  })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'an unexpected error occurred' });
+    });
+});
+
 app.get('/api/purchases/countPurchasesByCategory', (req, res) => {
   const sql = `
     select count("purchaseId") as purchases, "category"
@@ -165,6 +195,7 @@ app.post('/api/purchases', (req, res) => {
     values ($1, $2, $3, $4)
     returning *
   `;
+
   const params = [categoryId, category, description, amount];
   db.query(sql, params)
     .then(result => {
@@ -328,27 +359,6 @@ app.put('/api/notes', (req, res) => {
       });
     });
 });
-
-// app.delete('/api/categories/:categoryId', function (req, res, next) {
-//   const categoryId = parseInt(req.params.categoryId);
-
-//   const sql = `
-//     delete from "categories"
-//     where "categoryId" = $1
-//     returning *
-//   `;
-
-//   const params = [categoryId];
-
-//   db.query(sql, params)
-//     .then(result => {
-//       const data = result.rows[0];
-//       res.status(204).json(data);
-//     })
-//     .catch(err => {
-//       next(err);
-//     });
-// });
 
 app.delete('/api/categories/:categoryId', function (req, res, next) {
   const categoryId = parseInt(req.params.categoryId);

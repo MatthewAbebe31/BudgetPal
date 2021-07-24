@@ -48,6 +48,10 @@ a {
   color: #85bb65;
 }
 
+.content-container {
+  padding-bottom: 55px;
+}
+
 .card {
   width: 75%;
   margin-top: 20px;

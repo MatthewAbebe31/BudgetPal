@@ -67,6 +67,8 @@ export default class App extends React.Component {
 
   addCategory(newCategory) {
 
+    const newCategoryArr = [];
+
     fetch('/api/categories', {
       method: 'POST',
       headers: {
@@ -76,7 +78,10 @@ export default class App extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        const newCategoryArr = this.state.categories.concat(data);
+        this.state.categories.push(data);
+        for (let i = 0; i < this.state.categories.length; i++) {
+          newCategoryArr.unshift(this.state.categories[i]);
+        }
         this.setState({ categories: newCategoryArr }, () => {
           window.location.hash = 'categories';
         });
