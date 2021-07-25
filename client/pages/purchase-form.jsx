@@ -32,9 +32,9 @@ class PurchaseForm extends React.Component {
 
     let categoryName = null;
 
-    for (let i = 0; i < this.props.categories.length; i++) {
-      if (this.props.categories[i].categoryId === event.target.value) {
-        categoryName = this.props.categories[i].categoryName;
+    for (let i = 0; i < this.state.selectCategory.length; i++) {
+      if (this.state.selectCategory[i].categoryId === event.target.value) {
+        categoryName = this.state.selectCategory[i].categoryName;
       }
       this.setState({ category: categoryName });
     }
