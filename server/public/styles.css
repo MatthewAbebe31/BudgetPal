@@ -48,6 +48,10 @@ a {
   color: #85bb65;
 }
 
+.row {
+  --bs-gutter-x: 0;
+}
+
 .content-container {
   padding-bottom: 55px;
 }
