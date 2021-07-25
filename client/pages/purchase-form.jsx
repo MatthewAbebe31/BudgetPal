@@ -4,9 +4,9 @@ class PurchaseForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchaseId: '',
-      categoryId: '',
+      // purchaseId: '',
       category: '',
+      categoryId: '',
       description: '',
       amount: '',
       selectCategory: []
@@ -29,13 +29,17 @@ class PurchaseForm extends React.Component {
   }
 
   handleCategoryInputChange(event) {
-    this.state.selectCategory.map(category => {
-      if (category.categoryName === event.target.value) {
-        this.setState({ categoryId: category.categoryId });
+
+    let categoryName = null;
+
+    for (let i = 0; i < this.props.categories.length; i++) {
+      if (this.props.categories[i].categoryId === event.target.value) {
+        categoryName = this.props.categories[i].categoryName;
       }
-      return this.state.categoryId;
-    });
-    this.setState({ category: event.target.value });
+      this.setState({ category: categoryName });
+    }
+
+    this.setState({ categoryId: event.target.value });
   }
 
   handleDescriptionInputChange(event) {
@@ -49,9 +53,9 @@ class PurchaseForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const newPurchase = {
-      purchaseId: this.state.purchaseId,
-      categoryId: this.state.categoryId,
+    // purchaseId: this.state.purchaseId,
       category: this.state.category,
+      categoryId: this.state.categoryId,
       description: this.state.description,
       amount: parseInt(this.state.amount).toFixed(2)
     };
@@ -62,58 +66,58 @@ class PurchaseForm extends React.Component {
   }
 
   render() {
-    const categoryValue = this.state.category;
+    const categoryValue = this.state.categoryId;
     const purchaseDescriptionValue = this.state.description;
     const amountValue = this.state.amount;
-    const optionTemplate = this.state.selectCategory.map((v, key) => (
-      <option key={key} value={v.id}>{v.categoryName}</option>
+    const optionTemplate = this.state.selectCategory.map((category, key) => (
+    <option key={key} value={category.categoryId}>{category.categoryName}</option>
     ));
 
     return (
-      <div className="row">
-        <div className="col">
-          <div className="purchase-form-container pt-5">
-            <form className="purchase-form-group" onSubmit={this.handleSubmit}>
-              <h2 className="add-purchase-header">Add a Purchase.</h2>
+    <div className="row">
+      <div className="col">
+        <div className="purchase-form-container pt-5">
+          <form className="purchase-form-group" onSubmit={this.handleSubmit}>
+            <h2 className="add-purchase-header">Add a Purchase.</h2>
 
-              <label>Enter Category</label>
-              <select className="form-select" aria-label="Default select example" required value={categoryValue} onChange={this.handleCategoryInputChange}>
-                <option value="" disabled hidden>Select an option</option>
-                {optionTemplate}
-              </select>
+            <label>Enter Category</label>
+            <select className="form-select" aria-label="Default select example" required value={categoryValue} onChange={this.handleCategoryInputChange}>
+              <option value="" disabled hidden>Select an option</option>
+              {optionTemplate}
+            </select>
 
-              <label>Enter Description</label>
-              <input
-                required
-                autoFocus
-                type="text"
-                value={purchaseDescriptionValue}
-                htmlFor="purchaseDescriptionInput"
-                className="form-control"
-                id="purchaseDescriptionInput"
-                placeholder="Description"
-                onChange={this.handleDescriptionInputChange} />
+            <label>Enter Description</label>
+            <input
+              required
+              autoFocus
+              type="text"
+              value={purchaseDescriptionValue}
+              htmlFor="purchaseDescriptionInput"
+              className="form-control"
+              id="purchaseDescriptionInput"
+              placeholder="Description"
+              onChange={this.handleDescriptionInputChange} />
 
-              <label>Enter Amount</label>
-              <input
-                required
-                autoFocus
-                type="text"
-                value={amountValue}
-                htmlFor="amountValueInput"
-                className="form-control"
-                id="amountValueInput"
-                placeholder="$0.00"
-                onChange={this.handleAmountInputChange} />
+            <label>Enter Amount</label>
+            <input
+              required
+              autoFocus
+              type="text"
+              value={amountValue}
+              htmlFor="amountValueInput"
+              className="form-control"
+              id="amountValueInput"
+              placeholder="$0.00"
+              onChange={this.handleAmountInputChange} />
 
-              <div className="purchase-form-button-container d-flex justify-content-end w-100">
-                <button type="submit" className="btn btn-primary btn-sm">Submit</button>
-              </div>
+            <div className="purchase-form-button-container d-flex justify-content-end w-100">
+              <button type="submit" className="btn btn-primary btn-sm">Submit</button>
+            </div>
 
-            </form>
-          </div>
+          </form>
         </div>
       </div>
+    </div>
     );
   }
 }

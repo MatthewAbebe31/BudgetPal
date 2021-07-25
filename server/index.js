@@ -240,19 +240,19 @@ app.post('/api/categories', (req, res) => {
 
 app.post('/api/notes', (req, res) => {
 
-  const { category, note } = req.body;
-  if (!category || !note) {
+  const { categoryId, category, note } = req.body;
+  if (!categoryId || !category || !note) {
     res.status(400).json({
       error: 'Please enter required fields'
     });
     return;
   }
   const sql = `
-    insert into "notes" ("category", "note")
-    values ($1, $2)
+    insert into "notes" ("categoryId", "category", "note")
+    values ($1, $2, $3)
     returning *
   `;
-  const params = [category, note];
+  const params = [categoryId, category, note];
   db.query(sql, params)
     .then(result => {
       const [note] = result.rows;
@@ -372,11 +372,17 @@ app.delete('/api/categories/:categoryId', function (req, res, next) {
     where "categoryId" = $1
     returning *
   `;
+  const thirdSql = `
+    delete from "notes"
+    where "categoryId" = $1
+    returning *
+  `;
   const params = [categoryId];
 
   Promise.all([
     db.query(sql, params),
-    db.query(secondSql, params)
+    db.query(secondSql, params),
+    db.query(thirdSql, params)
   ]).then(result => {
     res.sendStatus(204);
   })
