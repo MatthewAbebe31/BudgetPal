@@ -190,30 +190,7 @@ class Analysis extends React.Component {
         {
           label: 'Purchases',
           data: this.state.purchasesByCategoryChartData,
-          backgroundColor: [
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor(),
-            getRandomColor()
-          ]
+          backgroundColor: 'rgb(0, 128, 0)'
         }
       ]
     };
