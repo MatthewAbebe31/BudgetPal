@@ -35,7 +35,7 @@ a {
 }
 
 .jumbotron {
-  background-color: rgb(255, 215, 0, 0.75);
+  background-color: rgb(255, 215, 0, 0.5);
   height: 250px;
   text-align: center;
   width: 75%;
@@ -85,10 +85,14 @@ input {
 
 .btn {
   cursor: pointer;
+  background-color: navy;
+  border: none;
 }
 
 .btn-link {
-  color: black;
+  color: white;
+  margin-right: 10px;
+  text-decoration: none;
 }
 
 canvas {
