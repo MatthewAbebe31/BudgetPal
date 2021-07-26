@@ -48,7 +48,6 @@ class PurchaseForm extends React.Component {
       amount: this.state.amount
     };
     this.props.onSubmit(newPurchase);
-    this.setState({ category: '' });
     this.setState({ description: '' });
     this.setState({ amount: '' });
 
