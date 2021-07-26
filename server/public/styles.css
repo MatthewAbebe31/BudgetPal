@@ -35,11 +35,11 @@ a {
 }
 
 .jumbotron {
-  background-color: rgb(255, 215, 0, 0.5);
+  background-color: rgba(133, 187, 101, 0.25);
   height: 250px;
   text-align: center;
   width: 75%;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .display-4 {
