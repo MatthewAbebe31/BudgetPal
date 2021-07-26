@@ -1,5 +1,5 @@
 body {
-  background-color: cornsilk;
+  background-color: whitesmoke;
 }
 
 a {
@@ -35,17 +35,25 @@ a {
 }
 
 .jumbotron {
-  background-color: rgb(255, 215, 0, 0.75);
+  background-color: rgba(133, 187, 101, 0.25);
   height: 250px;
   text-align: center;
   width: 75%;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .display-4 {
   margin-top: 75px;
   font-weight: bold;
   color: #85bb65;
+}
+
+.row {
+  --bs-gutter-x: 0;
+}
+
+.content-container {
+  padding-bottom: 75px;
 }
 
 .card {
@@ -81,10 +89,14 @@ input {
 
 .btn {
   cursor: pointer;
+  background-color: navy;
+  border: none;
 }
 
 .btn-link {
-  color: black;
+  color: white;
+  margin-right: 10px;
+  text-decoration: none;
 }
 
 canvas {
@@ -103,15 +115,9 @@ canvas {
   margin-top: 20px;
 }
 
-.content-container {
-  min-height: 100vh;
-  margin-bottom: 60px;
-}
-
 footer {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
   background-color: #85bb65;
   position: fixed;
   left: 0;
@@ -124,7 +130,8 @@ footer {
 
 .footer-name {
   color: white;
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
   font-weight: normal;
 }
 
@@ -165,7 +172,7 @@ footer {
 
 @media only screen and (max-width: 767px) {
   footer {
-    position: fixed !important;
+    position: fixed;
   }
 }
 

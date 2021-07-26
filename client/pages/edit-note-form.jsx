@@ -4,9 +4,8 @@ class EditNoteForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      noteId: '',
-      category: '',
-      note: '',
+      category: props.note.category,
+      note: props.note.note,
       selectCategory: []
     };
     this.handleEditCategoryInputChange = this.handleEditCategoryInputChange.bind(this);
@@ -33,17 +32,15 @@ class EditNoteForm extends React.Component {
   }
 
   handleSubmit(event) {
-
+    event.preventDefault();
     const editedNote = {
-      noteId: parseInt(this.props.noteId),
+      noteId: parseInt(this.props.note.noteId),
       category: this.state.category,
       note: this.state.note
     };
     this.props.onSubmit(editedNote, editedNote.noteId);
     this.setState({ category: '' });
     this.setState({ note: '' });
-
-    window.location.hash = 'notes';
   }
 
   render() {

@@ -8,8 +8,11 @@ class Analysis extends React.Component {
     this.state = {
       labels: [],
       chartData: [],
+      spendingIndexData: [],
       purchasesByDayLabels: [],
       purchasesByDayChartData: [],
+      totalAmountByCategoryChartData: [],
+      totalAmountByCategoryLabels: [],
       spendingByCategoryLabels: [],
       spendingByCategoryChartData: [],
       purchasesByCategoryLabels: [],
@@ -54,6 +57,35 @@ class Analysis extends React.Component {
         this.setState({ spendingByCategoryChartData: spendingByCategoryChartData });
       });
 
+    fetch('/api/categories/categoryBudget')
+      .then(res => res.json())
+      .then(data => {
+
+        const budgetIndexArr = [];
+        const spendingIndexArr = [];
+
+        this.setState({ indexData: data });
+
+        for (let z = 0; z < data[0].rows.length; z++) {
+          budgetIndexArr.push(data[0].rows.[z]);
+        }
+
+        for (let y = 0; y < data[1].rows.length; y++) {
+          spendingIndexArr.push(data[1].rows.[y]);
+        }
+
+        for (let i = 0; i < budgetIndexArr.length; i++) {
+          for (let m = 0; m < spendingIndexArr.length; m++) {
+            if (budgetIndexArr[i].categoryName === spendingIndexArr[m].x) {
+              spendingIndexArr[m].budgetAmount = budgetIndexArr[i].categoryamount;
+              spendingIndexArr[m].budgetVariance = budgetIndexArr[i].categoryamount - spendingIndexArr[m].totalSpent;
+              this.setState({ spendingIndexData: spendingIndexArr });
+            }
+          }
+        }
+
+      });
+
     fetch('/api/purchases/countPurchases')
       .then(res => res.json())
       .then(data => {
@@ -92,6 +124,36 @@ class Analysis extends React.Component {
 
   render() {
 
+    function getRandomColor() {
+      const rgbaArr = [
+        'rgba(255, 0, 0)',
+        'rgba(255, 255, 0)',
+        'rgba(0, 0, 255)',
+        'rgba(150, 75, 0)',
+        'rgba(255, 165, 0)',
+        'rgba(0, 128, 0)',
+        'rgba(238, 130, 238)',
+        'rgba(255, 166, 201)',
+        'rgba(255, 174, 66)',
+        'rgba(13, 152, 186)',
+        'rgba(199, 21, 133)',
+        'rgba(255, 83, 73)',
+        'rgba(154, 205, 50)',
+        'rgba(138, 43, 226)',
+        'rgba(199, 21, 133)',
+        'rgba(240, 225, 48)',
+        'rgba(0, 123, 167)',
+        'rgba(253, 213, 177)',
+        'rgba(255, 36, 0)',
+        'rgba(173, 255, 47)',
+        'rgba(75, 0, 130)'
+      ];
+
+      const randomColor = rgbaArr[Math.floor(Math.random() * rgbaArr.length)];
+
+      return randomColor;
+    }
+
     const data = {
       labels: this.state.labels,
       datasets: [
@@ -122,46 +184,26 @@ class Analysis extends React.Component {
       }
     };
 
-    const purchasesByDayData = {
-      labels: this.state.purchasesByDayLabels,
+    const purchasesByCategoryData = {
+      labels: this.state.purchasesByCategoryLabels,
       datasets: [
         {
           label: 'Purchases',
-          data: this.state.purchasesByDayChartData,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+          data: this.state.purchasesByCategoryChartData,
+          backgroundColor: 'rgb(0, 128, 0)'
         }
       ]
     };
 
-    const purchasesByDayOptions = {
+    const purchasesByCategoryOptions = {
       scales: {
         yAxes: {
           axis: 'y',
 
           ticks: {
             beginAtZero: true,
-            callback: function (value) { if (Number.isInteger(value)) { return value; } },
             stepSize: 1
           }
-        },
-        xAxes: {
-          reverse: true
         }
       }
     };
@@ -173,14 +215,30 @@ class Analysis extends React.Component {
           label: 'Spending',
           data: this.state.spendingByCategoryChartData,
           fill: false,
-          backgroundColor: ['rgba(30, 139, 195, 1)',
-            'rgba(255, 159, 64)', 'rgb(255, 205, 86)',
-            'rgb(0, 163, 51)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-            'rgb(201, 203, 207)',
-            'rgb(0,0,255)'],
-          borderColor: 'rgba(30, 139, 195, 1)'
+          backgroundColor: [
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor(),
+            getRandomColor()
+          ]
         }
       ]
     };
@@ -191,34 +249,40 @@ class Analysis extends React.Component {
       aspectRatio: 1.8
     };
 
-    const purchasesByCategoryData = {
-      labels: this.state.purchasesByCategoryLabels,
+    const budgetByCategoryData = {
       datasets: [
         {
-          label: 'Purchases',
-          data: this.state.purchasesByCategoryChartData,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+          label: 'Budget',
+          data: this.state.spendingIndexData,
+          parsing: {
+            yAxisKey: 'budgetAmount'
+          },
+          fill: false,
+          backgroundColor: 'rgb(0, 128, 0)'
+        },
+        {
+          label: 'Spending',
+          data: this.state.spendingIndexData,
+          parsing: {
+            yAxisKey: 'totalSpent'
+          },
+          fill: false,
+          backgroundColor: 'rgba(30, 139, 195, 1)'
+        },
+        {
+          label: 'Variance',
+          data: this.state.spendingIndexData,
+          parsing: {
+            yAxisKey: 'budgetVariance'
+          },
+          fill: false,
+          backgroundColor: 'rgb(255, 0, 0)'
         }
+
       ]
     };
 
-    const purchasesByCategoryOptions = {
+    const budgetByCategoryOptions = {
       scales: {
         yAxes: {
           axis: 'y',
@@ -266,11 +330,11 @@ class Analysis extends React.Component {
               <div className="purchases-by-time-chart-container mt-3 text-center w-75">
 
                 <div className='purchases-by-time-header mb-3'>
-                  <h4 className='chart-title'>Purchases by Time</h4>
+                  <h4 className='chart-title'>Purchases by Category</h4>
                 </div>
 
                 <div>
-                  <Bar data={purchasesByDayData} options={purchasesByDayOptions} />
+                  <Bar data={purchasesByCategoryData} options={purchasesByCategoryOptions} />
                 </div>
               </div>
             </div>
@@ -280,14 +344,15 @@ class Analysis extends React.Component {
               <div className="purchases-by-time-category-container mt-3 text-center w-75">
 
                 <div className='purchases-by-category-header mb-3 mt-3'>
-                  <h4 className='chart-title'>Purchases by Category</h4>
+                  <h4 className='chart-title'>Budget by Category</h4>
                 </div>
 
                 <div>
-                  <Bar data={purchasesByCategoryData} options={purchasesByCategoryOptions} />
+                  <Bar data={budgetByCategoryData} options={budgetByCategoryOptions} />
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </>

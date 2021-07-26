@@ -5,6 +5,7 @@ class NoteForm extends React.Component {
     super(props);
     this.state = {
       noteId: '',
+      categoryId: '',
       category: '',
       note: '',
       selectCategory: []
@@ -26,6 +27,12 @@ class NoteForm extends React.Component {
   }
 
   handleCategoryInputChange(event) {
+    this.state.selectCategory.map(category => {
+      if (category.categoryName === event.target.value) {
+        this.setState({ categoryId: category.categoryId });
+      }
+      return this.state.categoryId;
+    });
     this.setState({ category: event.target.value });
   }
 
@@ -37,14 +44,13 @@ class NoteForm extends React.Component {
     event.preventDefault();
     const newNote = {
       noteId: this.state.noteId,
+      categoryId: this.state.categoryId,
       category: this.state.category,
       note: this.state.note
     };
     this.props.onSubmit(newNote);
     this.setState({ category: '' });
     this.setState({ note: '' });
-
-    window.location.hash = '#notes';
   }
 
   render() {

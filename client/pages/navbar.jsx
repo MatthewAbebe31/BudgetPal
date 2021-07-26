@@ -53,7 +53,7 @@ class Navbar extends React.Component {
   render() {
     return (
 
-      <div className="row">
+      <div className="header-row">
 
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="col">

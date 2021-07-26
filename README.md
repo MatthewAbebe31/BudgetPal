@@ -39,26 +39,37 @@ git clone https://github.com/Matthew-Abebe/Budget-Pal.git
 cd Budget-Pal
 ```
 
-2. Start ```postgresql```.
+2. Make a copy of .env.example named .env.
+
+```
+cp .env.example .env
+```
+
+3. Install all dependencies with npm install
+
+```
+npm install
+```
+
+4. Start ```postgresql```.
 
 ```
 sudo service postgresql start
 ```
 
-3. Create a database.
+5. Create a database.
 
 ```
 createdb [database-name]
 ```
+ * To view database ```pgweb --db=[database-name]```.
+ Then visit ```http://localhost:8081```
 
-4. Import database schema.
+6. Import database schema.
 
 ```
 npm run db:import
 ```
-
- * To view database ```pgweb --db=[database-name]```.
- Then visit ```http://localhost:8081```
 
 5. Open a new console and start the Express API server.
 

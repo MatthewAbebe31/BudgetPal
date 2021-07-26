@@ -18,6 +18,9 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isCategoriesLoaded: false,
+      isPurchasesLoaded: false,
+      isNotesLoaded: false,
       purchases: [],
       categories: [],
       notes: [],
@@ -47,19 +50,19 @@ export default class App extends React.Component {
   getAllCategories() {
     fetch('/api/categories')
       .then(response => response.json())
-      .then(data => this.setState({ categories: data }));
+      .then(data => this.setState({ categories: data, isCategoriesLoaded: true }));
   }
 
   getAllPurchases() {
     fetch('/api/purchases')
       .then(response => response.json())
-      .then(data => this.setState({ purchases: data }));
+      .then(data => this.setState({ purchases: data, isPurchasesLoaded: true }));
   }
 
   getAllNotes() {
     fetch('/api/notes')
       .then(response => response.json())
-      .then(data => this.setState({ notes: data }));
+      .then(data => this.setState({ notes: data, isNotesLoaded: true }));
   }
 
   addCategory(newCategory) {
@@ -79,7 +82,9 @@ export default class App extends React.Component {
         for (let i = 0; i < this.state.categories.length; i++) {
           newCategoryArr.unshift(this.state.categories[i]);
         }
-        this.setState({ categories: newCategoryArr });
+        this.setState({ categories: newCategoryArr }, () => {
+          window.location.hash = 'categories';
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -103,7 +108,9 @@ export default class App extends React.Component {
         for (let i = 0; i < this.state.purchases.length; i++) {
           newPurchaseArr.unshift(this.state.purchases[i]);
         }
-        this.setState({ purchases: newPurchaseArr });
+        this.setState({ purchases: newPurchaseArr }, () => {
+          window.location.hash = 'purchases';
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -127,7 +134,9 @@ export default class App extends React.Component {
         for (let i = 0; i < this.state.notes.length; i++) {
           newNoteArr.unshift(this.state.notes[i]);
         }
-        this.setState({ notes: newNoteArr });
+        this.setState({ notes: newNoteArr }, () => {
+          window.location.hash = 'notes';
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -155,7 +164,9 @@ export default class App extends React.Component {
       .then(data => {
         const newCategories = this.state.categories.slice();
         newCategories[index] = data;
-        this.setState({ categories: newCategories });
+        this.setState({ categories: newCategories }, () => {
+          window.location.hash = 'categories';
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -182,7 +193,9 @@ export default class App extends React.Component {
       .then(data => {
         const newPurchases = this.state.purchases.slice();
         newPurchases[index] = data;
-        this.setState({ purchases: newPurchases });
+        this.setState({ purchases: newPurchases }, () => {
+          window.location.hash = 'purchases';
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -209,7 +222,9 @@ export default class App extends React.Component {
       .then(data => {
         const newNotes = this.state.notes.slice();
         newNotes[index] = data;
-        this.setState({ notes: newNotes });
+        this.setState({ notes: newNotes }, () => {
+          window.location.hash = 'notes';
+        });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -217,60 +232,93 @@ export default class App extends React.Component {
   }
 
   deleteCategory(categoryId) {
-
-    fetch(`/api/categories/categoryId/${categoryId}`, {
+    const checkPurchasesArr = this.state.purchases.filter(purchase =>
+      purchase.categoryId === categoryId
+    );
+    if (checkPurchasesArr.length > 0) {
+      const r = confirm('This category contains purchases. Are you sure you want to delete?');
+      if (r === false) {
+        return;
+      }
+    }
+    let categoriesArr = [];
+    fetch(`/api/categories/${categoryId}`, {
       method: 'DELETE'
     })
-      .catch(err => {
-        console.error(err);
+      .then(data => {
+        categoriesArr = this.state.categories.filter(category =>
+          data.categoryId === categoryId);
+        this.setState({ categories: categoriesArr }, () => {
+          window.location.hash = 'categories';
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
       });
-
-    const id = parseInt(categoryId, 10);
-    const categories = this.state.categories.filter(category => category.categoryId !== id);
-    this.setState({ categories: categories });
-
   }
 
   deletePurchase(purchaseId) {
 
-    fetch(`/api/purchases/purchaseId/${purchaseId}`, {
+    fetch(`/api/purchases/${purchaseId}`, {
       method: 'DELETE'
     })
-      .catch(err => {
-        console.error(err);
+      .then(data => {
+        if (data.ok) {
+          fetch('/api/purchases')
+            .then(data => {
+              if (data.ok) {
+                return data.json();
+              }
+            })
+            .catch(error => console.error(error))
+            .then(response => {
+              this.setState({ purchases: response });
+            });
+        } else {
+          throw new Error(data);
+        }
       });
-
-    const id = parseInt(purchaseId, 10);
-    const purchases = this.state.purchases.filter(purchase => purchase.purchaseId !== id);
-    this.setState({ purchases: purchases });
 
   }
 
   deleteNote(noteId) {
 
-    fetch(`/api/notes/noteId/${noteId}`, {
+    fetch(`/api/notes/${noteId}`, {
       method: 'DELETE'
     })
-      .catch(err => {
-        console.error(err);
+      .then(data => {
+        if (data.ok) {
+          fetch('/api/notes')
+            .then(data => {
+              if (data.ok) {
+                return data.json();
+              }
+            })
+            .catch(error => console.error(error))
+            .then(response => {
+              this.setState({ notes: response });
+            });
+        } else {
+          throw new Error(data);
+        }
       });
-
-    const id = parseInt(noteId, 10);
-    const notes = this.state.notes.filter(note => note.noteId !== id);
-    this.setState({ notes: notes });
 
   }
 
   renderPage() {
 
-    const { route } = this.state;
+    const { route, isCategoriesLoaded, isPurchasesLoaded, isNotesLoaded } = this.state;
 
+    if (!isCategoriesLoaded || !isPurchasesLoaded || !isNotesLoaded) {
+      return <div>Loading...</div>;
+    }
     if (route.path === '') {
       return <Home />;
     }
     if (route.path === 'categories') {
       return <CategoryList
         categories={this.state.categories}
+        purchases={this.state.purchases}
         deleteCategory={this.deleteCategory} />;
     }
     if (route.path === 'purchases') {
@@ -287,22 +335,22 @@ export default class App extends React.Component {
       return <NoteForm onSubmit={this.addNote} />;
     }
     if (route.path === 'addNewPurchases') {
-      return <PurchaseForm onSubmit={this.addPurchase} />;
+      return <PurchaseForm categories={this.state.categories} onSubmit={this.addPurchase} />;
     }
     if (route.path === 'addNewCategories') {
       return <CategoryForm onSubmit={this.addCategory} />;
     }
     if (route.path === 'editNotes') {
       const noteId = route.params.get('noteId');
-      return <EditNoteForm noteId={noteId} onSubmit={this.putNote} />;
+      return <EditNoteForm note={this.state.notes.find(note => `${note.noteId}` === noteId)} onSubmit={this.putNote} />;
     }
     if (route.path === 'editPurchases') {
       const purchaseId = route.params.get('purchaseId');
-      return <EditPurchaseForm purchaseId={purchaseId} onSubmit={this.putPurchase} />;
+      return <EditPurchaseForm purchase={this.state.purchases.find(purchase => `${purchase.purchaseId}` === purchaseId)} onSubmit={this.putPurchase} />;
     }
     if (route.path === 'editCategories') {
       const categoryId = route.params.get('categoryId');
-      return <EditCategoryForm categoryId={categoryId} onSubmit={this.putCategory} />;
+      return <EditCategoryForm category={this.state.categories.find(category => `${category.categoryId}` === categoryId)} onSubmit={this.putCategory} />;
     }
     if (route.path === 'analysis') {
       return <Analysis />;

@@ -4,10 +4,9 @@ class EditPurchaseForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchaseId: '',
-      category: '',
-      description: '',
-      amount: '',
+      category: props.purchase.category,
+      description: props.purchase.description,
+      amount: props.purchase.amount,
       selectCategory: []
     };
     this.handleEditCategoryInputChange = this.handleEditCategoryInputChange.bind(this);
@@ -39,19 +38,17 @@ class EditPurchaseForm extends React.Component {
   }
 
   handleSubmit(event) {
-
+    event.preventDefault();
     const editedPurchase = {
-      purchaseId: parseInt(this.props.purchaseId),
+      purchaseId: parseInt(this.props.purchase.purchaseId),
       category: this.state.category,
       description: this.state.description,
-      amount: parseInt(this.state.amount)
+      amount: parseInt(this.state.amount).toFixed(2)
     };
     this.props.onSubmit(editedPurchase, editedPurchase.purchaseId);
     this.setState({ category: '' });
     this.setState({ description: '' });
     this.setState({ amount: '' });
-
-    window.location.hash = 'purchases';
   }
 
   render() {
