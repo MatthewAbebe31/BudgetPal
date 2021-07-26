@@ -117,8 +117,7 @@ canvas {
 
 footer {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
   background-color: #85bb65;
   position: fixed;
   left: 0;
@@ -131,7 +130,8 @@ footer {
 
 .footer-name {
   color: white;
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
   font-weight: normal;
 }
 
