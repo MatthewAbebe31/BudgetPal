@@ -48,7 +48,7 @@ class Analysis extends React.Component {
         const spendingByCategoryChartData = [];
 
         for (let i = 0; i < data.length; i++) {
-          const labels = data[i].category;
+          const labels = data[i].categoryName;
           const amounts = data[i].amount;
           spendingByCategoryLabels.push(labels);
           spendingByCategoryChartData.push(amounts);
@@ -76,7 +76,7 @@ class Analysis extends React.Component {
 
         for (let i = 0; i < budgetIndexArr.length; i++) {
           for (let m = 0; m < spendingIndexArr.length; m++) {
-            if (budgetIndexArr[i].categoryName === spendingIndexArr[m].x) {
+            if (budgetIndexArr[i].categoryId === spendingIndexArr[m].categoryId) {
               spendingIndexArr[m].budgetAmount = budgetIndexArr[i].categoryamount;
               spendingIndexArr[m].budgetVariance = budgetIndexArr[i].categoryamount - spendingIndexArr[m].totalSpent;
               this.setState({ spendingIndexData: spendingIndexArr });
@@ -112,7 +112,7 @@ class Analysis extends React.Component {
         const purchasesByCategoryChartData = [];
 
         for (let j = 0; j < data.length; j++) {
-          const labels = data[j].category;
+          const labels = data[j].categoryName;
           const purchases = data[j].purchases;
           purchasesByCategoryLabels.push(labels);
           purchasesByCategoryChartData.push(purchases);

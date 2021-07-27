@@ -100,10 +100,11 @@ app.get('/api/purchases/amount', (req, res) => {
 
 app.get('/api/purchases/categorySpending', (req, res) => {
   const sql = `
-    select sum("amount") as amount, "category"
+    select "categoryId", sum("amount") as amount, "categoryName"
       from "purchases"
-     group by "category"
-     order by "category" desc
+    join "categories" using("categoryId")
+     group by "categoryId", "categoryName"
+     order by "categoryName" desc
   `;
   db.query(sql)
     .then(result => {
@@ -126,11 +127,11 @@ app.get('/api/categories/categoryBudget', (req, res) => {
   `;
 
   const secondSql = `
-    select sum("amount") as "totalSpent", "category" as "x"
+    select sum("amount") as "totalSpent", "categoryName" as "x"
       from "purchases"
-      join "categories" on ("category" = "categoryName")
-     group by "category"
-     order by "category" desc
+      join "categories" using ("categoryId")
+     group by "categoryName"
+     order by "categoryName" desc
   `;
 
   Promise.all([
@@ -147,10 +148,11 @@ app.get('/api/categories/categoryBudget', (req, res) => {
 
 app.get('/api/purchases/countPurchasesByCategory', (req, res) => {
   const sql = `
-    select count("purchaseId") as purchases, "category"
+    select count("purchaseId") as purchases, "categoryName"
       from "purchases"
-     group by "category"
-     order by "category" desc
+    join "categories" using ("categoryId")
+     group by "categoryName"
+     order by "categoryName" desc
   `;
   db.query(sql)
     .then(result => {
