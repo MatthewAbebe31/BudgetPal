@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 
 class PurchaseList extends React.Component {
   render() {
+    console.log(this.props.purchases);
     return (
       <div>
         <h2 className="text-center mt-3 text-decoration-underline">Purchases</h2>

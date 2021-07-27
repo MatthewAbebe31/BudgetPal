@@ -1,30 +1,9 @@
 import React from 'react';
 
 class CategoryList extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     categoriesData: []
-  //   };
-  // }
-
-  // componentDidMount() {
-  //   fetch('/api/categories')
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       const variance = {};
-  //       data.forEach(category => {
-  //         if (!Object.prototype.hasOwnProperty.call(variance, category.categoryId)) {
-  //           variance[category.categoryId] = 0;
-  //         }
-  //         variance[category.categoryId] += category.totalSpent;
-  //       });
-  //       this.setState({ categoriesData: data });
-  //     });
-
-  // }
 
   render() {
+    console.log(this.props.categories);
     return (
       <div>
         <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>

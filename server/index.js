@@ -43,7 +43,7 @@ app.get('/api/categories', (req, res) => {
 
 app.get('/api/purchases', (req, res) => {
   const sql = `
-    select "categoryId", "description", "amount", "date", "categoryName"
+    select "purchaseId", "categoryId"::INTEGER, "description", "amount", "date", "categoryName"
       from "purchases"
       join "categories" using ("categoryId")
      order by "purchaseId" desc
@@ -197,17 +197,24 @@ app.post('/api/purchases', (req, res) => {
     returning *
   `;
 
+  const secondSql = `
+    select "purchaseId", "categoryId"::INTEGER, "description", "amount", "date", "categoryName"
+      from "purchases"
+      join "categories" using ("categoryId")
+     order by "purchaseId" desc
+  `;
+
   const params = [categoryId, description, amount];
-  db.query(sql, params)
-    .then(result => {
-      const [purchase] = result.rows;
-      res.status(201).json(purchase);
-    })
+
+  Promise.all([
+    db.query(sql, params),
+    db.query(secondSql)
+  ]).then(results => {
+    res.status(201).json(results[0].rows[0]);
+  })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 
@@ -225,17 +232,26 @@ app.post('/api/categories', (req, res) => {
     values ($1, $2)
     returning *
   `;
+
+  const secondSql = `
+    select "categoryId"::INTEGER, "categoryName", "categoryAmount", sum("amount") as "totalSpent"
+      from "categories"
+      left join "purchases" using ("categoryId")
+      group by "categoryId", "categoryName", "categoryAmount"
+     order by "categoryId" desc
+  `;
+
   const params = [categoryName, categoryAmount];
-  db.query(sql, params)
-    .then(result => {
-      const [category] = result.rows;
-      res.status(201).json(category);
-    })
+
+  Promise.all([
+    db.query(sql, params),
+    db.query(secondSql)
+  ]).then(results => {
+    res.status(201).json(results[0].rows[0]);
+  })
     .catch(err => {
       console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+      res.status(500).json({ error: 'an unexpected error occurred' });
     });
 });
 

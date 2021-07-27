@@ -50,7 +50,8 @@ export default class App extends React.Component {
   getAllCategories() {
     fetch('/api/categories')
       .then(response => response.json())
-      .then(data => this.setState({ categories: data, isCategoriesLoaded: true }));
+      .then(data =>
+        this.setState({ categories: data, isCategoriesLoaded: true }));
   }
 
   getAllPurchases() {
@@ -235,6 +236,9 @@ export default class App extends React.Component {
     const checkPurchasesArr = this.state.purchases.filter(purchase =>
       purchase.categoryId === categoryId
     );
+
+    console.log(checkPurchasesArr);
+
     if (checkPurchasesArr.length > 0) {
       const r = confirm('This category contains purchases. Are you sure you want to delete?');
       if (r === false) {
@@ -247,7 +251,8 @@ export default class App extends React.Component {
     })
       .then(data => {
         categoriesArr = this.state.categories.filter(category =>
-          data.categoryId === categoryId);
+          category.categoryId !== categoryId
+        );
         this.setState({ categories: categoriesArr }, () => {
           window.location.hash = 'categories';
         });

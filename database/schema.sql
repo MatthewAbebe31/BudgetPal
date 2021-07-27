@@ -11,7 +11,7 @@ create table "purchases" (
   "purchaseId"      serial,
   "categoryId"      numeric not null,
   "description"     text    not null,
-  "amount"          numeric  not null,
+  "amount"          numeric  not null DEFAULT 0,
   "date"            DATE NOT NULL DEFAULT CURRENT_DATE,
   primary key ("purchaseId")
 );
@@ -20,6 +20,7 @@ create table "categories" (
   "categoryId"       serial,
   "categoryName"     text     not null,
   "categoryAmount"   numeric  not null,
+  "totalSpent"       numeric  not null DEFAULT 0,
   primary key ("categoryId")
 );
 
