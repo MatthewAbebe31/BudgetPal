@@ -76,7 +76,7 @@ class Analysis extends React.Component {
 
         for (let i = 0; i < budgetIndexArr.length; i++) {
           for (let m = 0; m < spendingIndexArr.length; m++) {
-            if (budgetIndexArr[i].categoryId === spendingIndexArr[m].categoryId) {
+            if (budgetIndexArr[i].categoryName === spendingIndexArr[m].x) {
               spendingIndexArr[m].budgetAmount = budgetIndexArr[i].categoryamount;
               spendingIndexArr[m].budgetVariance = budgetIndexArr[i].categoryamount - spendingIndexArr[m].totalSpent;
               this.setState({ spendingIndexData: spendingIndexArr });
