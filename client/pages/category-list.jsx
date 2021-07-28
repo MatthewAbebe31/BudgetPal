@@ -3,7 +3,7 @@ import React from 'react';
 class CategoryList extends React.Component {
 
   render() {
-    console.log(this.props.categories);
+    // console.log(this.props.categories);
     return (
       <div>
         <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>

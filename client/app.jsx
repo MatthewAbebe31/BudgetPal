@@ -237,8 +237,6 @@ export default class App extends React.Component {
       purchase.categoryId === categoryId
     );
 
-    console.log(checkPurchasesArr);
-
     if (checkPurchasesArr.length > 0) {
       const r = confirm('This category contains purchases. Are you sure you want to delete?');
       if (r === false) {

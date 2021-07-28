@@ -9,7 +9,7 @@ create schema "public";
 
 create table "purchases" (
   "purchaseId"      serial,
-  "categoryId"      numeric not null,
+  "categoryId"      integer not null,
   "description"     text    not null,
   "amount"          numeric  not null DEFAULT 0,
   "date"            DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -20,13 +20,12 @@ create table "categories" (
   "categoryId"       serial,
   "categoryName"     text     not null,
   "categoryAmount"   numeric  not null,
-  "totalSpent"       numeric  not null DEFAULT 0,
   primary key ("categoryId")
 );
 
 create table "notes" (
   "noteId"             serial,
-  "categoryId"         numeric  not null,
+  "categoryId"         integer  not null,
   "category"           text     not null,
   "note"               text     not null,
   "date"            DATE NOT NULL DEFAULT CURRENT_DATE,

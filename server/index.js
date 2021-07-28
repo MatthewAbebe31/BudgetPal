@@ -23,7 +23,7 @@ app.use(jsonMiddleware);
 
 app.get('/api/categories', (req, res) => {
   const sql = `
-    select "categoryId"::INTEGER, "categoryName", "categoryAmount", sum("amount") as "totalSpent"
+    select "categoryId", "categoryName", "categoryAmount", sum("amount") as "totalSpent"
       from "categories"
       left join "purchases" using ("categoryId")
       group by "categoryId", "categoryName", "categoryAmount"
@@ -43,7 +43,7 @@ app.get('/api/categories', (req, res) => {
 
 app.get('/api/purchases', (req, res) => {
   const sql = `
-    select "purchaseId", "categoryId"::INTEGER, "description", "amount", "date", "categoryName"
+    select "purchaseId", "categoryId", "description", "amount", "date", "categoryName"
       from "purchases"
       join "categories" using ("categoryId")
      order by "purchaseId" desc
@@ -199,29 +199,27 @@ app.post('/api/purchases', (req, res) => {
     returning *
   `;
 
-  const secondSql = `
-    select "purchaseId", "categoryId"::INTEGER, "description", "amount", "date", "categoryName"
-      from "purchases"
-      join "categories" using ("categoryId")
-     order by "purchaseId" desc
-  `;
-
   const params = [categoryId, description, amount];
 
-  Promise.all([
-    db.query(sql, params),
-    db.query(secondSql)
-  ]).then(results => {
-    res.status(201).json(results[0].rows[0]);
-  })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ error: 'an unexpected error occurred' });
+  db.query(sql, params)
+    .then(results => {
+      const secondParam = results.rows[0].purchaseId;
+      const secondSql = `
+    select "purchaseId", "categoryId", "description", "amount", "date", "categoryName"
+      from "purchases"
+      join "categories" using ("categoryId")
+      where "purchaseId" = ${secondParam}
+     order by "purchaseId" desc
+  `;
+      db.query(secondSql)
+        .then(results => {
+          res.status(201).json(results.rows[0]);
+        });
     });
+
 });
 
 app.post('/api/categories', (req, res) => {
-
   const { categoryName, categoryAmount } = req.body;
   if (!categoryName || !categoryAmount) {
     res.status(400).json({
@@ -235,25 +233,22 @@ app.post('/api/categories', (req, res) => {
     returning *
   `;
 
-  const secondSql = `
-    select "categoryId"::INTEGER, "categoryName", "categoryAmount", sum("amount") as "totalSpent"
-      from "categories"
-      left join "purchases" using ("categoryId")
-      group by "categoryId", "categoryName", "categoryAmount"
-     order by "categoryId" desc
-  `;
-
   const params = [categoryName, categoryAmount];
 
-  Promise.all([
-    db.query(sql, params),
-    db.query(secondSql)
-  ]).then(results => {
-    res.status(201).json(results[0].rows[0]);
-  })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ error: 'an unexpected error occurred' });
+  db.query(sql, params)
+    .then(results => {
+      const secondParam = results.rows[0].categoryId;
+      const secondSql = `
+    select "categoryId", "categoryName", "categoryAmount", sum("amount") as "totalSpent"
+      from "categories"
+      left join "purchases" using ("categoryId")
+      where "categoryId" = ${secondParam}
+      group by "categoryId"
+  `;
+      db.query(secondSql)
+        .then(results => {
+          res.status(201).json(results.rows[0]);
+        });
     });
 });
 
