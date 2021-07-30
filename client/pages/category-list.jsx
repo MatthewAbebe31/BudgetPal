@@ -1,6 +1,19 @@
 import React from 'react';
 
 class CategoryList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categories: []
+    };
+  }
+
+  componentDidMount() {
+    fetch('/api/categories')
+      .then(response => response.json())
+      .then(data =>
+        this.setState({ categories: data }));
+  }
 
   render() {
     // console.log(this.props.categories);
@@ -8,7 +21,7 @@ class CategoryList extends React.Component {
       <div>
         <h2 className="text-center mt-3 text-decoration-underline">Categories</h2>
         {
-          this.props.categories.map((category, index) => {
+          this.state.categories.map((category, index) => {
             return (
               <div key={index}>
                 <div className="d-flex justify-content-center">

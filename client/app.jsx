@@ -255,6 +255,8 @@ export default class App extends React.Component {
       .catch(error => {
         console.error('Error:', error);
       });
+
+    window.location.reload();
   }
 
   deletePurchase(purchaseId) {
@@ -316,10 +318,7 @@ export default class App extends React.Component {
       return <Home />;
     }
     if (route.path === 'categories') {
-      return <CategoryList
-        categories={this.state.categories}
-        purchases={this.state.purchases}
-        deleteCategory={this.deleteCategory} />;
+      return <CategoryList deleteCategory={this.deleteCategory} />;
     }
     if (route.path === 'purchases') {
       return <PurchaseList
