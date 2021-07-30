@@ -50,7 +50,8 @@ export default class App extends React.Component {
   getAllCategories() {
     fetch('/api/categories')
       .then(response => response.json())
-      .then(data => this.setState({ categories: data, isCategoriesLoaded: true }));
+      .then(data =>
+        this.setState({ categories: data, isCategoriesLoaded: true }));
   }
 
   getAllPurchases() {
@@ -174,13 +175,8 @@ export default class App extends React.Component {
   }
 
   putPurchase(editedPurchase, purchaseId) {
-    let index = null;
-    for (let i = 0; i < this.state.purchases.length; i++) {
-      const purchase = this.state.purchases[i];
-      if (purchase.purchaseId === purchaseId) {
-        index = i;
-      }
-    }
+    console.log(editedPurchase);
+    const newPurchaseArr = [];
 
     fetch('/api/purchases', {
       method: 'PUT',
@@ -191,9 +187,11 @@ export default class App extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        const newPurchases = this.state.purchases.slice();
-        newPurchases[index] = data;
-        this.setState({ purchases: newPurchases }, () => {
+        this.state.purchases.push(data);
+        for (let i = 0; i < this.state.purchases.length; i++) {
+          newPurchaseArr.unshift(this.state.purchases[i]);
+        }
+        this.setState({ purchases: newPurchaseArr }, () => {
           window.location.hash = 'purchases';
         });
       })
@@ -232,44 +230,30 @@ export default class App extends React.Component {
   }
 
   deleteCategory(categoryId) {
-
-    let categoryName = null;
-
-    for (let l = 0; l < this.state.categories.length; l++) {
-      if (this.state.categories[l].categoryId === categoryId) {
-        categoryName = this.state.categories[l].categoryName;
-      }
-    }
-
-    const purchasesArr = this.state.purchases.filter(purchase =>
-      purchase.category === categoryName
+    const checkPurchasesArr = this.state.purchases.filter(purchase =>
+      purchase.categoryId === categoryId
     );
 
-    if (purchasesArr.length > 0) {
+    if (checkPurchasesArr.length > 0) {
       const r = confirm('This category contains purchases. Are you sure you want to delete?');
       if (r === false) {
         return;
       }
     }
-
+    let categoriesArr = [];
     fetch(`/api/categories/${categoryId}`, {
       method: 'DELETE'
     })
       .then(data => {
-        if (data.ok) {
-          fetch('/api/categories')
-            .then(data => {
-              if (data.ok) {
-                return data.json();
-              }
-            })
-            .catch(error => console.error(error))
-            .then(response => {
-              this.setState({ categories: response });
-            });
-        } else {
-          throw new Error(data);
-        }
+        categoriesArr = this.state.categories.filter(category =>
+          category.categoryId !== categoryId
+        );
+        this.setState({ categories: categoriesArr }, () => {
+          window.location.hash = 'categories';
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
       });
 
     window.location.reload();
@@ -334,10 +318,7 @@ export default class App extends React.Component {
       return <Home />;
     }
     if (route.path === 'categories') {
-      return <CategoryList
-        categories={this.state.categories}
-        purchases={this.state.purchases}
-        deleteCategory={this.deleteCategory} />;
+      return <CategoryList deleteCategory={this.deleteCategory} />;
     }
     if (route.path === 'purchases') {
       return <PurchaseList

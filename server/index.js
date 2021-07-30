@@ -43,8 +43,9 @@ app.get('/api/categories', (req, res) => {
 
 app.get('/api/purchases', (req, res) => {
   const sql = `
-    select *
+    select "purchaseId", "categoryId", "description", "amount", "date", "categoryName" as "category"
       from "purchases"
+      join "categories" using ("categoryId")
      order by "purchaseId" desc
   `;
   db.query(sql)
@@ -99,10 +100,11 @@ app.get('/api/purchases/amount', (req, res) => {
 
 app.get('/api/purchases/categorySpending', (req, res) => {
   const sql = `
-    select sum("amount") as amount, "category"
+    select "categoryId", sum("amount") as amount, "categoryName"
       from "purchases"
-     group by "category"
-     order by "category" desc
+    join "categories" using("categoryId")
+     group by "categoryId", "categoryName"
+     order by "categoryName" desc
   `;
   db.query(sql)
     .then(result => {
@@ -125,11 +127,11 @@ app.get('/api/categories/categoryBudget', (req, res) => {
   `;
 
   const secondSql = `
-    select sum("amount") as "totalSpent", "category" as "x"
+    select sum("amount") as "totalSpent", "categoryName" as "x"
       from "purchases"
-      join "categories" on ("category" = "categoryName")
-     group by "category"
-     order by "category" desc
+      join "categories" using ("categoryId")
+     group by "categoryName"
+     order by "categoryName" desc
   `;
 
   Promise.all([
@@ -146,10 +148,11 @@ app.get('/api/categories/categoryBudget', (req, res) => {
 
 app.get('/api/purchases/countPurchasesByCategory', (req, res) => {
   const sql = `
-    select count("purchaseId") as purchases, "category"
+    select count("purchaseId") as purchases, "categoryName"
       from "purchases"
-     group by "category"
-     order by "category" desc
+    join "categories" using ("categoryId")
+     group by "categoryName"
+     order by "categoryName" desc
   `;
   db.query(sql)
     .then(result => {
@@ -183,35 +186,40 @@ app.get('/api/notes', (req, res) => {
 
 app.post('/api/purchases', (req, res) => {
 
-  const { categoryId, category, description, amount } = req.body;
-  if (!categoryId || !category || !description || !amount) {
+  const { categoryId, description, amount } = req.body;
+  if (!categoryId || !description || !amount) {
     res.status(400).json({
       error: 'Please enter required fields'
     });
     return;
   }
   const sql = `
-    insert into "purchases" ("categoryId", "category", "description", "amount")
-    values ($1, $2, $3, $4)
+    insert into "purchases" ("categoryId", "description", "amount")
+    values ($1, $2, $3)
     returning *
   `;
 
-  const params = [categoryId, category, description, amount];
+  const params = [categoryId, description, amount];
+
   db.query(sql, params)
-    .then(result => {
-      const [purchase] = result.rows;
-      res.status(201).json(purchase);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+    .then(results => {
+      const secondParam = results.rows[0].purchaseId;
+      const secondSql = `
+    select "purchaseId", "categoryId", "description", "amount", "date", "categoryName" as "category"
+      from "purchases"
+      join "categories" using ("categoryId")
+      where "purchaseId" = ${secondParam}
+     order by "purchaseId" desc
+  `;
+      db.query(secondSql)
+        .then(results => {
+          res.status(201).json(results.rows[0]);
+        });
     });
+
 });
 
 app.post('/api/categories', (req, res) => {
-
   const { categoryName, categoryAmount } = req.body;
   if (!categoryName || !categoryAmount) {
     res.status(400).json({
@@ -224,17 +232,23 @@ app.post('/api/categories', (req, res) => {
     values ($1, $2)
     returning *
   `;
+
   const params = [categoryName, categoryAmount];
+
   db.query(sql, params)
-    .then(result => {
-      const [category] = result.rows;
-      res.status(201).json(category);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+    .then(results => {
+      const secondParam = results.rows[0].categoryId;
+      const secondSql = `
+    select "categoryId", "categoryName", "categoryAmount", sum("amount") as "totalSpent"
+      from "categories"
+      left join "purchases" using ("categoryId")
+      where "categoryId" = ${secondParam}
+      group by "categoryId"
+  `;
+      db.query(secondSql)
+        .then(results => {
+          res.status(201).json(results.rows[0]);
+        });
     });
 });
 
@@ -297,11 +311,11 @@ app.put('/api/categories', (req, res) => {
     });
 });
 
-app.put('/api/purchases', (req, res) => {
+app.put('/api/purchases', (req, res, next) => {
 
-  const { purchaseId, category, description, amount } = req.body;
+  const { purchaseId, categoryId, description, amount } = req.body;
 
-  if (!purchaseId || !category || !description || !amount) {
+  if (!purchaseId || !categoryId || !description || !amount) {
     res.status(400).json({
       error: 'Please enter required fields'
     });
@@ -309,23 +323,38 @@ app.put('/api/purchases', (req, res) => {
   }
   const sql = `
     update "purchases"
-    set    "category"   = $1,
+    set    "categoryId"   = $1,
            "description" = $2,
            "amount" = $3
     where  "purchaseId"     = $4
     returning *
   `;
-  const params = [category, description, amount, purchaseId];
+  const params = [categoryId, description, amount, purchaseId];
+
   db.query(sql, params)
-    .then(result => {
-      const [purchase] = result.rows;
-      res.status(201).json(purchase);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+    .then(results => {
+      const secondParam = results.rows[0].purchaseId;
+      const secondSql = `
+    select "purchaseId", "categoryId", "description", "amount", "date", "categoryName" as "category"
+      from "purchases"
+      join "categories" using ("categoryId")
+      where "purchaseId" = ${secondParam}
+     order by "purchaseId" desc
+  `;
+      db.query(secondSql)
+        .then(results => {
+          const updatedPurchase = [results.rows[0]][0];
+          console.log(updatedPurchase);
+          if (!updatedPurchase) {
+            res.status(404).json({
+              error: `cannot find purchase with purchaseId ${secondParam}`
+            });
+          } else {
+            console.log(updatedPurchase);
+            res.json(updatedPurchase);
+          }
+        })
+        .catch(err => next(err));
     });
 });
 

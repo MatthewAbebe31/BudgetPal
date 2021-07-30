@@ -4,7 +4,7 @@ class EditPurchaseForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: props.purchase.category,
+      categoryId: props.purchase.categoryId,
       description: props.purchase.description,
       amount: props.purchase.amount,
       selectCategory: []
@@ -26,7 +26,7 @@ class EditPurchaseForm extends React.Component {
   }
 
   handleEditCategoryInputChange(event) {
-    this.setState({ category: event.target.value });
+    this.setState({ categoryId: event.target.value });
   }
 
   handleEditDescriptionInputChange(event) {
@@ -41,7 +41,7 @@ class EditPurchaseForm extends React.Component {
     event.preventDefault();
     const editedPurchase = {
       purchaseId: parseInt(this.props.purchase.purchaseId),
-      category: this.state.category,
+      categoryId: this.state.categoryId,
       description: this.state.description,
       amount: parseInt(this.state.amount).toFixed(2)
     };
@@ -55,8 +55,8 @@ class EditPurchaseForm extends React.Component {
     const editedCategory = this.state.category;
     const editedAmount = this.state.amount;
     const editedDescription = this.state.description;
-    const optionTemplate = this.state.selectCategory.map((v, key) => (
-      <option key={key} value={v.id}>{v.categoryName}</option>
+    const optionTemplate = this.state.selectCategory.map((category, key) => (
+      <option key={key} value={category.id}>{category.categoryName}</option>
     ));
 
     return (

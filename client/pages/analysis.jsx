@@ -48,7 +48,7 @@ class Analysis extends React.Component {
         const spendingByCategoryChartData = [];
 
         for (let i = 0; i < data.length; i++) {
-          const labels = data[i].category;
+          const labels = data[i].categoryName;
           const amounts = data[i].amount;
           spendingByCategoryLabels.push(labels);
           spendingByCategoryChartData.push(amounts);
@@ -112,7 +112,7 @@ class Analysis extends React.Component {
         const purchasesByCategoryChartData = [];
 
         for (let j = 0; j < data.length; j++) {
-          const labels = data[j].category;
+          const labels = data[j].categoryName;
           const purchases = data[j].purchases;
           purchasesByCategoryLabels.push(labels);
           purchasesByCategoryChartData.push(purchases);

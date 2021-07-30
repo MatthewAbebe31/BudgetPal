@@ -29,16 +29,6 @@ class PurchaseForm extends React.Component {
   }
 
   handleCategoryInputChange(event) {
-
-    let categoryName = null;
-
-    for (let i = 0; i < this.state.selectCategory.length; i++) {
-      if (this.state.selectCategory[i].categoryId === event.target.value) {
-        categoryName = this.state.selectCategory[i].categoryName;
-      }
-      this.setState({ category: categoryName });
-    }
-
     this.setState({ categoryId: event.target.value });
   }
 
@@ -60,7 +50,6 @@ class PurchaseForm extends React.Component {
       amount: parseInt(this.state.amount).toFixed(2)
     };
     this.props.onSubmit(newPurchase);
-    this.setState({ category: '' });
     this.setState({ description: '' });
     this.setState({ amount: '' });
   }
