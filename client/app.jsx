@@ -175,13 +175,8 @@ export default class App extends React.Component {
   }
 
   putPurchase(editedPurchase, purchaseId) {
-    let index = null;
-    for (let i = 0; i < this.state.purchases.length; i++) {
-      const purchase = this.state.purchases[i];
-      if (purchase.purchaseId === purchaseId) {
-        index = i;
-      }
-    }
+    console.log(editedPurchase);
+    const newPurchaseArr = [];
 
     fetch('/api/purchases', {
       method: 'PUT',
@@ -192,9 +187,11 @@ export default class App extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        const newPurchases = this.state.purchases.slice();
-        newPurchases[index] = data;
-        this.setState({ purchases: newPurchases }, () => {
+        this.state.purchases.push(data);
+        for (let i = 0; i < this.state.purchases.length; i++) {
+          newPurchaseArr.unshift(this.state.purchases[i]);
+        }
+        this.setState({ purchases: newPurchaseArr }, () => {
           window.location.hash = 'purchases';
         });
       })

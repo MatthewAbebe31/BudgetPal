@@ -15,7 +15,7 @@ class PurchaseList extends React.Component {
               <div key={index}>
                 <div className="d-flex justify-content-center">
                   <div className="card text-dark bg-light mb-3">
-                    <h5 className="card-header">{purchase.categoryName}</h5>
+                    <h5 className="card-header">{purchase.category}</h5>
                     <div className="card-body">
                       <p className="card-text"><b>Description:</b> {purchase.description}</p>
                       <p className="card-text"><b>Amount:</b> ${purchase.amount}</p>

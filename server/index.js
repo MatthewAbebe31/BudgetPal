@@ -311,11 +311,11 @@ app.put('/api/categories', (req, res) => {
     });
 });
 
-app.put('/api/purchases', (req, res) => {
+app.put('/api/purchases', (req, res, next) => {
 
-  const { purchaseId, category, description, amount } = req.body;
+  const { purchaseId, categoryId, description, amount } = req.body;
 
-  if (!purchaseId || !category || !description || !amount) {
+  if (!purchaseId || !categoryId || !description || !amount) {
     res.status(400).json({
       error: 'Please enter required fields'
     });
@@ -323,23 +323,38 @@ app.put('/api/purchases', (req, res) => {
   }
   const sql = `
     update "purchases"
-    set    "category"   = $1,
+    set    "categoryId"   = $1,
            "description" = $2,
            "amount" = $3
     where  "purchaseId"     = $4
     returning *
   `;
-  const params = [category, description, amount, purchaseId];
+  const params = [categoryId, description, amount, purchaseId];
+
   db.query(sql, params)
-    .then(result => {
-      const [purchase] = result.rows;
-      res.status(201).json(purchase);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
+    .then(results => {
+      const secondParam = results.rows[0].purchaseId;
+      const secondSql = `
+    select "purchaseId", "categoryId", "description", "amount", "date", "categoryName" as "category"
+      from "purchases"
+      join "categories" using ("categoryId")
+      where "purchaseId" = ${secondParam}
+     order by "purchaseId" desc
+  `;
+      db.query(secondSql)
+        .then(results => {
+          const updatedPurchase = [results.rows[0]][0];
+          console.log(updatedPurchase);
+          if (!updatedPurchase) {
+            res.status(404).json({
+              error: `cannot find purchase with purchaseId ${secondParam}`
+            });
+          } else {
+            console.log(updatedPurchase);
+            res.json(updatedPurchase);
+          }
+        })
+        .catch(err => next(err));
     });
 });
 
