@@ -43,7 +43,7 @@ app.get('/api/categories', (req, res) => {
 
 app.get('/api/purchases', (req, res) => {
   const sql = `
-    select "purchaseId", "categoryId", "description", "amount", "date", "categoryName"
+    select "purchaseId", "categoryId", "description", "amount", "date", "categoryName" as "category"
       from "purchases"
       join "categories" using ("categoryId")
      order by "purchaseId" desc
@@ -205,7 +205,7 @@ app.post('/api/purchases', (req, res) => {
     .then(results => {
       const secondParam = results.rows[0].purchaseId;
       const secondSql = `
-    select "purchaseId", "categoryId", "description", "amount", "date", "categoryName"
+    select "purchaseId", "categoryId", "description", "amount", "date", "categoryName" as "category"
       from "purchases"
       join "categories" using ("categoryId")
       where "purchaseId" = ${secondParam}
