@@ -330,7 +330,7 @@ class Analysis extends React.Component {
               <div className="purchases-by-time-chart-container mt-3 text-center w-75">
 
                 <div className='purchases-by-time-header mb-3'>
-                  <h4 className='chart-title'>Purchases by Category</h4>
+                  <h4 className='chart-title text-center fs-5'>Purchases by Category</h4>
                 </div>
 
                 <div>
@@ -344,7 +344,7 @@ class Analysis extends React.Component {
               <div className="purchases-by-time-category-container mt-3 text-center w-75">
 
                 <div className='purchases-by-category-header mb-3 mt-3'>
-                  <h4 className='chart-title'>Budget by Category</h4>
+                  <h4 className='chart-title text-center fs-5'>Budget by Category</h4>
                 </div>
 
                 <div>
