@@ -13,6 +13,7 @@ import EditNoteForm from './pages/edit-note-form';
 import Analysis from './pages/analysis';
 import Footer from './pages/footer';
 import parseRoute from './lib/parse-route';
+import { json } from 'express';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -234,16 +235,24 @@ export default class App extends React.Component {
   deleteCategory(categoryId) {
 
     let categoryName = null;
+    let purchasesArr = [];
 
-    for (let l = 0; l < this.state.categories.length; l++) {
-      if (this.state.categories[l].categoryId === categoryId) {
-        categoryName = this.state.categories[l].categoryName;
-      }
-    }
+    fetch('/api/categories')
+      .then(response => json(response))
+      .then(data => {
+        for (let l = 0; l < data.length; l++) {
+          if (data[l].categoryId === categoryId) {
+            categoryName = data[l].categoryName;
+          }
+        }
+      });
 
-    const purchasesArr = this.state.purchases.filter(purchase =>
-      purchase.category === categoryName
-    );
+    fetch('/api/purchases')
+      .then(response => json(response))
+      .then(data => {
+        purchasesArr = data.filter(purchase =>
+          purchase.category === categoryName);
+      });
 
     if (purchasesArr.length > 0) {
       const r = confirm('This category contains purchases. Are you sure you want to delete?');
