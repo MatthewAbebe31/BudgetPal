@@ -27,7 +27,7 @@ A full stack React application that tracks purchases and analyzes spending habit
 
 <h4>Live Demo</h4>
 
-Try the application live at https://budget-pal-app.herokuapp.com/
+Try the application live at 
 
 <h4>Installation</h4>
 
